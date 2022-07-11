@@ -1,6 +1,9 @@
 package arcana.data;
 
 import arcana.Arcana;
+import arcana.common.items.AspectIcon;
+import arcana.common.items.Crystal;
+import com.google.common.collect.ImmutableList;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -8,98 +11,52 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static arcana.common.items.ArcanaItems.FIREWAND;
 
 public class ItemModelProvider extends net.minecraftforge.client.model.generators.ItemModelProvider {
-
-    protected static final ResourceLocation GENERATED = new ResourceLocation("item/generated");
-    protected static final ResourceLocation HANDHELD = new ResourceLocation("item/handheld");
-
     public ItemModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
         super(generator, Arcana.id, existingFileHelper);
     }
 
-    protected ItemModelBuilder generatedItem(String name) {
-        try {
-            return withExistingParent(name, GENERATED)
-                    .texture("layer0", Arcana.id + ":items/" + name);
-        }catch (Exception e){
-            Arcana.logger.warn(name);
-        }
-        return null;
-    }
+    public static List<Item> generated = new ArrayList<>(ImmutableList.of(
+        FIREWAND
+    ));
+    public static List<Item> handheld = new ArrayList<>();
+    public static List<Item> blockItem = new ArrayList<>();
+    //...
 
-    protected ItemModelBuilder handheldItem(Item i) {
-        return handheldItem(name(i));
-    }
-
-    protected ItemModelBuilder handheldItem(String name) {
-        return withExistingParent(name, HANDHELD)
-                .texture("layer0", Arcana.id + ":items/" + name);
-    }
-
-
-    protected static String name(Item i) {
-        return Registry.ITEM.getKey(i).getPath();
-    }
-
-    protected ItemModelBuilder generatedItem(Item i) {
-        return generatedItem(name(i));
-    }
 
     @Override
     protected void registerModels() {
-        Set<Item> items = Registry.ITEM.stream().filter(i -> Arcana.id.equals(Registry.ITEM.getKey(i).getNamespace()))
-                .collect(Collectors.toSet());
-        //items.remove(FIREWAND);
-        //items.remove(ARCANE_WORKBENCH.asItem());
-        registerItemBlocks(takeAll(items, i -> i instanceof BlockItem).stream().map(i -> (BlockItem) i).collect(Collectors.toSet()));
-        registerItems(items);
+        List<Item> items = ForgeRegistries.ITEMS.getEntries().stream().map(e -> e.getValue()).collect(Collectors.toList());
+        handheld.forEach(this::handheldItem);
+        generated.forEach(this::generatedItem);
+        items.stream().filter(i -> i instanceof AspectIcon).forEach(i -> makeItemModel(i, "item/generated", "aspects/"));
+        items.stream().filter(i -> i instanceof Crystal).forEach(i -> makeItemModel(i, "item/generated", "items/crystals/"));
     }
 
-    private void registerItemBlocks(Set<BlockItem> itemBlocks) {
+    protected void generatedItem(Item item) {
+        makeItemModel(item, "item/generated");
     }
 
-    private void registerItems(Set<Item> items) {
-
-        takeAll(items, FIREWAND).forEach(this::handheldItem);
-
-        takeAll(items, i -> true).forEach(this::generatedItem);
+    protected void handheldItem(Item i) {
+        makeItemModel(i, "item/handheld");
     }
 
-    public static <T> Collection<T> takeAll(Set<T> src, Predicate<T> pred) {
-        List<T> ret = new ArrayList<>();
-
-        Iterator<T> iter = src.iterator();
-        while (iter.hasNext()) {
-            T item = iter.next();
-            if (pred.test(item)) {
-                iter.remove();
-                ret.add(item);
-            }
-        }
-
-        if (ret.isEmpty()) {
-            Arcana.logger.warn("takeAll predicate yielded nothing", new Throwable());
-        }
-        return ret;
+    protected void makeItemModel(Item item, String parent) {
+        String name = item.getRegistryName().getPath();
+        singleTexture(name, mcLoc(parent), "layer0", new ResourceLocation(Arcana.id, "items/" + name));
     }
 
-    public static <T> Collection<T> takeAll(Set<? extends T> src, T... items) {
-        List<T> ret = Arrays.asList(items);
-        for (T item : items) {
-            if (!src.contains(item)) {
-                Arcana.logger.warn("Item {} not found in set", item);
-            }
-        }
-        if (!src.removeAll(ret)) {
-            Arcana.logger.warn("takeAll array didn't yield anything ({})", Arrays.toString(items));
-        }
-        return ret;
+    protected void makeItemModel(Item item, String parent, String texturePath) {
+        String name = item.getRegistryName().getPath();
+        singleTexture(name, mcLoc(parent), "layer0", new ResourceLocation(Arcana.id, texturePath + name));
     }
 }

@@ -1,5 +1,6 @@
 package arcana.common.items;
 
+import arcana.aspects.AspectUtils;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -9,5 +10,6 @@ public class ArcanaItems {
     public static void register(RegistryEvent.Register<Item> event){
         IForgeRegistry<Item> reg = event.getRegistry();
         reg.register(FIREWAND);
+        AspectUtils.registerItems(reg);
     }
 }
