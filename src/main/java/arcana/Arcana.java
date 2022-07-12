@@ -1,7 +1,7 @@
 package arcana;
 
 import arcana.common.ArcanaGroup;
-import arcana.common.items.ArcanaItems;
+import arcana.common.items.ModItems;
 import arcana.data.DataGenerators;
 import net.minecraft.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -15,10 +15,4 @@ public class Arcana {
     public static final String id = "arcana";
     public static final Logger logger = LogManager.getLogger();
     public static ArcanaGroup ARCANAGROUP = new ArcanaGroup();
-
-    public Arcana(){
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        modEventBus.addListener(DataGenerators::gatherData);
-        modEventBus.addGenericListener(Item.class, ArcanaItems::register);
-    }
 }

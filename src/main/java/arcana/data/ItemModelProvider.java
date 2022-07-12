@@ -5,20 +5,15 @@ import arcana.common.items.AspectIcon;
 import arcana.common.items.Crystal;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static arcana.common.items.ArcanaItems.FIREWAND;
+import static arcana.common.items.ModItems.FIREWAND;
 
 public class ItemModelProvider extends net.minecraftforge.client.model.generators.ItemModelProvider {
     public ItemModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
