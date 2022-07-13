@@ -1,4 +1,4 @@
-package arcana.aspects;
+package arcana.common.aspects;
 
 import arcana.common.ArcanaGroup;
 import arcana.common.items.AspectIcon;

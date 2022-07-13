@@ -1,6 +1,6 @@
 package arcana.common.items;
 
-import arcana.aspects.Aspect;
+import arcana.common.aspects.Aspect;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;

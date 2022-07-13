@@ -1,15 +1,18 @@
-package arcana.events;
+package arcana.server.events;
 
-import arcana.worldgen.ModFeatures;
-import arcana.worldgen.Tower;
+import arcana.common.capability.Marks;
+import arcana.server.worldgen.ModFeatures;
+import arcana.server.worldgen.Tower;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.FlatChunkGenerator;
-import net.minecraft.world.gen.settings.StructureSeparationSettings;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

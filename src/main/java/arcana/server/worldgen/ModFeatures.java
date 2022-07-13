@@ -1,6 +1,6 @@
-package arcana.worldgen;
+package arcana.server.worldgen;
 
-import arcana.aspects.Aspects;
+import arcana.common.aspects.Aspects;
 import net.minecraft.world.gen.feature.StructureFeature;
 import net.minecraft.world.gen.feature.structure.Structure;
 

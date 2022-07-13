@@ -1,17 +1,21 @@
 package arcana;
 
+import arcana.common.capability.Marks;
+import arcana.common.packets.PacketSender;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.gen.feature.StructureFeature;
 import net.minecraft.world.gen.feature.structure.Structure;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
-import static arcana.worldgen.ModFeatures.*;
+import static arcana.server.worldgen.ModFeatures.*;
 import static arcana.common.items.ModItems.*;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -33,7 +37,11 @@ public class Register {
         event.getRegistry().registerAll(FIREWAND);
     }
 
-
+    @SubscribeEvent
+    static void setupCommon(FMLCommonSetupEvent event){
+        CapabilityManager.INSTANCE.register(Marks.class, new Marks.Storage(), Marks::new);
+        PacketSender.init();
+    }
 
     private static void regStructs(IForgeRegistry<Structure<?>> registry, Structure<?> ... structs){
         for (Structure<?> struct : structs) {

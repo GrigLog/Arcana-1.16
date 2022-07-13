@@ -1,4 +1,4 @@
-package arcana.aspects;
+package arcana.common.aspects;
 
 /**
  * Stores a set of colours.

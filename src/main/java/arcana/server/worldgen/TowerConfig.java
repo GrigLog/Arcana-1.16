@@ -1,6 +1,6 @@
-package arcana.worldgen;
+package arcana.server.worldgen;
 
-import arcana.aspects.Aspect;
+import arcana.common.aspects.Aspect;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.ResourceLocation;

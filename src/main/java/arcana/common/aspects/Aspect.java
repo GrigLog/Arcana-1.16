@@ -1,4 +1,4 @@
-package arcana.aspects;
+package arcana.common.aspects;
 
 import arcana.Arcana;
 import net.minecraft.util.ResourceLocation;

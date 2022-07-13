@@ -1,6 +1,6 @@
 package arcana.common.items;
 
-import arcana.aspects.Aspect;
+import arcana.common.aspects.Aspect;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
