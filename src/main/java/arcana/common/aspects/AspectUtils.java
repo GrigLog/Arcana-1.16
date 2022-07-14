@@ -25,8 +25,6 @@ public class AspectUtils {
 	public static List<ItemStack> aspectStacks;
 
 	public static void registerItems(IForgeRegistry<Item> registry){
-		// Automatically register all aspects' items
-		// Addons should be able to create an assets/arcana/... directory and declare their own model & textures, I think.
 		for(Aspect aspect : Aspects.getList())
 			if(aspect != Aspects.EMPTY){
 				AspectIcon item = new AspectIcon(aspect);

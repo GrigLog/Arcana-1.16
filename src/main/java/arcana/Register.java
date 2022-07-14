@@ -1,5 +1,6 @@
 package arcana;
 
+import arcana.common.aspects.AspectUtils;
 import arcana.common.capability.Marks;
 import arcana.common.packets.PacketSender;
 import net.minecraft.item.Item;
@@ -35,6 +36,7 @@ public class Register {
     @SubscribeEvent
     static void regItems(RegistryEvent.Register<Item> event){
         event.getRegistry().registerAll(FIREWAND);
+        AspectUtils.registerItems(event.getRegistry());
     }
 
     @SubscribeEvent

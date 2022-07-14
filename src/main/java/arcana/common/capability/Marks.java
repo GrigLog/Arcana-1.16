@@ -3,6 +3,7 @@ package arcana.common.capability;
 import arcana.Arcana;
 import arcana.common.packets.MarksPacket;
 import arcana.common.packets.PacketSender;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
@@ -28,10 +29,16 @@ public class Marks {
     public static Capability<Marks> CAPABILITY;
     public static ResourceLocation id = new ResourceLocation(Arcana.id, "marks");
 
+    public static final int MARKS_RANGE = 12; //12 chunk radius
+
     public List<BlockPos> positions;
 
     public Marks() {
         positions = new ArrayList<>();
+    }
+
+    public Marks(List<BlockPos> positions){
+        this.positions = positions;
     }
 
 
@@ -47,8 +54,18 @@ public class Marks {
         return this;
     }
 
-    public void sendToClient(@Nonnull ServerPlayerEntity player){
+    protected void sendToClient(@Nonnull ServerPlayerEntity player){
         PacketSender.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new MarksPacket(this));
+    }
+
+    public static void sendToClient(@Nonnull PlayerEntity player){
+        Marks cap = player.level.getCapability(Marks.CAPABILITY).resolve().orElse(null);
+        BlockPos pos = player.blockPosition();
+        List<BlockPos> positions = cap.positions.stream().filter(bp -> //only send the closest marks
+                Math.abs(bp.getX() - pos.getX()) < (MARKS_RANGE << 5) &&
+                Math.abs(bp.getZ() - pos.getZ()) < (MARKS_RANGE << 5))
+            .collect(Collectors.toList());
+        (new Marks(positions)).sendToClient((ServerPlayerEntity) player);
     }
 
     public static class Provider implements ICapabilitySerializable<INBT> {

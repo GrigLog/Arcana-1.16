@@ -1,5 +1,6 @@
 package arcana.server.worldgen;
 
+import arcana.Arcana;
 import arcana.common.capability.Marks;
 import com.mojang.serialization.Codec;
 import net.minecraft.block.BlockState;
@@ -32,10 +33,11 @@ import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import static java.lang.Math.*;
 import java.util.Random;
 
 public class Tower extends Structure<TowerConfig> {
-    public static final StructureSeparationSettings separation = new StructureSeparationSettings(10, 5, 880055535);
+    public static final StructureSeparationSettings separation = new StructureSeparationSettings(50, 35, 880055535);
     public Tower(Codec<TowerConfig> codec) {
         super(codec);
         setRegistryName("tower");
@@ -110,10 +112,19 @@ public class Tower extends Structure<TowerConfig> {
         @Override
         public boolean postProcess(ISeedReader world, StructureManager sm, ChunkGenerator gen, Random rand, MutableBoundingBox box, ChunkPos chPos, BlockPos pos) {
             Marks cap = world.getLevel().getCapability(Marks.CAPABILITY).resolve().orElse(null);
-            for (int dx = 1; dx < 50; dx++){
-                int y = gen.getBaseHeight(x + dx, z, Heightmap.Type.WORLD_SURFACE);
-                BlockPos bp = new BlockPos(x + dx, y, z);
-                cap.positions.add(bp);
+            int r = 100;
+            int rings = 6;
+            for (int i = 1; i <= rings; i++){
+                double dn = 2 * PI / acos(1 - 0.5 / (i*i)); //this formula makes distance between marks in one ring = r
+                int n = (int)pow(2, ceil(log(dn) / log(2))); //but we want the power of 2
+                Arcana.logger.info("ring " + i + ": " + n + " marks");
+                for (int k = 0; k < n; k++){
+                    int markX = (int) (x + r * i * cos(2*PI * k/n));
+                    int markZ = (int) (z + r * i * sin(2*PI * k/n));
+                    int markY = gen.getBaseHeight(markX, markZ, Heightmap.Type.WORLD_SURFACE);
+                    BlockPos bp = new BlockPos(markX, markY, markZ);
+                    cap.positions.add(bp);
+                }
             }
             return true;
         }

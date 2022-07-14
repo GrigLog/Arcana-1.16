@@ -27,8 +27,7 @@ public class RenderEvents {
             return;
         Marks cap = world.getCapability(Marks.CAPABILITY).resolve().orElse(null);
         List<BlockPos> positions = cap.positions;
-        positions.forEach(pos -> //todo: only render close ones
+        positions.forEach(pos ->
             event.getContext().addParticle(ParticleTypes.FLAME, true, pos.getX() + 0.5, pos.getY() + 0.2, pos.getZ() + 0.5, 0, 0, 0));
-        event.getContext().addParticle(ParticleTypes.FLAME, true, (int)player.getX(), (int)player.getY(), (int)player.getZ(), 0, 0, 0);
     }
 }
