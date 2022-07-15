@@ -1,5 +1,6 @@
 package arcana.common.packets;
 
+import arcana.common.aspects.AspectUtils;
 import arcana.common.capability.Marks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
@@ -12,6 +13,7 @@ import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -23,15 +25,19 @@ public class MarksPacket {
     }
 
     static MarksPacket decode(PacketBuffer buf){
-        Marks cap = new Marks();
-        long[] arr = buf.readLongArray(null);
-        cap.positions = Arrays.stream(arr).mapToObj(BlockPos::of).collect(Collectors.toList());
+        Marks cap = new Marks(new ArrayList[AspectUtils.primalAspects.length]);
+        for (int i = 0; i < AspectUtils.primalAspects.length; i++) {
+            long[] arr = buf.readLongArray(null);
+            cap.positions[i] = Arrays.stream(arr).mapToObj(BlockPos::of).collect(Collectors.toList());
+        }
         return new MarksPacket(cap);
     }
 
     static void encode(MarksPacket packet, PacketBuffer buf){
-        long[] arr = packet.cap.positions.stream().mapToLong(BlockPos::asLong).toArray();
-        buf.writeLongArray(arr);
+        for (int i = 0; i < AspectUtils.primalAspects.length; i++) {
+            long[] arr = packet.cap.positions[i].stream().mapToLong(BlockPos::asLong).toArray();
+            buf.writeLongArray(arr);
+        }
     }
 
     static void handle(MarksPacket packet, Supplier<NetworkEvent.Context> ctx){

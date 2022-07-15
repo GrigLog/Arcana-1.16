@@ -1,10 +1,14 @@
 package arcana.server.worldgen;
 
 import arcana.Arcana;
+import arcana.common.aspects.Aspect;
+import arcana.common.aspects.AspectUtils;
 import arcana.common.capability.Marks;
 import com.mojang.serialization.Codec;
 import net.minecraft.block.BlockState;
 import net.minecraft.command.impl.LocateCommand;
+import net.minecraft.entity.EntityPredicate;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SharedSeedRandom;
@@ -32,6 +36,7 @@ import net.minecraft.world.gen.settings.StructureSeparationSettings;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.commons.lang3.ArrayUtils;
 
 import static java.lang.Math.*;
 import java.util.Random;
@@ -85,7 +90,7 @@ public class Tower extends Structure<TowerConfig> {
             calculateBoundingBox();
             int xCenter = (boundingBox.x0 + boundingBox.x1) / 2;
             int zCenter = (boundingBox.z0 + boundingBox.z1) / 2;
-            pieces.add(new FakePiece(new BlockPos(xCenter, boundingBox.y0, zCenter))); //it spawns marks when World becomes available
+            pieces.add(new FakePiece(new BlockPos(xCenter, boundingBox.y0, zCenter), config.aspect)); //it spawns marks when World becomes available
         }
     }
 
@@ -93,20 +98,23 @@ public class Tower extends Structure<TowerConfig> {
         protected static IStructurePieceType type = IStructurePieceType.setPieceId(FakePiece::new, "arcana:fake_tower_piece");
 
         int x, z;
-        public FakePiece(BlockPos pos) {
+        int primalIndex;
+        public FakePiece(BlockPos pos, Aspect aspect) {
             super(type, 0);
             this.x = pos.getX();
             this.z = pos.getZ();
             boundingBox = new MutableBoundingBox(pos.getX(), pos.getY(), pos.getZ(), pos.getX(), pos.getY(), pos.getZ());
+            primalIndex = ArrayUtils.indexOf(AspectUtils.primalAspects, aspect);
         }
 
         public FakePiece(TemplateManager tm, CompoundNBT tag) {
             super(type, tag);
+            primalIndex = tag.getInt("primalIndex");
         }
 
         @Override
         protected void addAdditionalSaveData(CompoundNBT tag) {
-
+            tag.putInt("primalIndex", primalIndex);
         }
 
         @Override
@@ -114,18 +122,23 @@ public class Tower extends Structure<TowerConfig> {
             Marks cap = world.getLevel().getCapability(Marks.CAPABILITY).resolve().orElse(null);
             int r = 100;
             int rings = 6;
+            double a0 = rand.nextDouble() * PI;
             for (int i = 1; i <= rings; i++){
                 double dn = 2 * PI / acos(1 - 0.5 / (i*i)); //this formula makes distance between marks in one ring = r
                 int n = (int)pow(2, ceil(log(dn) / log(2))); //but we want the power of 2
-                Arcana.logger.info("ring " + i + ": " + n + " marks");
+                //Arcana.logger.info("ring " + i + ": " + n + " marks");
                 for (int k = 0; k < n; k++){
-                    int markX = (int) (x + r * i * cos(2*PI * k/n));
-                    int markZ = (int) (z + r * i * sin(2*PI * k/n));
+                    int markX = (int) (boundingBox.x0 + r * i * cos(a0 + 2*PI * k/n));
+                    int markZ = (int) (boundingBox.z0 + r * i * sin(a0 + 2*PI * k/n));
                     int markY = gen.getBaseHeight(markX, markZ, Heightmap.Type.WORLD_SURFACE);
                     BlockPos bp = new BlockPos(markX, markY, markZ);
-                    cap.positions.add(bp);
+                    cap.positions[primalIndex].add(bp);
                 }
             }
+            //the structure is usually generated AFTER a player crosses the chunk border, so we have to force client update here.
+            //PlayerEntity player = world.getNearestPlayer(x, 128, z, Marks.MARKS_RANGE << 5, null);
+            //if (player != null)
+            //    Marks.sendToClient(player);
             return true;
         }
     }

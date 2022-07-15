@@ -3,17 +3,23 @@ package arcana;
 import arcana.common.aspects.AspectUtils;
 import arcana.common.capability.Marks;
 import arcana.common.packets.PacketSender;
+import arcana.common.particles.ModParticles;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.item.Item;
+import net.minecraft.particles.ParticleType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.gen.feature.StructureFeature;
 import net.minecraft.world.gen.feature.structure.Structure;
+import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import static arcana.server.worldgen.ModFeatures.*;
@@ -37,6 +43,11 @@ public class Register {
     static void regItems(RegistryEvent.Register<Item> event){
         event.getRegistry().registerAll(FIREWAND);
         AspectUtils.registerItems(event.getRegistry());
+    }
+
+    @SubscribeEvent
+    static void regParticles(RegistryEvent.Register<ParticleType<?>> event){
+        event.getRegistry().registerAll(ModParticles.markType);
     }
 
     @SubscribeEvent

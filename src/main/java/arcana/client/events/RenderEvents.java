@@ -1,6 +1,9 @@
 package arcana.client.events;
 
+import arcana.common.aspects.AspectUtils;
+import arcana.common.aspects.Aspects;
 import arcana.common.capability.Marks;
+import arcana.common.particles.Mark;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
@@ -23,11 +26,16 @@ public class RenderEvents {
         ClientPlayerEntity player = Minecraft.getInstance().player;
         if (world == null || player == null)
             return;
-        if (player.tickCount % 20 != 0)
+        if (player.tickCount % 15 != 0)
             return;
         Marks cap = world.getCapability(Marks.CAPABILITY).resolve().orElse(null);
-        List<BlockPos> positions = cap.positions;
-        positions.forEach(pos ->
-            event.getContext().addParticle(ParticleTypes.FLAME, true, pos.getX() + 0.5, pos.getY() + 0.2, pos.getZ() + 0.5, 0, 0, 0));
+        for (int i = 0; i < AspectUtils.primalAspects.length; i++) {
+            for (BlockPos pos : cap.positions[i]){
+                for (int j = 0; j < 3; j++)
+                    world.addParticle(new Mark.Data(AspectUtils.primalAspects[i]),
+                        pos.getX() + world.random.nextFloat(), pos.getY() + 0.1, pos.getZ() + world.random.nextFloat(),
+                        0, 0.1, 0);
+            }
+        }
     }
 }

@@ -1,12 +1,17 @@
 package arcana.common.capability;
 
 import arcana.Arcana;
+import arcana.common.aspects.Aspect;
+import arcana.common.aspects.AspectUtils;
+import arcana.common.aspects.Aspects;
 import arcana.common.packets.MarksPacket;
 import arcana.common.packets.PacketSender;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.nbt.LongNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -14,6 +19,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.network.PacketDistributor;
 
@@ -31,26 +37,38 @@ public class Marks {
 
     public static final int MARKS_RANGE = 12; //12 chunk radius
 
-    public List<BlockPos> positions;
+    public List<BlockPos>[] positions;
 
     public Marks() {
-        positions = new ArrayList<>();
+        positions = new ArrayList[AspectUtils.primalAspects.length];
+        for (int i = 0; i < AspectUtils.primalAspects.length; i++)
+            positions[i] = new ArrayList<>();
     }
 
-    public Marks(List<BlockPos> positions){
+    public Marks(List<BlockPos>[] positions){
         this.positions = positions;
     }
 
 
     public CompoundNBT getNbt() {
         CompoundNBT tag = new CompoundNBT();
-        tag.putLongArray("positions", positions.stream().map(BlockPos::asLong).collect(Collectors.toList()));
+        ListNBT arr = new ListNBT();
+        for (int i = 0; i < AspectUtils.primalAspects.length; i++){
+            ListNBT list = new ListNBT();
+            this.positions[i].forEach(bp -> list.add(LongNBT.valueOf(bp.asLong())));
+            arr.add(list);
+        }
+        tag.put("positions", arr);
         return tag;
     }
 
     public Marks setNbt(CompoundNBT tag) {
-        long[] arr = tag.getLongArray("positions");
-        positions = Arrays.stream(arr).mapToObj(BlockPos::of).collect(Collectors.toList());
+        ListNBT arr = (ListNBT) tag.get("positions");
+        List<BlockPos>[] positions = new ArrayList[AspectUtils.primalAspects.length];
+        for (int i = 0; i < AspectUtils.primalAspects.length; i++){
+            positions[i] = arr.getList(i).stream().map(l -> BlockPos.of(((LongNBT)l).getAsLong())).collect(Collectors.toList());
+        }
+        this.positions = positions;
         return this;
     }
 
@@ -61,11 +79,14 @@ public class Marks {
     public static void sendToClient(@Nonnull PlayerEntity player){
         Marks cap = player.level.getCapability(Marks.CAPABILITY).resolve().orElse(null);
         BlockPos pos = player.blockPosition();
-        List<BlockPos> positions = cap.positions.stream().filter(bp -> //only send the closest marks
-                Math.abs(bp.getX() - pos.getX()) < (MARKS_RANGE << 5) &&
-                Math.abs(bp.getZ() - pos.getZ()) < (MARKS_RANGE << 5))
-            .collect(Collectors.toList());
-        (new Marks(positions)).sendToClient((ServerPlayerEntity) player);
+        Marks toSend = new Marks(new ArrayList[AspectUtils.primalAspects.length]);
+        for (int i = 0; i < AspectUtils.primalAspects.length; i++) {
+            toSend.positions[i] = cap.positions[i].stream().filter(bp -> //only send the closest marks
+                        Math.abs(bp.getX() - pos.getX()) < (MARKS_RANGE << 5) &&
+                        Math.abs(bp.getZ() - pos.getZ()) < (MARKS_RANGE << 5))
+                .collect(Collectors.toList());
+        }
+        toSend.sendToClient((ServerPlayerEntity) player);
     }
 
     public static class Provider implements ICapabilitySerializable<INBT> {
