@@ -20,7 +20,8 @@ import java.util.stream.Collectors;
 public class AspectUtils {
 	public static final List<Item> aspectItems = new ArrayList<>();
 	public static final Map<Aspect, Item> aspectCrystalItems = new HashMap<>();
-	public static final Aspect[] primalAspects = new Aspect[]{Aspects.AIR, Aspects.CHAOS, Aspects.EARTH, Aspects.FIRE, Aspects.ORDER, Aspects.WATER};
+	//do not change order!
+	public static final Aspect[] primalAspects = new Aspect[]{Aspects.AIR, Aspects.WATER, Aspects.EARTH, Aspects.FIRE, Aspects.ORDER, Aspects.CHAOS};
 	public static final Aspect[] sinAspects = new Aspect[]{Aspects.ENVY, Aspects.LUST, Aspects.SLOTH, Aspects.PRIDE, Aspects.GREED, Aspects.WRATH, Aspects.GLUTTONY};
 	public static List<ItemStack> aspectStacks;
 

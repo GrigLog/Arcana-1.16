@@ -3,6 +3,7 @@ package arcana.server.worldgen;
 import arcana.Arcana;
 import arcana.common.aspects.Aspect;
 import arcana.common.aspects.AspectUtils;
+import arcana.common.aspects.Aspects;
 import arcana.common.capability.Marks;
 import com.mojang.serialization.Codec;
 import net.minecraft.block.BlockState;
@@ -10,6 +11,7 @@ import net.minecraft.command.impl.LocateCommand;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.math.BlockPos;
@@ -28,11 +30,14 @@ import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.WorldGenRegion;
+import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.gen.feature.StructureFeature;
 import net.minecraft.world.gen.feature.jigsaw.JigsawManager;
 import net.minecraft.world.gen.feature.jigsaw.JigsawPattern;
 import net.minecraft.world.gen.feature.structure.*;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 import net.minecraft.world.gen.settings.StructureSeparationSettings;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -41,11 +46,14 @@ import org.apache.commons.lang3.ArrayUtils;
 import static java.lang.Math.*;
 import java.util.Random;
 
-public class Tower extends Structure<TowerConfig> {
-    public static final StructureSeparationSettings separation = new StructureSeparationSettings(50, 35, 880055535);
-    public Tower(Codec<TowerConfig> codec) {
-        super(codec);
-        setRegistryName("tower");
+public class Tower extends Structure<NoFeatureConfig> {
+    public StructureFeature<?, ?> configured;
+    Aspect aspect;
+    public Tower(Aspect aspect) {
+        super(NoFeatureConfig.CODEC);
+        this.aspect = aspect;
+        setRegistryName(new ResourceLocation(aspect.id.getNamespace(), "tower_" + aspect.id.getPath()));
+        configured = this.configured(new NoFeatureConfig());
     }
 
     @Override
@@ -54,25 +62,27 @@ public class Tower extends Structure<TowerConfig> {
     }
 
     @Override
-    public IStartFactory<TowerConfig> getStartFactory() {
-        return Start::new;
+    public IStartFactory<NoFeatureConfig> getStartFactory() {
+        return (struct, chX, chZ, box, references, seedPart) -> new Start(aspect, struct, chX, chZ, box, references, seedPart);
     }
 
     @Override
-    protected boolean isFeatureChunk(ChunkGenerator gen, BiomeProvider biomes, long seed, SharedSeedRandom rand, int chX, int chZ, Biome biome, ChunkPos chPos, TowerConfig config) {
-        BlockPos centerOfChunk = new BlockPos(chX << 4, 0, chZ << 4);
-        int landHeight = gen.getFirstOccupiedHeight(centerOfChunk.getX(), centerOfChunk.getZ(), Heightmap.Type.WORLD_SURFACE_WG);
-        IBlockReader columnOfBlocks = gen.getBaseColumn(centerOfChunk.getX(), centerOfChunk.getZ());
-        BlockState topBlock = columnOfBlocks.getBlockState(centerOfChunk.above(landHeight));
+    protected boolean isFeatureChunk(ChunkGenerator gen, BiomeProvider biomes, long seed, SharedSeedRandom rand, int chX, int chZ, Biome biome, ChunkPos chPos, NoFeatureConfig config) {
+        BlockPos center = new BlockPos(chX << 4, 0, chZ << 4);
+        int landHeight = gen.getFirstOccupiedHeight(center.getX(), center.getZ(), Heightmap.Type.WORLD_SURFACE_WG);
+        IBlockReader columnOfBlocks = gen.getBaseColumn(center.getX(), center.getZ());
+        BlockState topBlock = columnOfBlocks.getBlockState(center.above(landHeight));
         return topBlock.getFluidState().isEmpty();
     }
 
-    public static class Start extends StructureStart<TowerConfig> {
-        public Start(Structure<TowerConfig> struct, int chX, int chZ, MutableBoundingBox box, int references, long seedPart) {
+    public static class Start extends StructureStart<NoFeatureConfig> {
+        Aspect aspect;
+        public Start(Aspect aspect, Structure<NoFeatureConfig> struct, int chX, int chZ, MutableBoundingBox box, int references, long seedPart) {
             super(struct, chX, chZ, box, references, seedPart);
+            this.aspect = aspect;
         }
 
-        public void generatePieces(DynamicRegistries registries, ChunkGenerator gen, TemplateManager tm, int chX, int chZ, Biome biome, TowerConfig config) {
+        public void generatePieces(DynamicRegistries registries, ChunkGenerator gen, TemplateManager tm, int chX, int chZ, Biome biome, NoFeatureConfig config) {
             int x = (chX << 4)  + random.nextInt(16);
             int z = (chZ << 4) + random.nextInt(16);
             BlockPos center = new BlockPos(x, 0, z); //jigsaw figures out y automatically for the first piece
@@ -90,7 +100,7 @@ public class Tower extends Structure<TowerConfig> {
             calculateBoundingBox();
             int xCenter = (boundingBox.x0 + boundingBox.x1) / 2;
             int zCenter = (boundingBox.z0 + boundingBox.z1) / 2;
-            pieces.add(new FakePiece(new BlockPos(xCenter, boundingBox.y0, zCenter), config.aspect)); //it spawns marks when World becomes available
+            pieces.add(new FakePiece(new BlockPos(xCenter, boundingBox.y0, zCenter), aspect)); //it spawns marks when World becomes available
         }
     }
 
@@ -135,10 +145,6 @@ public class Tower extends Structure<TowerConfig> {
                     cap.positions[primalIndex].add(bp);
                 }
             }
-            //the structure is usually generated AFTER a player crosses the chunk border, so we have to force client update here.
-            //PlayerEntity player = world.getNearestPlayer(x, 128, z, Marks.MARKS_RANGE << 5, null);
-            //if (player != null)
-            //    Marks.sendToClient(player);
             return true;
         }
     }

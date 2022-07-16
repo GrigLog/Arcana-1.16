@@ -4,6 +4,7 @@ import arcana.common.aspects.AspectUtils;
 import arcana.common.capability.Marks;
 import arcana.common.packets.PacketSender;
 import arcana.common.particles.ModParticles;
+import arcana.server.worldgen.Tower;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.item.Item;
@@ -29,14 +30,10 @@ import static arcana.common.items.ModItems.*;
 public class Register {
     @SubscribeEvent
     static void regStructs(RegistryEvent.Register<Structure<?>> event){
-        regStructs(event.getRegistry(), tower);
-
-        regConfStruct("tower_air", towerAir);
-        regConfStruct("tower_water", towerWater);
-        regConfStruct("tower_earth", towerEarth);
-        regConfStruct("tower_fire", towerFire);
-        regConfStruct("tower_order", towerOrder);
-        regConfStruct("tower_chaos", towerChaos);
+        for (Tower t: new Tower[]{towerAir, towerWater, towerEarth, towerFire, towerOrder, towerChaos}){
+            regStructs(event.getRegistry(), t);
+            regConfStruct(t.getRegistryName().getPath() + "_configured", t.configured);
+        }
     }
 
     @SubscribeEvent
