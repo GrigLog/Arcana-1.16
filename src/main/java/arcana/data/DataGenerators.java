@@ -10,7 +10,7 @@ import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 public class DataGenerators {
     @SubscribeEvent
     public static void gatherData(GatherDataEvent evt) {
-        Arcana.logger.warn("gatherData");
+        Arcana.logger.info("gatherData");
         ExistingFileHelper helper = evt.getExistingFileHelper();
         if (evt.includeServer()) {
 

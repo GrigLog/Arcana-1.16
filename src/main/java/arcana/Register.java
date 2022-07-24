@@ -5,8 +5,6 @@ import arcana.common.capability.Marks;
 import arcana.common.packets.PacketSender;
 import arcana.common.particles.ModParticles;
 import arcana.server.worldgen.Tower;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.item.Item;
 import net.minecraft.particles.ParticleType;
 import net.minecraft.util.ResourceLocation;
@@ -14,17 +12,15 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.gen.feature.StructureFeature;
 import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 
-import static arcana.server.worldgen.ModFeatures.*;
 import static arcana.common.items.ModItems.*;
+import static arcana.server.worldgen.ModFeatures.*;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Register {
@@ -38,8 +34,44 @@ public class Register {
 
     @SubscribeEvent
     static void regItems(RegistryEvent.Register<Item> event){
-        event.getRegistry().registerAll(FIREWAND);
         AspectUtils.registerItems(event.getRegistry());
+
+        event.getRegistry().registerAll(FIREWAND);
+        event.getRegistry().registerAll(Gauntlet);
+        event.getRegistry().registerAll(Focus);
+
+        event.getRegistry().registerAll(AmberCap);
+        event.getRegistry().registerAll(BambooCap);
+        event.getRegistry().registerAll(ClayCap);
+        event.getRegistry().registerAll(EldritchCap);
+        event.getRegistry().registerAll(HoneyCap);
+        event.getRegistry().registerAll(CopperCap);
+        event.getRegistry().registerAll(ElementiumCap);
+        event.getRegistry().registerAll(GoldCap);
+        event.getRegistry().registerAll(IronCap);
+        event.getRegistry().registerAll(ManasteelCap);
+        event.getRegistry().registerAll(SilverCap);
+        event.getRegistry().registerAll(TerrasteelCap);
+        event.getRegistry().registerAll(ThaumiumCap);
+        event.getRegistry().registerAll(VoidCap);
+        event.getRegistry().registerAll(LeatherCap);
+        event.getRegistry().registerAll(MechanicalCap);
+        event.getRegistry().registerAll(PrismarineCap);
+        event.getRegistry().registerAll(QuartzCap);
+        event.getRegistry().registerAll(ShulkerCap);
+
+        event.getRegistry().registerAll(BLAZE_WAND_CORE);
+        event.getRegistry().registerAll(ENDROD_WAND_CORE);
+        event.getRegistry().registerAll(BONE_WAND_CORE);
+        event.getRegistry().registerAll(ICE_WAND_CORE);
+        event.getRegistry().registerAll(ARCANE_STONE_WAND_CORE);
+        event.getRegistry().registerAll(OBSIDIAN_WAND_CORE);
+        event.getRegistry().registerAll(SUGAR_CANE_WAND_CORE);
+        event.getRegistry().registerAll(MECHANICAL_WAND_CORE);
+        event.getRegistry().registerAll(ELDRITCH_WAND_CORE);
+        event.getRegistry().registerAll(CLAY_WAND_CORE);
+
+        event.getRegistry().registerAll(Wand);
     }
 
     @SubscribeEvent
