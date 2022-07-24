@@ -83,7 +83,8 @@ public class WandModelGeometry implements IModelGeometry<WandModelGeometry> {
         // get focus model and texture, apply, and add
         Random rand = new Random();
         if (focus != null) {
-            IBakedModel focusModel = bakery.getBakedModel(focus, modelTransform, spriteGetter);
+                IBakedModel focusModel = bakery.getBakedModel(arcLoc("item/wands/foci/wand_focus"), modelTransform, spriteGetter);
+            if(variant.getPath().equals("staff")) focusModel = bakery.getBakedModel(arcLoc("item/wands/foci/staff_focus"), modelTransform, spriteGetter);
             if (focusModel != null)
                 builder.addAll(focusModel.getQuads(null, null, rand));
         }

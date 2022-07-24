@@ -42,5 +42,8 @@ public class InitEvents {
             event.addSprite(arcLoc("models/wands/caps/"+cap.name));
         for(CoreItem core : CoreItem.CORES.values())
             event.addSprite(arcLoc("models/wands/cores/"+core.name));
+        event.addSprite(arcLoc("models/wands/foci/wand_focus"));
+        event.addSprite(arcLoc("models/wands/foci/wand_focus_overlay"));
+        event.addSprite(arcLoc("models/wands/foci/wand_focus_t"));
     }
 }
