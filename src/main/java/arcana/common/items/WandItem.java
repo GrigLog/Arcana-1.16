@@ -25,6 +25,10 @@ public class WandItem extends Item {
 
     public WandItem(){
         super(new Properties().tab(Arcana.ARCANAGROUP).stacksTo(1));
+        init();
+    }
+
+    void init(){
         setRegistryName(arcLoc("wand"));
     }
 
@@ -32,7 +36,7 @@ public class WandItem extends Item {
         CompoundNBT nbt = new CompoundNBT();
         nbt.putString("cap", cap.name);
         nbt.putString("core", core.name);
-        ItemStack stack = new ItemStack(ModItems.Wand.asItem(), 1);
+        ItemStack stack = new ItemStack(this.asItem(), 1);
         stack.setTag(nbt);
         return stack;
     }

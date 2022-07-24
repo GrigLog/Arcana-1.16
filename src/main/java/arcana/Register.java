@@ -72,6 +72,7 @@ public class Register {
         event.getRegistry().registerAll(CLAY_WAND_CORE);
 
         event.getRegistry().registerAll(Wand);
+        event.getRegistry().registerAll(Staff);
     }
 
     @SubscribeEvent

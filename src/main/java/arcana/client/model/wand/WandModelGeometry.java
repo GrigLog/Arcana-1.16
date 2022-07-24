@@ -2,6 +2,7 @@ package arcana.client.model.wand;
 
 import arcana.common.items.CapItem;
 import arcana.common.items.CoreItem;
+import arcana.common.items.StaffItem;
 import arcana.common.items.WandItem;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -61,10 +62,9 @@ public class WandModelGeometry implements IModelGeometry<WandModelGeometry> {
         // get cap texture
         RenderMaterial capTex = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS, cap);
 
-        // get variant model
-        if (variant == null) {
+        if(variant == null)
             variant = arcLoc("wand");
-        }
+
         ResourceLocation coreLoc = new ResourceLocation(variant.getNamespace(), "item/wands/variants/" + variant.getPath());
         //ResourceLocation coreLoc = arcLoc("item/wands/variants/wand");
         IUnbakedModel coreModel = bakery.getModel(coreLoc);
@@ -116,14 +116,9 @@ public class WandModelGeometry implements IModelGeometry<WandModelGeometry> {
             // get variant (staff/scepter/wand)
             // TODO: improve this slightly
             ResourceLocation variant = arcLoc("wand");
-            //if (stack.getItem() instanceof WandItem) {
-            //	variant = "wand"; // yes this is redundant, just here for completeness
-            //}
-            //else if(stack.getItem() instanceof ScepterItem) {
-            //	variant = arcLoc("scepter");
-            //} else if(stack.getItem() instanceof StaffItem) {
-            //	variant = arcLoc("staff");
-            //}
+            if(stack.getItem() instanceof StaffItem) {
+            	variant = arcLoc("staff");
+            }
 
             // get focus
             // nbt context comes from the focusData tag
