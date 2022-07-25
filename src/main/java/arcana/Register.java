@@ -73,6 +73,7 @@ public class Register {
 
         event.getRegistry().registerAll(Wand);
         event.getRegistry().registerAll(Staff);
+        event.getRegistry().registerAll(Arcanum);
     }
 
     @SubscribeEvent

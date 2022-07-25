@@ -1,0 +1,10 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "arcana:items/arcanum"
+  },
+  "overrides": [
+    { "predicate": { "arcana:open": 0 }, "model": "arcana:item/arcanum/arcanum_closed" },
+    { "predicate": { "arcana:open": 1 }, "model": "arcana:item/arcanum/arcanum_open" }
+]
+}

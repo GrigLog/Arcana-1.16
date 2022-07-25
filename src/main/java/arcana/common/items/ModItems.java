@@ -4,6 +4,8 @@ import net.minecraft.item.Item;
 
 public class ModItems {
     public static Item FIREWAND = new BasicWand();
+
+    public static Item Arcanum = new ArcanumItem();
     public static Item Wand = new WandItem();
     public static Item Staff = new StaffItem();
     public static Item Gauntlet = new Gauntlet();

@@ -44,7 +44,7 @@ public class FocusItem extends Item{
         if(allowdedIn(group)){
             for(int style = 0; style < 36; style++) {
                 CompoundNBT nbt = new CompoundNBT();
-                ItemStack stack = new ItemStack(ModItems.Focus.getItem(), 1);
+                ItemStack stack = new ItemStack(this.getItem(), 1);
                 nbt.putInt("style", style);
                 stack.setTag(nbt);
                 items.add(stack);

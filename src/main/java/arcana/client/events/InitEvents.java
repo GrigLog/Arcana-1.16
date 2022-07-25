@@ -16,6 +16,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
+import static arcana.common.items.ModItems.Arcanum;
 import static arcana.common.items.ModItems.Focus;
 import static arcana.utils.Util.arcLoc;
 
@@ -28,7 +29,8 @@ public class InitEvents {
 
     @SubscribeEvent
     static void regItemModelProperties(FMLClientSetupEvent event){
-        ItemModelsProperties.register(Focus, arcLoc("style"),(stack, world, player)->stack.getTag().getInt("style"));
+        ItemModelsProperties.register(Focus, arcLoc("style"),(stack, world, player)->stack.getOrCreateTag().getInt("style"));
+        ItemModelsProperties.register(Arcanum, arcLoc("open"),(stack, world, player)->stack.getOrCreateTag().getInt("open"));
     }
 
     @SubscribeEvent
