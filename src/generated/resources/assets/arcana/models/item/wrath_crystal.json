@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "arcana:items/crystals/wrath_crystal"
+    "layer0": "arcana:item/crystals/wrath_crystal"
   }
 }

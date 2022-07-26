@@ -13,7 +13,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static arcana.common.items.ModItems.FIREWAND;
+import static arcana.common.items.ModItems.*;
+import static arcana.common.blocks.ModBlocks.*;
 
 public class ItemModelProvider extends net.minecraftforge.client.model.generators.ItemModelProvider {
     public ItemModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
@@ -21,11 +22,10 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
     }
 
     public static List<Item> generated = new ArrayList<>(ImmutableList.of(
-        FIREWAND
+        FIREWAND, RESEARCH_TABLE
     ));
     public static List<Item> handheld = new ArrayList<>();
     public static List<Item> blockItem = new ArrayList<>();
-    //...
 
 
     @Override
@@ -34,7 +34,7 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
         handheld.forEach(this::handheldItem);
         generated.forEach(this::generatedItem);
         items.stream().filter(i -> i instanceof AspectIcon).forEach(i -> makeItemModel(i, "item/generated", "aspects/"));
-        items.stream().filter(i -> i instanceof Crystal).forEach(i -> makeItemModel(i, "item/generated", "items/crystals/"));
+        items.stream().filter(i -> i instanceof Crystal).forEach(i -> makeItemModel(i, "item/generated", "item/crystals/"));
     }
 
     protected void generatedItem(Item item) {
@@ -47,7 +47,7 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
 
     protected void makeItemModel(Item item, String parent) {
         String name = item.getRegistryName().getPath();
-        singleTexture(name, mcLoc(parent), "layer0", new ResourceLocation(Arcana.id, "items/" + name));
+        singleTexture(name, mcLoc(parent), "layer0", new ResourceLocation(Arcana.id, "item/" + name));
     }
 
     protected void makeItemModel(Item item, String parent, String texturePath) {

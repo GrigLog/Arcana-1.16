@@ -1,14 +1,22 @@
 package arcana;
 
 import arcana.common.aspects.AspectUtils;
+import arcana.common.blocks.ModBlocks;
+import arcana.common.blocks.tiles.ModTiles;
 import arcana.common.capability.Marks;
+import arcana.common.containers.ModContainers;
+import arcana.common.items.ModItems;
 import arcana.common.packets.PacketSender;
 import arcana.common.particles.ModParticles;
 import arcana.server.worldgen.Tower;
+import arcana.utils.Util;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleManager;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.particles.ParticleType;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
@@ -25,6 +33,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 import static arcana.server.worldgen.ModFeatures.*;
 import static arcana.common.items.ModItems.*;
+import static arcana.common.blocks.ModBlocks.*;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Register {
@@ -38,8 +47,23 @@ public class Register {
 
     @SubscribeEvent
     static void regItems(RegistryEvent.Register<Item> event){
-        event.getRegistry().registerAll(FIREWAND);
+        Util.<Item>getFields(ModItems.class, Item.class, null).forEach(event.getRegistry()::register);
         AspectUtils.registerItems(event.getRegistry());
+    }
+
+    @SubscribeEvent
+    static void regBlocks(RegistryEvent.Register<Block> event){
+        Util.<Block>getFields(ModBlocks.class, Block.class, null).forEach(event.getRegistry()::register);
+    }
+
+    @SubscribeEvent
+    static void regTiles(RegistryEvent.Register<TileEntityType<?>> event){
+        Util.<TileEntityType<?>>getFields(ModTiles.class, TileEntityType.class, null).forEach(event.getRegistry()::register);
+    }
+
+    @SubscribeEvent
+    static void regContainers(RegistryEvent.Register<ContainerType<?>> event){
+        Util.<ContainerType<?>>getFields(ModContainers.class, ContainerType.class, null).forEach(event.getRegistry()::register);
     }
 
     @SubscribeEvent
