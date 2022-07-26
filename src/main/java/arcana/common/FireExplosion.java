@@ -6,7 +6,6 @@ import net.minecraft.enchantment.ProtectionEnchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.TNTEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
@@ -22,7 +21,6 @@ import net.minecraft.world.ExplosionContext;
 import net.minecraft.world.World;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import static java.lang.Math.*;
@@ -54,12 +52,6 @@ public class FireExplosion {
     public void explode() {
         if (world.isClientSide) {
             world.playLocalSound(x, y, z, SoundEvents.GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (world.random.nextFloat() - world.random.nextFloat()) * 0.2F) * 0.7F, false);
-            //for (double d = -1.0; d < 1.0; d+=0.1)
-            //for(double i = 0; i < 360;i+=4){
-            //    double xs = (i<=90?((90-i)/90):i<=180?-(i-90)/90:i<=270?-((270-i)/90):(i-270)/90);
-            //    double zs = (i<=90?i/90:i<=180?((180-i)/90):i<=270?-(i-180)/90:-((360-i)/90));
-            //    world.addParticle(ParticleTypes.FLAME, x, y, z, xs*radius/8, d*radius/8, zs*radius/8);
-            //}
             for (double b = -PI; b < PI; b+=0.1) {
                 double r = radius * cos(b)/8;
                 double ys = radius * sin(b)/8;

@@ -1,6 +1,5 @@
 package arcana.common.items;
 
-import arcana.Arcana;
 import arcana.common.ArcanaGroup;
 import arcana.common.FireExplosion;
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,18 +8,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
+
+import static arcana.utils.Util.arcLoc;
 
 public class BasicWand extends Item {
 
     public static double DAMAGE = 10;
     public static double BURN_TIME = 3;
 
-    public BasicWand(){
+    public BasicWand(){ // Удалить потом
         super(ArcanaGroup.itemProps().rarity(Rarity.EPIC).stacksTo(1));
-        setRegistryName("basicwand");
+        setRegistryName(arcLoc("basicwand"));
     }
 
     @Override

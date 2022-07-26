@@ -31,8 +31,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 
-import static arcana.server.worldgen.ModFeatures.*;
 import static arcana.common.items.ModItems.*;
+import static arcana.server.worldgen.ModFeatures.*;
 import static arcana.common.blocks.ModBlocks.*;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
