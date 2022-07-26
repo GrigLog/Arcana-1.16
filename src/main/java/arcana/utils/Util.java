@@ -22,4 +22,8 @@ public class Util {
         }
         return res;
     }
+
+    public static ResourceLocation arcLoc(String s){
+        return new ResourceLocation(Arcana.id, s);
+    }
 }

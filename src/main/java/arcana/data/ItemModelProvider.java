@@ -2,6 +2,8 @@ package arcana.data;
 
 import arcana.Arcana;
 import arcana.common.items.AspectIcon;
+import arcana.common.items.CapItem;
+import arcana.common.items.CoreItem;
 import arcana.common.items.Crystal;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.data.DataGenerator;
@@ -37,8 +39,8 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
         generated.forEach(this::generatedItem);
         items.stream().filter(i -> i instanceof AspectIcon).forEach(i -> makeItemModel(i, "item/generated", "aspects/"));
         items.stream().filter(i -> i instanceof Crystal).forEach(i -> makeItemModel(i, "item/generated", "item/crystals/"));
-        items.stream().filter(i -> i instanceof CapItem).forEach(i -> makeItemModel(i, "item/generated", "items/caps/"));
-        items.stream().filter(i -> i instanceof CoreItem).forEach(i -> makeItemModel(i, "item/generated", "items/cores/"));
+        items.stream().filter(i -> i instanceof CapItem).forEach(i -> makeItemModel(i, "item/generated", "item/caps/"));
+        items.stream().filter(i -> i instanceof CoreItem).forEach(i -> makeItemModel(i, "item/generated", "item/cores/"));
     }
 
     protected void generatedItem(Item item) {
@@ -51,11 +53,19 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
 
     protected void makeItemModel(Item item, String parent) {
         String name = item.getRegistryName().getPath();
-        singleTexture(name, mcLoc(parent), "layer0", arcLoc("items/" + name));
+        try {
+            singleTexture(name, mcLoc(parent), "layer0", arcLoc("item/" + name));
+        } catch (IllegalArgumentException e){
+            e.printStackTrace();
+        }
     }
 
     protected void makeItemModel(Item item, String parent, String texturePath) {
         String name = item.getRegistryName().getPath();
-        singleTexture(name, mcLoc(parent), "layer0", arcLoc(texturePath + name));
+        try{
+            singleTexture(name, mcLoc(parent), "layer0", arcLoc(texturePath + name));
+        } catch (IllegalArgumentException e){
+            e.printStackTrace();
+        }
     }
 }

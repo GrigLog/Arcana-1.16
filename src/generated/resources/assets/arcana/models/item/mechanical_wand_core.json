@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "arcana:items/cores/mechanical_wand_core"
+    "layer0": "arcana:item/cores/mechanical_wand_core"
   }
 }

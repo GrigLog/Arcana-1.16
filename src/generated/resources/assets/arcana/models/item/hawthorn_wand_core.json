@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "arcana:item/caps/bamboo_cap"
+    "layer0": "arcana:item/cores/hawthorn_wand_core"
   }
 }

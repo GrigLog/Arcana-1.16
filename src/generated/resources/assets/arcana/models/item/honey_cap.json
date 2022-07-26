@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "arcana:items/caps/honey_cap"
+    "layer0": "arcana:item/caps/honey_cap"
   }
 }
