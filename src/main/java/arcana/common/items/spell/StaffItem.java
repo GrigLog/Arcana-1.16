@@ -1,4 +1,4 @@
-package arcana.common.items;
+package arcana.common.items.spell;
 
 import static arcana.utils.Util.arcLoc;
 

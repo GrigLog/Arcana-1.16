@@ -13,7 +13,6 @@ import net.minecraft.util.text.ITextComponent;
 public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer> {
     public static final int WIDTH = 378;
     public static final int HEIGHT = 280;
-
     private static final ResourceLocation BG = new ResourceLocation(Arcana.id, "textures/gui/container/research_table.png");
 
     ResearchTable tile;
@@ -21,11 +20,11 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
         super(container, inv, text);
         imageWidth = WIDTH;
         imageHeight = HEIGHT;
+        tile = container.tile;
     }
 
     @Override
-    protected void renderLabels(MatrixStack pMatrixStack, int pX, int pY) {
-    }
+    protected void renderLabels(MatrixStack pMatrixStack, int pX, int pY) {}
 
     @Override
     protected void renderBg(MatrixStack ms, float pPartialTicks, int mouseX, int mouseY) {

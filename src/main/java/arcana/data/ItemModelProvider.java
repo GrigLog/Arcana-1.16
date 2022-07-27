@@ -1,10 +1,10 @@
 package arcana.data;
 
 import arcana.Arcana;
-import arcana.common.items.AspectIcon;
-import arcana.common.items.CapItem;
-import arcana.common.items.CoreItem;
-import arcana.common.items.Crystal;
+import arcana.common.items.aspect.AspectIcon;
+import arcana.common.items.spell.CapItem;
+import arcana.common.items.spell.CoreItem;
+import arcana.common.items.aspect.Crystal;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.Item;
@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static arcana.common.items.ModItems.*;
-import static arcana.common.blocks.ModBlocks.*;
 import static arcana.utils.Util.arcLoc;
 
 public class ItemModelProvider extends net.minecraftforge.client.model.generators.ItemModelProvider {
@@ -25,7 +24,7 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
     }
 
     public static List<Item> generated = new ArrayList<>(ImmutableList.of(
-        FIREWAND, RESEARCH_TABLE
+        FIREWAND, RESEARCH_TABLE, SCRIBING_TOOLS, RESEARCH_NOTE, RESEARCH_NOTE_COMPLETE
     ));
     public static List<Item> handheld = new ArrayList<>();
     public static List<Item> blockItem = new ArrayList<>();

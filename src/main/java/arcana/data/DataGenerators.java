@@ -3,6 +3,7 @@ package arcana.data;
 import arcana.Arcana;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.common.data.ForgeBlockTagsProvider;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
@@ -14,12 +15,8 @@ public class DataGenerators {
         Arcana.logger.info("gatherData");
         ExistingFileHelper helper = evt.getExistingFileHelper();
         DataGenerator gen = evt.getGenerator();
-        if (evt.includeServer()) {
-
-        }
-        if (evt.includeClient()) {
-            evt.getGenerator().addProvider(new ItemModelProvider(gen, helper));
-            evt.getGenerator().addProvider(new BlockstateProvider(gen, helper));
-        }
+        gen.addProvider(new ItemModelProvider(gen, helper));
+        gen.addProvider(new BlockstateProvider(gen, helper));
+        gen.addProvider(new ItemTagsProvider(gen, new ForgeBlockTagsProvider(gen, helper), helper));
     }
 }

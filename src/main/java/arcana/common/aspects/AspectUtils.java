@@ -1,8 +1,8 @@
 package arcana.common.aspects;
 
 import arcana.common.ArcanaGroup;
-import arcana.common.items.AspectIcon;
-import arcana.common.items.Crystal;
+import arcana.common.items.aspect.AspectIcon;
+import arcana.common.items.aspect.Crystal;
 import arcana.utils.Pair;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

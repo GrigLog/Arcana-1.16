@@ -111,7 +111,10 @@ fd0f6f69b519038d8be7cec43efd9f5ea7922735 assets/arcana/models/item/order.json
 e981cae90cf5e5397e835cdf0b4fce725efbab52 assets/arcana/models/item/pride_crystal.json
 a26cc2e52f62f655b671e2fe83da9d2a9a4ea381 assets/arcana/models/item/prismarine_cap.json
 2898d35064baac752f038c44078c18b13ca10760 assets/arcana/models/item/quartz_cap.json
+08852d76b12ae3ce135dd2f00597d1ff02b1d15a assets/arcana/models/item/research_note.json
+c94e4140f8cd026f8367d5411bcd0fb962d7b3c9 assets/arcana/models/item/research_note_complete.json
 fafb0d07b3a0e5dce7d5e390683ef319a199bb38 assets/arcana/models/item/research_table.json
+c009290acc134c4477e3039e029b6e099fd49a03 assets/arcana/models/item/scribing_tools.json
 dd3952a0193616d91e3222d2b6feb68d3f25ddb7 assets/arcana/models/item/seeds.json
 7cf10146eb58246a0e2b4f3ba18f2247ab06fd91 assets/arcana/models/item/seeds_crystal.json
 a674d5f6baeff3b9f4530aab1cd531cab03aacd9 assets/arcana/models/item/senses.json
@@ -153,3 +156,4 @@ e66094c2489e0cf7561bbee5e8a9db19c551a24f assets/arcana/models/item/wind.json
 47376b609429605639ab76cf964518032bb5721e assets/arcana/models/item/wood_wand_core.json
 3e7d5d0f4ea8e58471e14c6945b7282f476bac6e assets/arcana/models/item/wrath.json
 ca96f0fb5a5bc7c8ac96da2f9f6db2fd06b21d22 assets/arcana/models/item/wrath_crystal.json
+5c86eead974e9a185df5e920a8f0f63a0bf82bb2 data/arcana/tags/items/scribing_tools.json

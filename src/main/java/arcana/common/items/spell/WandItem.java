@@ -1,6 +1,7 @@
-package arcana.common.items;
+package arcana.common.items.spell;
 
 import arcana.Arcana;
+import arcana.common.items.ModItems;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -61,12 +62,12 @@ public class WandItem extends Item {
     public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
         if(allowdedIn(group)){
             // iron/wooden, silver/dair, gold/greatwood, thaumium/silverwood, void/arcanium
-            items.add(withCapAndCore(ModItems.IronCap, ModItems.WOOD_WAND_CORE));
-            items.add(withCapAndCore(ModItems.SilverCap, ModItems.DAIR_WAND_CORE));
-            items.add(withCapAndCore(ModItems.GoldCap, ModItems.GREATWOOD_WAND_CORE));
-            items.add(withCapAndCore(ModItems.ThaumiumCap, ModItems.SILVERWOOD_WAND_CORE));
-            items.add(withCapAndCore(ModItems.VoidCap,ModItems.ARCANIUM_WAND_CORE));
-            items.add(withCapAndCore(ModItems.VoidCap,ModItems.BLAZE_WAND_CORE));
+            items.add(withCapAndCore(ModItems.IRON_CAP, ModItems.WOOD_WAND_CORE));
+            items.add(withCapAndCore(ModItems.SILVER_CAP, ModItems.DAIR_WAND_CORE));
+            items.add(withCapAndCore(ModItems.GOLD_CAP, ModItems.GREATWOOD_WAND_CORE));
+            items.add(withCapAndCore(ModItems.THAUMIUM_CAP, ModItems.SILVERWOOD_WAND_CORE));
+            items.add(withCapAndCore(ModItems.VOID_CAP,ModItems.ARCANIUM_WAND_CORE));
+            items.add(withCapAndCore(ModItems.VOID_CAP,ModItems.BLAZE_WAND_CORE));
         }
     }
 

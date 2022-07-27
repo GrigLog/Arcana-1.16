@@ -40,10 +40,7 @@ public class ResearchTableLeft extends AdvancedHorizontalBlock {
     @Override
     public void onRemove(BlockState oldState, World world, BlockPos pos, BlockState newState, boolean isMoving) {
         super.onRemove(oldState, world, pos, newState, isMoving);
-        if (newState.getBlock() == oldState.getBlock())
-            Arcana.logger.info("fake remove!");
-        else {
-            Arcana.logger.info("remove");
+        if (newState.getBlock() != oldState.getBlock()){
             BlockPos right = pos.relative(oldState.getValue(FACING).getClockWise());
             world.destroyBlock(right, true);
         }
@@ -57,8 +54,8 @@ public class ResearchTableLeft extends AdvancedHorizontalBlock {
     @Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult pHit) {
         if(!world.isClientSide) {
-            ResearchTable te = (ResearchTable) world.getBlockEntity(pos.relative(state.getValue(FACING).getClockWise()));
-            NetworkHooks.openGui((ServerPlayerEntity) player, ResearchTableContainer.serverProvider(te), ResearchTableContainer.clientDataHolder(te));
+            TileEntity te = world.getBlockEntity(pos.relative(state.getValue(FACING).getClockWise()));
+            ResearchTableContainer.open((ServerPlayerEntity) player, (ResearchTable) te);
         }
         return ActionResultType.SUCCESS;
     }

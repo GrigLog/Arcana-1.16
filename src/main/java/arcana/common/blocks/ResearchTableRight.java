@@ -13,12 +13,14 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.tileentity.ChestTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -59,7 +61,7 @@ public class ResearchTableRight extends AdvancedHorizontalBlock {
         BlockPos pos2 = ctx.getClickedPos().relative(facing.getCounterClockWise());
         if (!ctx.getLevel().getBlockState(pos2).canBeReplaced(ctx))
             return null;
-        return defaultBlockState().setValue(FACING, facing);
+        return defaultBlockState().setValue(FACING, facing).setValue(INK, false);
     }
 
     @Override
@@ -70,10 +72,7 @@ public class ResearchTableRight extends AdvancedHorizontalBlock {
     @Override
     public void onRemove(BlockState oldState, World world, BlockPos pos, BlockState newState, boolean isMoving) {
         super.onRemove(oldState, world, pos, newState, isMoving);
-        if (newState.getBlock() == oldState.getBlock())
-            Arcana.logger.info("fake remove!");
-        else {
-            Arcana.logger.info("remove");
+        if (newState.getBlock() != oldState.getBlock()){
             BlockPos left = pos.relative(oldState.getValue(FACING).getCounterClockWise());
             world.destroyBlock(left, true);
         }
@@ -86,7 +85,7 @@ public class ResearchTableRight extends AdvancedHorizontalBlock {
             return;
         Direction facing = state.getValue(FACING);
         BlockPos posLeft = pos.relative(facing.getCounterClockWise());
-        world.setBlockAndUpdate(posLeft, ModBlocks.RESEARCH_TABLE_LEFT.defaultBlockState().setValue(FACING, facing));
+        world.setBlockAndUpdate(posLeft, ModBlocks.RESEARCH_TABLE_LEFT.defaultBlockState().setValue(FACING, facing).setValue(ResearchTableLeft.PAPER, false));
         //world.updateNeighborsAt(posLeft, Blocks.AIR);
         //state.updateNeighbourShapes(world, posLeft, 3);
     }
@@ -94,8 +93,8 @@ public class ResearchTableRight extends AdvancedHorizontalBlock {
     @Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult pHit) {
         if(!world.isClientSide) {
-            ResearchTable te = (ResearchTable) world.getBlockEntity(pos);
-            NetworkHooks.openGui((ServerPlayerEntity) player, ResearchTableContainer.serverProvider(te), ResearchTableContainer.clientDataHolder(te));
+            TileEntity te = world.getBlockEntity(pos);
+            ResearchTableContainer.open((ServerPlayerEntity) player, (ResearchTable) te);
         }
         return ActionResultType.SUCCESS;
     }

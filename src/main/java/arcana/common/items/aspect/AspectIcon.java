@@ -1,4 +1,4 @@
-package arcana.common.items;
+package arcana.common.items.aspect;
 
 import arcana.common.aspects.Aspect;
 import mcp.MethodsReturnNonnullByDefault;

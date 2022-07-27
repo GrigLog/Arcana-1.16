@@ -1,6 +1,7 @@
-package arcana.common.items;
+package arcana.common.items.spell;
 
 import arcana.Arcana;
+import arcana.common.items.ModItems;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -44,7 +45,7 @@ public class FocusItem extends Item{
         if(allowdedIn(group)){
             for(int style = 0; style < 36; style++) {
                 CompoundNBT nbt = new CompoundNBT();
-                ItemStack stack = new ItemStack(ModItems.Focus.getItem(), 1);
+                ItemStack stack = new ItemStack(ModItems.FOCUS.getItem(), 1);
                 nbt.putInt("style", style);
                 stack.setTag(nbt);
                 items.add(stack);

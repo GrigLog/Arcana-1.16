@@ -1,4 +1,4 @@
-package arcana.common.items;
+package arcana.common.items.spell;
 
 import arcana.Arcana;
 import net.minecraft.client.util.ITooltipFlag;
@@ -20,26 +20,26 @@ import java.util.Map;
 
 import static arcana.utils.Util.arcLoc;
 
-public class CapItem extends Item {
-    public static Map<String, CapItem> CAPS = new LinkedHashMap<>();
-    public final int complexity, visStorage, level;
+public class CoreItem extends Item {
+    public static Map<String, CoreItem> CORES = new LinkedHashMap<>();
+    public final int maxVis,difficulty,level;
     public String name;
 
-    public CapItem(String name, int visStorage, int complexity, int level){
+    public CoreItem(String name, int maxVis,int difficulty,int level) {
         super(new Properties().tab(Arcana.ARCANAGROUP));
         setRegistryName(arcLoc(name));
-        this.complexity = complexity;
-        this.visStorage = visStorage;
+        this.maxVis = maxVis;
         this.level = level;
+        this.difficulty = difficulty;
         this.name = name;
-        CAPS.put(name,this);
+        CORES.put(name,this);
     }
 
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(@Nonnull ItemStack stack, @Nullable World world, @Nonnull List<ITextComponent> tooltip, @Nonnull ITooltipFlag flag){
         super.appendHoverText(stack, world, tooltip, flag);
-        tooltip.add(new StringTextComponent(String.format("VisStorage: %s",visStorage)).setStyle(Style.EMPTY.withColor((Color.fromRgb(0xdec7fc)))));
-        tooltip.add(new StringTextComponent(String.format("Level: %s",level)).setStyle(Style.EMPTY.withColor((Color.fromRgb(0xdec7fc)))));
-        tooltip.add(new StringTextComponent(String.format("Complexity: %s",complexity)).setStyle(Style.EMPTY.withColor((Color.fromRgb(0xdec7fc)))));
+            tooltip.add(new StringTextComponent(String.format("MaxVis: %s",maxVis)).setStyle(Style.EMPTY.withColor((Color.fromRgb(0xdec7fc)))));
+            tooltip.add(new StringTextComponent(String.format("Level: %s",level)).setStyle(Style.EMPTY.withColor((Color.fromRgb(0xdec7fc)))));
+            tooltip.add(new StringTextComponent(String.format("Difficulty: %s",difficulty)).setStyle(Style.EMPTY.withColor((Color.fromRgb(0xdec7fc)))));
     }
 }

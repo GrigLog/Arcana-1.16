@@ -1,4 +1,4 @@
-package arcana.common.items;
+package arcana.common.items.spell;
 
 import arcana.Arcana;
 import net.minecraft.item.Item;
