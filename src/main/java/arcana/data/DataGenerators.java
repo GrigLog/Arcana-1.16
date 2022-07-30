@@ -18,5 +18,6 @@ public class DataGenerators {
         gen.addProvider(new ItemModelProvider(gen, helper));
         gen.addProvider(new BlockstateProvider(gen, helper));
         gen.addProvider(new ItemTagsProvider(gen, new ForgeBlockTagsProvider(gen, helper), helper));
+        gen.addProvider(new ItemAspectsProvider(gen));
     }
 }

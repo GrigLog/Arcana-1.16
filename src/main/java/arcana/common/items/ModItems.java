@@ -29,7 +29,7 @@ public class ModItems {
     public static CapItem IRON_CAP = new CapItem("iron_cap", 10, 3, 1);
     public static CapItem MANASTEEL_CAP = new CapItem("manasteel_cap", 0, 0, 0);
     public static CapItem SILVER_CAP = new CapItem("silver_cap", 0, 75, 2);
-    public static CapItem TerrasteelCap = new CapItem("terrasteel_cap", 0, 0, 0);
+    public static CapItem TERRASTEEL_CAP = new CapItem("terrasteel_cap", 0, 0, 0);
     public static CapItem THAUMIUM_CAP = new CapItem("thaumium_cap", 50, 25, 3);
     public static CapItem VOID_CAP = new CapItem("void_cap", 75, 45, 3);
     public static CapItem LEATHER_CAP = new CapItem("leather_cap", 50, 30, 2);

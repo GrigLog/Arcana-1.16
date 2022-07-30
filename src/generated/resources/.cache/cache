@@ -29,8 +29,6 @@ ce82e998c7d8a292e3d1b49e482be3c6412caf17 assets/arcana/models/item/darkness.json
 c0cda1b17aa2f6cf9b9429d7bd444adde3030cff assets/arcana/models/item/darkness_crystal.json
 39226a0518198dbac4570cdd0a8b8190b63585c6 assets/arcana/models/item/death.json
 7d5b686e6ab6a6d3648000e927d4b29ea8ecb829 assets/arcana/models/item/death_crystal.json
-ac1e41bd78284e8363511fd73e37ed9d5f8bc975 assets/arcana/models/item/dummy.json
-d892d5c3f463b1dffc015bff7c4bb637426856fa assets/arcana/models/item/dummy_crystal.json
 10ff68b0ea3cf321c4834e86f56c9951a81c216c assets/arcana/models/item/earth.json
 1c553143286953e672afffa2cd1562a7d08c4ed6 assets/arcana/models/item/earth_crystal.json
 7567dfbfa8d6c1c55028d75d53b21c67b4179866 assets/arcana/models/item/eldritch.json
@@ -156,4 +154,5 @@ e66094c2489e0cf7561bbee5e8a9db19c551a24f assets/arcana/models/item/wind.json
 47376b609429605639ab76cf964518032bb5721e assets/arcana/models/item/wood_wand_core.json
 3e7d5d0f4ea8e58471e14c6945b7282f476bac6e assets/arcana/models/item/wrath.json
 ca96f0fb5a5bc7c8ac96da2f9f6db2fd06b21d22 assets/arcana/models/item/wrath_crystal.json
+aa4edf77ab78d92618a65a3d645d5dee0bce9c98 data/arcana/item_aspects/default.json
 5c86eead974e9a185df5e920a8f0f63a0bf82bb2 data/arcana/tags/items/scribing_tools.json
