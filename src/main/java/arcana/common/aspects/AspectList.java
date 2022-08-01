@@ -57,6 +57,28 @@ public class AspectList implements Iterable<AspectStack> {
         return arr;
     }
 
+    public int getAmount(Aspect a){
+        for (AspectStack as : list){
+            if (as.aspect == a)
+                return as.amount;
+        }
+        return 0;
+    }
+
+    public int sum(){
+        int s = 0;
+        for (AspectStack as : list){
+            s += as.amount;
+        }
+        return s;
+    }
+
+    public AspectList multiply(float a){
+        list = list.stream().peek(as -> as.amount = Math.round(as.amount * a))
+            .filter(as -> as.amount > 0).collect(Collectors.toList());
+        return this;
+    }
+
     @Override
     public Iterator<AspectStack> iterator() {
         return list.iterator();

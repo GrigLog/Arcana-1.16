@@ -1,7 +1,8 @@
 package arcana.common.aspects;
 
 import arcana.Arcana;
-import arcana.common.items.aspect.Crystal;
+import arcana.common.aspects.graph.ItemAspectResolver;
+import com.google.common.collect.Lists;
 import com.google.gson.*;
 import net.minecraft.client.resources.JsonReloadListener;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -51,6 +52,7 @@ public class ItemAspectRegistry extends JsonReloadListener {
         return itemAspects.computeIfAbsent(item, i -> new AspectList());
     }
 
+
     public static AspectList get(ItemStack stack) {
         Item item = stack.getItem();
         AspectList aspects = get(item).copy();
@@ -81,7 +83,6 @@ public class ItemAspectRegistry extends JsonReloadListener {
             if (server == null || !server.isRunning()) //will not be called for the first time, and will not throw errors about uninitialized tags
                 return;
         }
-        processing = true;
         // add new data
         files.forEach(ItemAspectRegistry::parse);
 
@@ -92,73 +93,19 @@ public class ItemAspectRegistry extends JsonReloadListener {
         // for every item tag, give them aspects
         itemTagAssociations.forEach((tag, list) -> {
             for (Item item : tag.getValues())
-                itemAspects.merge(item, list, AspectList::add);
+                itemAspects.merge(item, list.copy(), AspectList::add);
         });
-
-        // TODO: for every item not already given aspects in this way, give according to recipes
-        //for (IRecipe<?> recipe : recipes.getRecipes()) {
-        //    Item item = recipe.getResultItem().getItem();
-        //    if (!itemAspects.containsKey(item))
-        //        itemAspects.put(item, getGenerating(item));
-        //    // generating avoids getting stuck in recursive loops.
-        //    generating.clear();
-        //}
+        files.clear();
 
         Arcana.logger.info("Assigned aspects to {} items", itemAspects.size());
-        processing = false;
-        files.clear();
+        //TODO: use cache to determine if resolving is necessary
+        ItemAspectResolver.resolve(itemAspects, recipes, ForgeRegistries.ITEMS.getValues());
+        itemAspects.forEach((item, aspects) -> {
+            aspects.list.sort(Comparator.comparingInt(as -> -as.amount));
+            aspects.list = aspects.list.subList(0, Math.min(5, aspects.list.size()));
+        });
+        Arcana.logger.info("Assigned aspects to {} items", itemAspects.size());
     }
-
-
-    /*
-    private AspectList getFromRecipes(Item item) {
-        generating.add(item);
-        AspectList ret;
-        List<AspectList> allGenerated = new ArrayList<>();
-        // consider every recipe that produces this item
-        for (IRecipe<?> recipe : recipes.getRecipes())
-            if (recipe.getResultItem().getItem() == item) {
-                AspectList generated = new AspectList();
-                for (Ingredient ingredient : recipe.getIngredients()) {
-                    if (ingredient.getItems().length > 0) {
-                        ItemStack first = ingredient.getItems()[0];
-                        if (!generating.contains(first.getItem())) {
-                            AspectList ingredients = getGenerating(first);
-                            for (AspectStack stack : ingredients.list)
-                                generated.add(new AspectStack(stack.getAspect(), Math.max(stack.amount / recipe.getResultItem().getCount(), 1)));
-                        }
-                    }
-                }
-                if (recipe instanceof AspectInfluencingRecipe)
-                    ((AspectInfluencingRecipe) recipe).influence(generated);
-                allGenerated.add(generated);
-            }
-        ret = allGenerated.stream()
-            // pair of aspects:total num of aspects
-            .map(stacks -> Pair.of(stacks, stacks.stream().mapToDouble(AspectStack::getAmount).sum()))
-            // filter combos with 0 aspects
-            .filter(pair -> pair.getSecond() > 0)
-            // sort by least total aspects
-            .min(Comparator.comparingDouble(Pair::getSecond))
-            // get aspects
-            .map(Pair::getFirst).orElse(new ArrayList<>());
-        return ret;
-    }
-
-    private AspectList getGenerating(Item item) {
-        if (itemAspects.containsKey(item))
-            return itemAspects.get(item);
-        else
-            return getFromRecipes(item);
-    }
-
-    private AspectList getGenerating(ItemStack stack) {
-        if (itemAspects.containsKey(stack.getItem()))
-            return get(stack.getItem());
-        else
-            return getFromRecipes(stack.getItem());
-    }
-     */
 
     private static void parse(ResourceLocation fileLoc, JsonElement e) {
         // just go through the keys and map them to tags or items

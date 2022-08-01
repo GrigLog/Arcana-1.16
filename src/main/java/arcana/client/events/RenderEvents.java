@@ -45,16 +45,6 @@ public class RenderEvents {
         }
     }
 
-    /*
-    @SubscribeEvent
-    static void tooltip(ItemTooltipEvent event){
-        for (AspectStack as : ItemAspectRegistry.get(event.getItemStack())){
-            event.getToolTip().add(new StringTextComponent(as.count + " ").append(new TranslationTextComponent(as.getAspect().translationKey)));
-        }
-    }*/
-
-
-
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onRenderTooltipPost(@Nonnull RenderTooltipEvent.PostText event) {
         if (!Screen.hasShiftDown())
