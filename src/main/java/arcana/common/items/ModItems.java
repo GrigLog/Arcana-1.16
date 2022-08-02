@@ -14,8 +14,8 @@ public class ModItems {
     public static Item RESEARCH_NOTE = new ResearchNote(ArcanaGroup.itemProps(), false).setRegistryName("research_note");
     public static Item RESEARCH_NOTE_COMPLETE = new ResearchNote(ArcanaGroup.itemProps(), true).setRegistryName("research_note_complete");
 
-    public static Item WAND = new WandItem();
-    public static Item STAFF = new StaffItem();
+    public static WandItem WAND = new WandItem();
+    //public static Item STAFF = new StaffItem();
     public static Item GAUNTLET = new Gauntlet();
     public static arcana.common.items.FocusItem FOCUS = new arcana.common.items.FocusItem("focus_1");
 

@@ -34,10 +34,11 @@ public class WandItem extends Item {
         setRegistryName(arcLoc("wand"));
     }
 
-    public ItemStack withCapAndCore(CapItem cap, CoreItem core){
+    public ItemStack withCapAndCore(CapItem cap, CoreItem core, String var){
         CompoundNBT nbt = new CompoundNBT();
         nbt.putString("cap", cap.name);
         nbt.putString("core", core.name);
+        nbt.putString("variant", var);
         ItemStack stack = new ItemStack(this.asItem(), 1);
         stack.setTag(nbt);
         return stack;
@@ -63,12 +64,19 @@ public class WandItem extends Item {
     public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
         if(allowdedIn(group)){
             // iron/wooden, silver/dair, gold/greatwood, thaumium/silverwood, void/arcanium
-            items.add(withCapAndCore(ModItems.IRON_CAP, ModItems.WOOD_WAND_CORE));
-            items.add(withCapAndCore(ModItems.SILVER_CAP, ModItems.DAIR_WAND_CORE));
-            items.add(withCapAndCore(ModItems.GOLD_CAP, ModItems.GREATWOOD_WAND_CORE));
-            items.add(withCapAndCore(ModItems.THAUMIUM_CAP, ModItems.SILVERWOOD_WAND_CORE));
-            items.add(withCapAndCore(ModItems.VOID_CAP,ModItems.ARCANIUM_WAND_CORE));
-            items.add(withCapAndCore(ModItems.VOID_CAP,ModItems.BLAZE_WAND_CORE));
+            items.add(withCapAndCore(ModItems.IRON_CAP, ModItems.WOOD_WAND_CORE, "wand"));
+            items.add(withCapAndCore(ModItems.SILVER_CAP, ModItems.DAIR_WAND_CORE, "wand"));
+            items.add(withCapAndCore(ModItems.GOLD_CAP, ModItems.GREATWOOD_WAND_CORE, "wand"));
+            items.add(withCapAndCore(ModItems.THAUMIUM_CAP, ModItems.SILVERWOOD_WAND_CORE, "wand"));
+            items.add(withCapAndCore(ModItems.VOID_CAP,ModItems.ARCANIUM_WAND_CORE, "wand"));
+            items.add(withCapAndCore(ModItems.VOID_CAP,ModItems.BLAZE_WAND_CORE, "wand"));
+
+            items.add(withCapAndCore(ModItems.IRON_CAP, ModItems.WOOD_WAND_CORE, "staff"));
+            items.add(withCapAndCore(ModItems.SILVER_CAP, ModItems.DAIR_WAND_CORE, "staff"));
+            items.add(withCapAndCore(ModItems.GOLD_CAP, ModItems.GREATWOOD_WAND_CORE, "staff"));
+            items.add(withCapAndCore(ModItems.THAUMIUM_CAP, ModItems.SILVERWOOD_WAND_CORE, "staff"));
+            items.add(withCapAndCore(ModItems.VOID_CAP,ModItems.ARCANIUM_WAND_CORE, "staff"));
+            items.add(withCapAndCore(ModItems.VOID_CAP,ModItems.BLAZE_WAND_CORE, "staff"));
         }
     }
 
@@ -78,7 +86,7 @@ public class WandItem extends Item {
         CoreItem core = getCore(stack);
         CapItem cap = getCap(stack);
         tooltip.add(new StringTextComponent(String.format("MaxVis: %s",core.maxVis+cap.visStorage)).setStyle(Style.EMPTY.withColor((Color.fromRgb(0xdec7fc)))));
-        tooltip.add(new StringTextComponent(String.format("Level: %s",core.level+cap.level)).setStyle(Style.EMPTY.withColor((Color.fromRgb(0xdec7fc)))));
+        tooltip.add(new StringTextComponent(String.format("Level: %s",core.level)).setStyle(Style.EMPTY.withColor((Color.fromRgb(0xdec7fc)))));
         tooltip.add(new StringTextComponent(String.format("Difficulty: %s",core.difficulty)).setStyle(Style.EMPTY.withColor((Color.fromRgb(0xdec7fc)))));
         tooltip.add(new StringTextComponent(String.format("Complexity: %s",cap.complexity)).setStyle(Style.EMPTY.withColor((Color.fromRgb(0xdec7fc)))));
     }

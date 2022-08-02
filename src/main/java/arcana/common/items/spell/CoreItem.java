@@ -42,4 +42,8 @@ public class CoreItem extends Item {
             tooltip.add(new StringTextComponent(String.format("Level: %s",level)).setStyle(Style.EMPTY.withColor((Color.fromRgb(0xdec7fc)))));
             tooltip.add(new StringTextComponent(String.format("Difficulty: %s",difficulty)).setStyle(Style.EMPTY.withColor((Color.fromRgb(0xdec7fc)))));
     }
+
+    public boolean capAllowed(CapItem cap){
+        return level >= cap.level;
+    }
 }

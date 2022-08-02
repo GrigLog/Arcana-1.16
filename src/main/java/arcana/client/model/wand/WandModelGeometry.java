@@ -2,7 +2,6 @@ package arcana.client.model.wand;
 
 import arcana.common.items.spell.CapItem;
 import arcana.common.items.spell.CoreItem;
-import arcana.common.items.spell.StaffItem;
 import arcana.common.items.spell.WandItem;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -117,9 +116,9 @@ public class WandModelGeometry implements IModelGeometry<WandModelGeometry> {
             // get variant (staff/scepter/wand)
             // TODO: improve this slightly
             ResourceLocation variant = arcLoc("wand");
-            if(stack.getItem() instanceof StaffItem) {
-            	variant = arcLoc("staff");
-            }
+            if(stack.getTag() != null)
+                variant = arcLoc(stack.getOrCreateTag().getString("variant"));
+
 
             // get focus
             // nbt context comes from the focusData tag
