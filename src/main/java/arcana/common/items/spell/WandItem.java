@@ -1,6 +1,7 @@
 package arcana.common.items.spell;
 
 import arcana.Arcana;
+import arcana.common.items.FocusItem;
 import arcana.common.items.ModItems;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;

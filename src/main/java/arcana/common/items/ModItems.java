@@ -1,8 +1,13 @@
 package arcana.common.items;
 
+import arcana.common.ArcanaGroup;
+import arcana.common.blocks.ModBlocks;
+import arcana.common.items.spell.*;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 
 public class ModItems {
+    public static Item Arcanum = new ArcanumItem();
     public static Item FIREWAND = new BasicWand();
     public static Item RESEARCH_TABLE = new BlockItem(ModBlocks.RESEARCH_TABLE_RIGHT, ArcanaGroup.itemProps()).setRegistryName("research_table");
     public static Item SCRIBING_TOOLS = new Item(ArcanaGroup.itemProps().durability(100).setNoRepair()).setRegistryName("scribing_tools");
@@ -12,7 +17,7 @@ public class ModItems {
     public static Item WAND = new WandItem();
     public static Item STAFF = new StaffItem();
     public static Item GAUNTLET = new Gauntlet();
-    public static FocusItem FOCUS = new FocusItem("focus_1");
+    public static arcana.common.items.FocusItem FOCUS = new arcana.common.items.FocusItem("focus_1");
 
     public static CapItem AMBER_CAP = new CapItem("amber_cap", 50, 30, 2);
     public static CapItem BAMBOO_CAP = new CapItem("bamboo_cap", 50, 30, 2);

@@ -1,9 +1,9 @@
 package arcana.client.events;
 
 import arcana.client.gui.ResearchTableScreen;
+import arcana.client.model.wand.WandModelLoader;
 import arcana.common.blocks.ModBlocks;
 import arcana.common.containers.ModContainers;
-import arcana.client.model.wand.WandModelLoader;
 import arcana.common.items.spell.CapItem;
 import arcana.common.items.spell.CoreItem;
 import arcana.common.particles.MarkParticle;
@@ -22,8 +22,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
-import static arcana.common.items.ModItems.FOCUS;
 import static arcana.common.items.ModItems.Arcanum;
+import static arcana.common.items.ModItems.FOCUS;
 import static arcana.utils.Util.arcLoc;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
