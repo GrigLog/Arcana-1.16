@@ -15,7 +15,6 @@ public class Aspects{
 	
 	public static final Aspect
 			EMPTY = Aspect.create("empty", ColorRange.create(0x0, 0x0, 0x0, 0x0, 0x0)),
-			DUMMY = Aspect.create("dummy", ColorRange.create(0x0, 0x0, 0x0, 0x0, 0x0)),
 	
 	AIR = Aspect.create("air", ColorRange.create(0x7c554b, 0xa7846a, 0xe8d2a0, 0xf4f0c4, 0xfdffe5)),
 			CHAOS = Aspect.create("chaos", ColorRange.create(0x90909, 0x1e1e1f, 0x4d4d4d, 0x757377, 0x9a979c)),
@@ -158,5 +157,9 @@ public class Aspects{
 
 	public static Set<Aspect> getSet(){
 		return ASPECTS.values();
+	}
+
+	public static Aspect get(ResourceLocation id){
+		return ASPECTS.get(id);
 	}
 }

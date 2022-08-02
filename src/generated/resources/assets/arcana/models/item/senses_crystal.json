@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "arcana:items/crystals/senses_crystal"
+    "layer0": "arcana:item/crystals/senses_crystal"
   }
 }

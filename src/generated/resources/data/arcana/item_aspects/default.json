@@ -1,0 +1,1324 @@
+{
+  "minecraft:bamboo": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 5
+    },
+    {
+      "aspect": "arcana:plant",
+      "amount": 2
+    }
+  ],
+  "minecraft:blaze_rod": [
+    {
+      "aspect": "arcana:aura",
+      "amount": 1
+    },
+    {
+      "aspect": "arcana:light",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:fire",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:nether",
+      "amount": 1
+    }
+  ],
+  "minecraft:bone": [
+    {
+      "aspect": "arcana:death",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:beast",
+      "amount": 1
+    }
+  ],
+  "minecraft:bone_meal": [
+    {
+      "aspect": "arcana:death",
+      "amount": 1
+    },
+    {
+      "aspect": "arcana:life",
+      "amount": 1
+    },
+    {
+      "aspect": "arcana:exchange",
+      "amount": 1
+    }
+  ],
+  "minecraft:book": [
+    {
+      "aspect": "arcana:senses",
+      "amount": 5
+    },
+    {
+      "aspect": "arcana:mind",
+      "amount": 5
+    }
+  ],
+  "minecraft:clay_ball": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:water",
+      "amount": 3
+    }
+  ],
+  "minecraft:coarse_dirt": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:chaos",
+      "amount": 1
+    }
+  ],
+  "minecraft:dark_prismarine": [
+    {
+      "aspect": "arcana:crystal",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:water",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:darkness",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:mana",
+      "amount": 1
+    }
+  ],
+  "minecraft:dirt": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 2
+    }
+  ],
+  "minecraft:egg": [
+    {
+      "aspect": "arcana:beast",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:life",
+      "amount": 9
+    }
+  ],
+  "minecraft:enchanted_book": [
+    {
+      "aspect": "arcana:senses",
+      "amount": 5
+    },
+    {
+      "aspect": "arcana:mind",
+      "amount": 5
+    }
+  ],
+  "minecraft:end_stone": [
+    {
+      "aspect": "arcana:ender",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:earth",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:darkness",
+      "amount": 3
+    }
+  ],
+  "minecraft:experience_bottle": [
+    {
+      "aspect": "arcana:mana",
+      "amount": 24
+    }
+  ],
+  "minecraft:farmland": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:water",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:life",
+      "amount": 1
+    }
+  ],
+  "minecraft:feather": [
+    {
+      "aspect": "arcana:beast",
+      "amount": 1
+    },
+    {
+      "aspect": "arcana:flight",
+      "amount": 4
+    }
+  ],
+  "minecraft:flint": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:tool",
+      "amount": 1
+    }
+  ],
+  "minecraft:glowstone": [
+    {
+      "aspect": "arcana:light",
+      "amount": 8
+    },
+    {
+      "aspect": "arcana:senses",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:nether",
+      "amount": 1
+    }
+  ],
+  "minecraft:glowstone_dust": [
+    {
+      "aspect": "arcana:light",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:earth",
+      "amount": 1
+    },
+    {
+      "aspect": "arcana:nether",
+      "amount": 1
+    }
+  ],
+  "minecraft:grass_block": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:plant",
+      "amount": 1
+    }
+  ],
+  "minecraft:grass_path": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:journey",
+      "amount": 1
+    }
+  ],
+  "minecraft:gunpowder": [
+    {
+      "aspect": "arcana:energy",
+      "amount": 10
+    },
+    {
+      "aspect": "arcana:fire",
+      "amount": 3
+    }
+  ],
+  "minecraft:heart_of_the_sea": [
+    {
+      "aspect": "arcana:life",
+      "amount": 5
+    },
+    {
+      "aspect": "arcana:aura",
+      "amount": 5
+    },
+    {
+      "aspect": "arcana:water",
+      "amount": 20
+    }
+  ],
+  "minecraft:honeycomb": [
+    {
+      "aspect": "arcana:senses",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:harvest",
+      "amount": 1
+    }
+  ],
+  "minecraft:honey_bottle": [
+    {
+      "aspect": "arcana:air",
+      "amount": 10
+    },
+    {
+      "aspect": "arcana:senses",
+      "amount": 3
+    }
+  ],
+  "minecraft:ice": [
+    {
+      "aspect": "arcana:ice",
+      "amount": 5
+    }
+  ],
+  "minecraft:kelp": [
+    {
+      "aspect": "arcana:water",
+      "amount": 7
+    },
+    {
+      "aspect": "arcana:plant",
+      "amount": 1
+    }
+  ],
+  "minecraft:lapis_lazuli": [
+    {
+      "aspect": "arcana:mind",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:crystal",
+      "amount": 1
+    }
+  ],
+  "minecraft:lava_bucket": [
+    {
+      "aspect": "arcana:metal",
+      "amount": 12
+    },
+    {
+      "aspect": "arcana:fire",
+      "amount": 5
+    },
+    {
+      "aspect": "arcana:earth",
+      "amount": 5
+    }
+  ],
+  "minecraft:leather": [
+    {
+      "aspect": "arcana:beast",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:armour",
+      "amount": 3
+    }
+  ],
+  "minecraft:magma_block": [
+    {
+      "aspect": "arcana:fire",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:overworld",
+      "amount": 1
+    },
+    {
+      "aspect": "arcana:nether",
+      "amount": 1
+    }
+  ],
+  "minecraft:melon": [
+    {
+      "aspect": "arcana:plant",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:harvest",
+      "amount": 2
+    }
+  ],
+  "minecraft:milk_bucket": [
+    {
+      "aspect": "arcana:metal",
+      "amount": 12
+    },
+    {
+      "aspect": "arcana:life",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:beast",
+      "amount": 3
+    }
+  ],
+  "minecraft:mycelium": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:plant",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:water",
+      "amount": 1
+    },
+    {
+      "aspect": "arcana:exchange",
+      "amount": 1
+    }
+  ],
+  "minecraft:nautilus_shell": [
+    {
+      "aspect": "arcana:air",
+      "amount": 5
+    },
+    {
+      "aspect": "arcana:water",
+      "amount": 10
+    },
+    {
+      "aspect": "arcana:greed",
+      "amount": 1
+    }
+  ],
+  "minecraft:netherrack": [
+    {
+      "aspect": "arcana:fire",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:earth",
+      "amount": 1
+    },
+    {
+      "aspect": "arcana:nether",
+      "amount": 1
+    }
+  ],
+  "minecraft:quartz": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:crystal",
+      "amount": 1
+    },
+    {
+      "aspect": "arcana:nether",
+      "amount": 1
+    }
+  ],
+  "minecraft:nether_quartz_ore": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:crystal",
+      "amount": 1
+    },
+    {
+      "aspect": "arcana:nether",
+      "amount": 1
+    }
+  ],
+  "minecraft:obsidian": [
+    {
+      "aspect": "arcana:fire",
+      "amount": 1
+    },
+    {
+      "aspect": "arcana:earth",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:darkness",
+      "amount": 2
+    }
+  ],
+  "minecraft:paper": [
+    {
+      "aspect": "arcana:plant",
+      "amount": 1
+    }
+  ],
+  "minecraft:podzol": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:plant",
+      "amount": 1
+    },
+    {
+      "aspect": "arcana:metal",
+      "amount": 1
+    }
+  ],
+  "minecraft:prismarine": [
+    {
+      "aspect": "arcana:crystal",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:water",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:mana",
+      "amount": 1
+    }
+  ],
+  "minecraft:prismarine_bricks": [
+    {
+      "aspect": "arcana:crystal",
+      "amount": 5
+    },
+    {
+      "aspect": "arcana:water",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:mana",
+      "amount": 2
+    }
+  ],
+  "minecraft:pumpkin": [
+    {
+      "aspect": "arcana:plant",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:harvest",
+      "amount": 2
+    }
+  ],
+  "minecraft:purpur_block": [
+    {
+      "aspect": "arcana:ender",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:earth",
+      "amount": 1
+    },
+    {
+      "aspect": "arcana:mana",
+      "amount": 2
+    }
+  ],
+  "minecraft:rabbit_hide": [
+    {
+      "aspect": "arcana:beast",
+      "amount": 1
+    }
+  ],
+  "minecraft:saddle": [
+    {
+      "aspect": "arcana:journey",
+      "amount": 20
+    },
+    {
+      "aspect": "arcana:armour",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:beast",
+      "amount": 3
+    }
+  ],
+  "minecraft:sea_lantern": [
+    {
+      "aspect": "arcana:crystal",
+      "amount": 5
+    },
+    {
+      "aspect": "arcana:water",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:light",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:mana",
+      "amount": 2
+    }
+  ],
+  "minecraft:slime_ball": [
+    {
+      "aspect": "arcana:slime",
+      "amount": 4
+    }
+  ],
+  "minecraft:snowball": [
+    {
+      "aspect": "arcana:ice",
+      "amount": 1
+    }
+  ],
+  "minecraft:soul_sand": [
+    {
+      "aspect": "arcana:imprison",
+      "amount": 1
+    },
+    {
+      "aspect": "arcana:spirit",
+      "amount": 1
+    },
+    {
+      "aspect": "arcana:nether",
+      "amount": 1
+    }
+  ],
+  "minecraft:string": [
+    {
+      "aspect": "arcana:beast",
+      "amount": 1
+    },
+    {
+      "aspect": "arcana:tool",
+      "amount": 1
+    }
+  ],
+  "minecraft:sugar_cane": [
+    {
+      "aspect": "arcana:water",
+      "amount": 5
+    },
+    {
+      "aspect": "arcana:plant",
+      "amount": 2
+    }
+  ],
+  "minecraft:turtle_egg": [
+    {
+      "aspect": "arcana:life",
+      "amount": 6
+    },
+    {
+      "aspect": "arcana:beast",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:water",
+      "amount": 5
+    }
+  ],
+  "minecraft:water_bucket": [
+    {
+      "aspect": "arcana:metal",
+      "amount": 12
+    },
+    {
+      "aspect": "arcana:water",
+      "amount": 5
+    }
+  ],
+  "minecraft:wheat": [
+    {
+      "aspect": "arcana:plant",
+      "amount": 6
+    },
+    {
+      "aspect": "arcana:harvest",
+      "amount": 2
+    }
+  ],
+  "minecraft:wheat_seeds": [
+    {
+      "aspect": "arcana:plant",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:life",
+      "amount": 2
+    }
+  ],
+  "minecraft:white_wool": [
+    {
+      "aspect": "arcana:fabric",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:beast",
+      "amount": 1
+    }
+  ],
+  "arcana:air_crystal": [
+    {
+      "aspect": "arcana:air",
+      "amount": 1
+    }
+  ],
+  "arcana:chaos_crystal": [
+    {
+      "aspect": "arcana:chaos",
+      "amount": 1
+    }
+  ],
+  "arcana:fire_crystal": [
+    {
+      "aspect": "arcana:fire",
+      "amount": 1
+    }
+  ],
+  "arcana:earth_crystal": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 1
+    }
+  ],
+  "arcana:order_crystal": [
+    {
+      "aspect": "arcana:order",
+      "amount": 1
+    }
+  ],
+  "arcana:water_crystal": [
+    {
+      "aspect": "arcana:water",
+      "amount": 1
+    }
+  ],
+  "arcana:armour_crystal": [
+    {
+      "aspect": "arcana:armour",
+      "amount": 1
+    }
+  ],
+  "arcana:aura_crystal": [
+    {
+      "aspect": "arcana:aura",
+      "amount": 1
+    }
+  ],
+  "arcana:beast_crystal": [
+    {
+      "aspect": "arcana:beast",
+      "amount": 1
+    }
+  ],
+  "arcana:crafting_crystal": [
+    {
+      "aspect": "arcana:crafting",
+      "amount": 1
+    }
+  ],
+  "arcana:creation_crystal": [
+    {
+      "aspect": "arcana:creation",
+      "amount": 1
+    }
+  ],
+  "arcana:crystal_crystal": [
+    {
+      "aspect": "arcana:crystal",
+      "amount": 1
+    }
+  ],
+  "arcana:darkness_crystal": [
+    {
+      "aspect": "arcana:darkness",
+      "amount": 1
+    }
+  ],
+  "arcana:death_crystal": [
+    {
+      "aspect": "arcana:death",
+      "amount": 1
+    }
+  ],
+  "arcana:eldritch_crystal": [
+    {
+      "aspect": "arcana:eldritch",
+      "amount": 1
+    }
+  ],
+  "arcana:ender_crystal": [
+    {
+      "aspect": "arcana:ender",
+      "amount": 1
+    }
+  ],
+  "arcana:energy_crystal": [
+    {
+      "aspect": "arcana:energy",
+      "amount": 1
+    }
+  ],
+  "arcana:envy_crystal": [
+    {
+      "aspect": "arcana:envy",
+      "amount": 1
+    }
+  ],
+  "arcana:exchange_crystal": [
+    {
+      "aspect": "arcana:exchange",
+      "amount": 1
+    }
+  ],
+  "arcana:fabric_crystal": [
+    {
+      "aspect": "arcana:fabric",
+      "amount": 1
+    }
+  ],
+  "arcana:flesh_crystal": [
+    {
+      "aspect": "arcana:flesh",
+      "amount": 1
+    }
+  ],
+  "arcana:flight_crystal": [
+    {
+      "aspect": "arcana:flight",
+      "amount": 1
+    }
+  ],
+  "arcana:gluttony_crystal": [
+    {
+      "aspect": "arcana:gluttony",
+      "amount": 1
+    }
+  ],
+  "arcana:greed_crystal": [
+    {
+      "aspect": "arcana:greed",
+      "amount": 1
+    }
+  ],
+  "arcana:harvest_crystal": [
+    {
+      "aspect": "arcana:harvest",
+      "amount": 1
+    }
+  ],
+  "arcana:human_crystal": [
+    {
+      "aspect": "arcana:human",
+      "amount": 1
+    }
+  ],
+  "arcana:ice_crystal": [
+    {
+      "aspect": "arcana:ice",
+      "amount": 1
+    }
+  ],
+  "arcana:imprison_crystal": [
+    {
+      "aspect": "arcana:imprison",
+      "amount": 1
+    }
+  ],
+  "arcana:journey_crystal": [
+    {
+      "aspect": "arcana:journey",
+      "amount": 1
+    }
+  ],
+  "arcana:life_crystal": [
+    {
+      "aspect": "arcana:life",
+      "amount": 1
+    }
+  ],
+  "arcana:light_crystal": [
+    {
+      "aspect": "arcana:light",
+      "amount": 1
+    }
+  ],
+  "arcana:lust_crystal": [
+    {
+      "aspect": "arcana:lust",
+      "amount": 1
+    }
+  ],
+  "arcana:machine_crystal": [
+    {
+      "aspect": "arcana:machine",
+      "amount": 1
+    }
+  ],
+  "arcana:mana_crystal": [
+    {
+      "aspect": "arcana:mana",
+      "amount": 1
+    }
+  ],
+  "arcana:metal_crystal": [
+    {
+      "aspect": "arcana:metal",
+      "amount": 1
+    }
+  ],
+  "arcana:mining_crystal": [
+    {
+      "aspect": "arcana:mining",
+      "amount": 1
+    }
+  ],
+  "arcana:mind_crystal": [
+    {
+      "aspect": "arcana:mind",
+      "amount": 1
+    }
+  ],
+  "arcana:movement_crystal": [
+    {
+      "aspect": "arcana:movement",
+      "amount": 1
+    }
+  ],
+  "arcana:nether_crystal": [
+    {
+      "aspect": "arcana:nether",
+      "amount": 1
+    }
+  ],
+  "arcana:overworld_crystal": [
+    {
+      "aspect": "arcana:overworld",
+      "amount": 1
+    }
+  ],
+  "arcana:plant_crystal": [
+    {
+      "aspect": "arcana:plant",
+      "amount": 1
+    }
+  ],
+  "arcana:pride_crystal": [
+    {
+      "aspect": "arcana:pride",
+      "amount": 1
+    }
+  ],
+  "arcana:seeds_crystal": [
+    {
+      "aspect": "arcana:seeds",
+      "amount": 1
+    }
+  ],
+  "arcana:senses_crystal": [
+    {
+      "aspect": "arcana:senses",
+      "amount": 1
+    }
+  ],
+  "arcana:slime_crystal": [
+    {
+      "aspect": "arcana:slime",
+      "amount": 1
+    }
+  ],
+  "arcana:sloth_crystal": [
+    {
+      "aspect": "arcana:sloth",
+      "amount": 1
+    }
+  ],
+  "arcana:spirit_crystal": [
+    {
+      "aspect": "arcana:spirit",
+      "amount": 1
+    }
+  ],
+  "arcana:strength_crystal": [
+    {
+      "aspect": "arcana:strength",
+      "amount": 1
+    }
+  ],
+  "arcana:taint_crystal": [
+    {
+      "aspect": "arcana:taint",
+      "amount": 1
+    }
+  ],
+  "arcana:tool_crystal": [
+    {
+      "aspect": "arcana:tool",
+      "amount": 1
+    }
+  ],
+  "arcana:tree_crystal": [
+    {
+      "aspect": "arcana:tree",
+      "amount": 1
+    }
+  ],
+  "arcana:undead_crystal": [
+    {
+      "aspect": "arcana:undead",
+      "amount": 1
+    }
+  ],
+  "arcana:vacuum_crystal": [
+    {
+      "aspect": "arcana:vacuum",
+      "amount": 1
+    }
+  ],
+  "arcana:venom_crystal": [
+    {
+      "aspect": "arcana:venom",
+      "amount": 1
+    }
+  ],
+  "arcana:weapon_crystal": [
+    {
+      "aspect": "arcana:weapon",
+      "amount": 1
+    }
+  ],
+  "arcana:wind_crystal": [
+    {
+      "aspect": "arcana:wind",
+      "amount": 1
+    }
+  ],
+  "arcana:wrath_crystal": [
+    {
+      "aspect": "arcana:wrath",
+      "amount": 1
+    }
+  ],
+  "#arcana:shulker_boxes": [
+    {
+      "aspect": "arcana:vacuum",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:mana",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:ender",
+      "amount": 1
+    }
+  ],
+  "#forge:cobblestone": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:chaos",
+      "amount": 1
+    }
+  ],
+  "#forge:dusts/redstone": [
+    {
+      "aspect": "arcana:energy",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:machine",
+      "amount": 2
+    }
+  ],
+  "#forge:dyes": [
+    {
+      "aspect": "arcana:senses",
+      "amount": 5
+    }
+  ],
+  "#forge:gems/diamond": [
+    {
+      "aspect": "arcana:crystal",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:creation",
+      "amount": 2
+    }
+  ],
+  "#forge:gems/emerald": [
+    {
+      "aspect": "arcana:crystal",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:pride",
+      "amount": 2
+    }
+  ],
+  "#forge:gravel": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 2
+    }
+  ],
+  "#forge:ingots/arcanium": [
+    {
+      "aspect": "arcana:metal",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:mana",
+      "amount": 3
+    }
+  ],
+  "#forge:ingots/gold": [
+    {
+      "aspect": "arcana:metal",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:greed",
+      "amount": 2
+    }
+  ],
+  "#forge:ingots/iron": [
+    {
+      "aspect": "arcana:metal",
+      "amount": 4
+    }
+  ],
+  "#forge:ingots/silver": [
+    {
+      "aspect": "arcana:metal",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:imprison",
+      "amount": 2
+    }
+  ],
+  "#forge:ores/coal": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:energy",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:fire",
+      "amount": 1
+    }
+  ],
+  "#forge:ores/diamond": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:crystal",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:creation",
+      "amount": 2
+    }
+  ],
+  "#forge:ores/emerald": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:crystal",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:pride",
+      "amount": 2
+    }
+  ],
+  "#forge:ores/gold": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:metal",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:greed",
+      "amount": 2
+    }
+  ],
+  "#forge:ores/iron": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:metal",
+      "amount": 4
+    }
+  ],
+  "#forge:ores/redstone": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:energy",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:machine",
+      "amount": 2
+    }
+  ],
+  "#forge:sand": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:air",
+      "amount": 2
+    }
+  ],
+  "#forge:sand/red": [
+    {
+      "aspect": "arcana:fire",
+      "amount": 1
+    }
+  ],
+  "#forge:stone": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 4
+    }
+  ],
+  "#minecraft:banners": [
+    {
+      "aspect": "arcana:fabric",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:crafting",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:senses",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:pride",
+      "amount": 1
+    }
+  ],
+  "#minecraft:beds": [
+    {
+      "aspect": "arcana:fabric",
+      "amount": 6
+    },
+    {
+      "aspect": "arcana:human",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:crafting",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:sloth",
+      "amount": 1
+    }
+  ],
+  "#minecraft:boats": [
+    {
+      "aspect": "arcana:tree",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:water",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:journey",
+      "amount": 1
+    }
+  ],
+  "#minecraft:buttons": [
+    {
+      "aspect": "arcana:machine",
+      "amount": 1
+    }
+  ],
+  "#minecraft:coals": [
+    {
+      "aspect": "arcana:energy",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:fire",
+      "amount": 1
+    }
+  ],
+  "#minecraft:leaves": [
+    {
+      "aspect": "arcana:plant",
+      "amount": 1
+    }
+  ],
+  "#minecraft:logs": [
+    {
+      "aspect": "arcana:tree",
+      "amount": 4
+    }
+  ],
+  "#minecraft:planks": [
+    {
+      "aspect": "arcana:tree",
+      "amount": 1
+    }
+  ],
+  "#minecraft:saplings": [
+    {
+      "aspect": "arcana:plant",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:tree",
+      "amount": 1
+    },
+    {
+      "aspect": "arcana:life",
+      "amount": 1
+    }
+  ],
+  "#minecraft:trapdoors": [
+    {
+      "aspect": "arcana:machine",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:movement",
+      "amount": 1
+    },
+    {
+      "aspect": "arcana:imprison",
+      "amount": 1
+    }
+  ],
+  "#minecraft:wooden_trapdoors": [
+    {
+      "aspect": "arcana:tree",
+      "amount": 2
+    }
+  ]
+}

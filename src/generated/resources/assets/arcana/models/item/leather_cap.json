@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "arcana:items/caps/leather_cap"
+    "layer0": "arcana:item/caps/leather_cap"
   }
 }

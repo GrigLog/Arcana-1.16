@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "arcana:items/crystals/flesh_crystal"
+    "layer0": "arcana:item/crystals/flesh_crystal"
   }
 }

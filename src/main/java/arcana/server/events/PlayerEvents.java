@@ -1,6 +1,7 @@
 package arcana.server.events;
 
 import arcana.common.capability.Marks;
+import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraftforge.event.entity.EntityEvent;

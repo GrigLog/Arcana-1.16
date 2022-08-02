@@ -1,19 +1,14 @@
 package arcana.common.aspects;
 
 import arcana.common.ArcanaGroup;
-import arcana.common.items.AspectIcon;
-import arcana.common.items.Crystal;
+import arcana.common.items.aspect.AspectIcon;
+import arcana.common.items.aspect.Crystal;
 import arcana.utils.Pair;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistry;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -42,36 +37,29 @@ public class AspectUtils {
 			|| Aspects.COMBINATIONS.inverse().getOrDefault(b, Pair.of(null, null)).contains(a);
 	}
 
-	public static ResourceLocation getAspectTextureLocation(Aspect aspect) {
-		return new ResourceLocation(aspect.id.getNamespace(), "textures/aspect/" + aspect.id.getPath() + ".png");
+	public static void add(Collection<AspectStack> aspects, Aspect a, int amount){
+		for (AspectStack as : aspects){
+			if (as.getAspect() == a){
+				as.amount += amount;
+				return;
+			}
+		}
+		aspects.add(new AspectStack(a, amount));
 	}
 
-
-	public static void putAspect(CompoundNBT compound, String key, Aspect aspect){
-		compound.putString(key, aspect.id.toString());
+	public static void add(Collection<AspectStack> aspects, AspectStack a){
+		for (AspectStack as : aspects){
+			if (as.getAspect() == a.getAspect()){
+				as.amount += a.amount;
+				return;
+			}
+		}
+		aspects.add(a);
 	}
 
-	public static Aspect getAspect(CompoundNBT compound, String key){
-		return Aspect.fromId(new ResourceLocation(compound.getString(key)));
+	public static void add(Collection<AspectStack> list1, Collection<AspectStack> list2){
+		for (AspectStack as : list2){
+			add(list1, as);
+		}
 	}
-
-	/*
-	public static int getEmptyCell(AspectHandler handler) {
-		return handler.getHolders().indexOf(handler.findFirstHolderMatching(h -> h.getStack().isEmpty()));
-	}
-
-	public static String aspectHandlerToJson(AspectHandler handler) {
-		Gson gson = new GsonBuilder()
-				.setPrettyPrinting()
-				.create();
-		return gson.toJson(handler.getHolders());
-	}
-
-	public static List<AspectStack> squish(List<AspectStack> unSquished){
-		return StreamUtils.partialReduce(unSquished, AspectStack::getAspect, (left, right) -> new AspectStack(left.getAspect(), left.getAmount() + right.getAmount()));
-	}
-
-	public static List<Aspect> castContainingAspects() {
-		return Casts.castMap.values().stream().map(ICast::getSpellAspect).collect(Collectors.toList());
-	}*/
 }

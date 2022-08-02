@@ -24,15 +24,10 @@ public class Aspect {
 		return new ResourceLocation(Arcana.id, "textures/gui/hud/wand/vis/" + id + ".png");
 	}
 
-	// Static Methods
 
 	public static Aspect create(String name, ColorRange colors){
 		Aspect aspect = new Aspect(new ResourceLocation(Arcana.id, name), colors);
 		Aspects.ASPECTS.put(aspect.id, aspect);
 		return aspect;
-	}
-
-	public static Aspect fromId(ResourceLocation id) {
-		return Aspects.ASPECTS.get(id);
 	}
 }

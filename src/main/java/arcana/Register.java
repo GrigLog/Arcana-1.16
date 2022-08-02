@@ -1,12 +1,20 @@
 package arcana;
 
 import arcana.common.aspects.AspectUtils;
+import arcana.common.blocks.ModBlocks;
+import arcana.common.blocks.tiles.ModTiles;
 import arcana.common.capability.Marks;
+import arcana.common.containers.ModContainers;
+import arcana.common.items.ModItems;
 import arcana.common.packets.PacketSender;
 import arcana.common.particles.ModParticles;
 import arcana.server.worldgen.Tower;
+import arcana.utils.Util;
+import net.minecraft.block.Block;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.particles.ParticleType;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
@@ -21,6 +29,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 import static arcana.common.items.ModItems.*;
 import static arcana.server.worldgen.ModFeatures.*;
+import static arcana.common.blocks.ModBlocks.*;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Register {
@@ -34,46 +43,23 @@ public class Register {
 
     @SubscribeEvent
     static void regItems(RegistryEvent.Register<Item> event){
+        Util.<Item>getFields(ModItems.class, Item.class, null).forEach(event.getRegistry()::register);
         AspectUtils.registerItems(event.getRegistry());
+    }
 
-        event.getRegistry().registerAll(FIREWAND);
-        event.getRegistry().registerAll(Gauntlet);
-        event.getRegistry().registerAll(Focus);
+    @SubscribeEvent
+    static void regBlocks(RegistryEvent.Register<Block> event){
+        Util.<Block>getFields(ModBlocks.class, Block.class, null).forEach(event.getRegistry()::register);
+    }
 
-        event.getRegistry().registerAll(AmberCap);
-        event.getRegistry().registerAll(BambooCap);
-        event.getRegistry().registerAll(ClayCap);
-        event.getRegistry().registerAll(EldritchCap);
-        event.getRegistry().registerAll(HoneyCap);
-        event.getRegistry().registerAll(CopperCap);
-        event.getRegistry().registerAll(ElementiumCap);
-        event.getRegistry().registerAll(GoldCap);
-        event.getRegistry().registerAll(IronCap);
-        event.getRegistry().registerAll(ManasteelCap);
-        event.getRegistry().registerAll(SilverCap);
-        event.getRegistry().registerAll(TerrasteelCap);
-        event.getRegistry().registerAll(ThaumiumCap);
-        event.getRegistry().registerAll(VoidCap);
-        event.getRegistry().registerAll(LeatherCap);
-        event.getRegistry().registerAll(MechanicalCap);
-        event.getRegistry().registerAll(PrismarineCap);
-        event.getRegistry().registerAll(QuartzCap);
-        event.getRegistry().registerAll(ShulkerCap);
+    @SubscribeEvent
+    static void regTiles(RegistryEvent.Register<TileEntityType<?>> event){
+        Util.<TileEntityType<?>>getFields(ModTiles.class, TileEntityType.class, null).forEach(event.getRegistry()::register);
+    }
 
-        event.getRegistry().registerAll(BLAZE_WAND_CORE);
-        event.getRegistry().registerAll(ENDROD_WAND_CORE);
-        event.getRegistry().registerAll(BONE_WAND_CORE);
-        event.getRegistry().registerAll(ICE_WAND_CORE);
-        event.getRegistry().registerAll(ARCANE_STONE_WAND_CORE);
-        event.getRegistry().registerAll(OBSIDIAN_WAND_CORE);
-        event.getRegistry().registerAll(SUGAR_CANE_WAND_CORE);
-        event.getRegistry().registerAll(MECHANICAL_WAND_CORE);
-        event.getRegistry().registerAll(ELDRITCH_WAND_CORE);
-        event.getRegistry().registerAll(CLAY_WAND_CORE);
-
-        event.getRegistry().registerAll(Wand);
-        event.getRegistry().registerAll(Staff);
-        event.getRegistry().registerAll(Arcanum);
+    @SubscribeEvent
+    static void regContainers(RegistryEvent.Register<ContainerType<?>> event){
+        Util.<ContainerType<?>>getFields(ModContainers.class, ContainerType.class, null).forEach(event.getRegistry()::register);
     }
 
     @SubscribeEvent
