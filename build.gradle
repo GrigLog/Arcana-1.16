@@ -9,9 +9,6 @@ buildscript {
 		classpath 'org.parchmentmc:librarian:1.+'
     }
 }
-plugins {
-    id 'com.github.johnrengelman.shadow' version '7.1.2'
-}
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'eclipse'
@@ -75,18 +72,7 @@ repositories{
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.35'
 
-    compileOnly fg.deobf("com.ldtteam:aequivaleo:${project.aequivaleoVersion}:universal")
     runtimeOnly fg.deobf("curse.maven:jei-238222:3681294")
-    implementation "org.jgrapht:jgrapht-core:${project.jgraphtVersion}"
-
-}
-
-shadowJar {
-    dependencies {
-        include dependency("org.jgrapht:jgrapht-core:${project.jgraphtVersion}")
-    }
-    relocate 'org.jgrapht', 'arcana.jgrapht'
-    archiveClassifier.set('') //without this line Shadow will just generate arcana-0.0-all.jar, we want to remove the 'all' classifier and override.
 }
 
 jar {
@@ -104,7 +90,6 @@ jar {
 }
 
 jar.finalizedBy('reobfJar')
-jar.finalizedBy('shadowJar')
 
 publishing {
     publications {

@@ -1,14 +1,14 @@
 package arcana.common.aspects.graph;
 
 import arcana.Arcana;
-import arcana.common.aspects.Aspect;
 import arcana.common.aspects.AspectList;
-import arcana.common.aspects.Aspects;
+import arcana.common.aspects.graph.nodes.IngredientNode;
+import arcana.common.aspects.graph.nodes.ItemNode;
+import arcana.common.aspects.graph.nodes.RecipeNode;
+import com.google.common.collect.ImmutableList;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.RecipeManager;
-import net.minecraft.tags.ItemTags;
-import org.jgrapht.graph.DefaultEdge;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -20,49 +20,62 @@ public class ItemAspectResolver {
 
         ArcanaGraph graph = new ArcanaGraph();
         for (Item item : items)
-            graph.addItem(item);
+            graph.addItem(item, itemAspects.get(item));
         for (IRecipe<?> recipe : recipes.getRecipes())
-            graph.addRecipe(recipe);
-
-        Arcana.logger.info(graph);
+            graph.addRecipe(recipe, itemAspects.keySet());
+        Arcana.logger.info("items: " + graph.itemNodes.size() + ", recipes: " + graph.recipeNodes.size() + ", ingredients:" + graph.ingNodes.size() + ", edges: " + graph.edges);
         resolveAspects(itemAspects, graph);
         Long t2 = System.nanoTime();
-        Arcana.logger.info("Done. Took " + (t2 - t1) / 1000000 + " ms.");
+        Arcana.logger.info("Done. Took " + (t2 - t1) / 1000000000f + " seconds.");
+        Arcana.logger.info(graph.ingNodes.values().toString());
     }
 
-    private static void resolveAspects(Map<Item, AspectList> known, ArcanaGraph graph) {
-        List<PrimitiveRecipeNode> knownRecipes = new ArrayList<>();
-        Set<PrimitiveRecipeNode> toExamine = graph.recipeNodes;
-        while (true) {
-            for (PrimitiveRecipeNode r : toExamine) {
-                if (known.containsKey(r.output.getItem()))
-                    continue;
-                boolean allInputsKnown = true;
-                for (DefaultEdge edge : graph.incomingEdgesOf(r)) {
-                    ItemNode node = (ItemNode) graph.getEdgeSource(edge);
-                    if (!known.containsKey(node.item)) {
-                        allInputsKnown = false;
+    private static void resolveAspects(Map<Item, AspectList> knownItems, ArcanaGraph graph) {
+        List<ItemNode> itemUpdate = knownItems.keySet().stream().map(item -> graph.itemNodes.get(item)).collect(Collectors.toList());
+
+        SortedSet<RecipeNode> knownRecipes = new TreeSet<>(); //recipes with all known ingredients
+        Set<RecipeNode> checkKnownRecipes = new HashSet<>(); //unknown recipes which might become known in this update
+        Set<RecipeNode> updateRecipes = new HashSet<>(); //only known recipes must go in there!
+        while (true){
+            for (ItemNode item : itemUpdate) {
+                for (IngredientNode ing : item.links) {
+                    boolean ingBecameKnown = ing.isUnknown();
+                    boolean ingUpdated = ing.updateValue(item);
+                    for (RecipeNode r : ing.links){
+                        if (r.isUnknown() && ingBecameKnown)
+                            checkKnownRecipes.add(r);
+                        else if (ingUpdated){
+                            updateRecipes.add(r);
+                        }
+                    }
+                }
+            }
+            for (RecipeNode r : checkKnownRecipes){
+                boolean allKnown = true;
+                for (IngredientNode ing : r.ingredients){
+                    if (ing.isUnknown()) {
+                        allKnown = false;
                         break;
                     }
                 }
-                if (allInputsKnown) {
+                if (allKnown) {
+                    r.updateValue();
                     knownRecipes.add(r);
                 }
             }
             if (knownRecipes.size() == 0)
                 break;
-            knownRecipes.forEach(r -> r.calcValue(known));
-            knownRecipes.sort(Comparator.comparingInt(r -> r.value));
-            if (knownRecipes.get(knownRecipes.size() - 1).value == 0)
-                break;
+            checkKnownRecipes.clear();
 
-            PrimitiveRecipeNode bestRecipe = knownRecipes.remove(0);
-            Item newItem = bestRecipe.output.getItem();
-            Arcana.logger.info("assigned " + bestRecipe.value + " aspects in total to " + newItem.getRegistryName());
-            known.put(newItem, bestRecipe.inputAspects.copy().multiply(0.75f));
-            knownRecipes = knownRecipes.stream().filter(r -> r.output.getItem() != newItem).collect(Collectors.toList()); //remove recipes with the same input and output items
-            toExamine = graph.outgoingEdgesOf(graph.itemNodes.get(newItem)).stream()
-                .map(edge -> (PrimitiveRecipeNode) graph.getEdgeTarget(edge)).collect(Collectors.toSet());
+            updateRecipes.forEach(RecipeNode::updateValue);
+            updateRecipes.clear();
+
+            RecipeNode bestRecipe = knownRecipes.first();
+            ItemNode newNode = bestRecipe.link;
+            knownRecipes.removeIf(r -> r.link.item == newNode.item);
+            newNode.cache.update(bestRecipe.getList());
+            knownItems.put(newNode.item, newNode.cache.list);
+            itemUpdate = ImmutableList.of(newNode);
         }
     }
 }

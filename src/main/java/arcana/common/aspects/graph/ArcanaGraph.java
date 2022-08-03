@@ -1,63 +1,71 @@
 package arcana.common.aspects.graph;
 
-import com.google.common.collect.Lists;
+import arcana.common.aspects.AspectList;
+import arcana.common.aspects.graph.nodes.IngredientNode;
+import arcana.common.aspects.graph.nodes.ItemNode;
+import arcana.common.aspects.graph.nodes.RecipeNode;
+import arcana.utils.Pair;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
-import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleDirectedGraph;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
-public class ArcanaGraph extends SimpleDirectedGraph<IArcanaNode, DefaultEdge> {
+public class ArcanaGraph {
     public Map<Item, ItemNode> itemNodes = new HashMap<>();
-    public Set<PrimitiveRecipeNode> recipeNodes = new HashSet<>();
-    private Map<HashableIngredient, Ingredient> usedIngredients = new HashMap<>();
-    public ArcanaGraph() {
-        super(DefaultEdge.class);
-    }
+    public Map<IngredientNode, IngredientNode> ingNodes = new HashMap<>(); //it should have been Set but sets in java don't have a "get(key)->key" method
+    public Set<RecipeNode> recipeNodes = new HashSet<>();
+    int edges = 0; //TODO: remove in future! It's just for debugging
+    public ArcanaGraph() {}
 
-    public void addRecipe(IRecipe<?> recipe){
+    public void addRecipe(IRecipe<?> recipe, Set<Item> knownItems){
         if (recipe.getIngredients().isEmpty())
             return;
-        if (recipe.getResultItem() == ItemStack.EMPTY)
+        ItemStack result = recipe.getResultItem();
+        if (result == ItemStack.EMPTY || knownItems.contains(result.getItem()))
             return;
-        Map<Ingredient, Integer> counts = new HashMap<>();
+
+        Map<IngredientNode, Integer> counts = new HashMap<>();
         for (Ingredient ing : recipe.getIngredients()){
             if (ing.isEmpty())
                 continue;
-            counts.merge(intern(ing), 1, Integer::sum);
+            Pair<IngredientNode, Integer> ingHolder = addIngredient(ing);
+            counts.merge(ingHolder.a, ingHolder.b, Integer::sum);
         }
-        List<List<ItemStack>> ings = counts.keySet().stream()
-            .map(ing -> Arrays.stream(ing.getItems())
-                .map(is -> {
-                    ItemStack copy = is.copy();
-                    copy.setCount(is.getCount() * counts.get(ing));
-                    return copy;})
-                .collect(Collectors.toList()))
-            .collect(Collectors.toList());
-        for (List<ItemStack> inputCombination : Lists.cartesianProduct(ings)){
-            PrimitiveRecipeNode n = new PrimitiveRecipeNode(recipe.getResultItem(), inputCombination);
-            recipeNodes.add(n);
-            addVertex(n);
-            for (ItemStack is : inputCombination){
-                addEdge(itemNodes.get(is.getItem()), n);
+
+        RecipeNode r = new RecipeNode(result, counts);
+        r.link = itemNodes.get(result.getItem());
+        edges++;
+        for (IngredientNode ing : r.ingredients){
+            ing.links.add(r);
+            edges++;
+        }
+        recipeNodes.add(r);
+    }
+
+    private Pair<IngredientNode, Integer> addIngredient(Ingredient ing){
+        IngredientNode nodeNew = new IngredientNode(ing);
+        int count = nodeNew.reduce();
+        IngredientNode node = ingNodes.get(nodeNew);
+        if (node == null){
+            node = nodeNew;
+            ingNodes.put(node, node);
+            for (ItemNode in : itemNodes.values()){
+                if (node.hasItem(in.item)){
+                    in.links.add(node);
+                    edges++;
+                }
             }
-            addEdge(n, itemNodes.get(recipe.getResultItem().getItem()));
         }
+        return Pair.of(node, count);
     }
 
-    public void addItem(Item item){
-        ItemNode n = new ItemNode(item);
-        addVertex(n);
-        itemNodes.put(item, n);
-    }
-
-    //This one helps with merging recipes created by Ingredient.of(stack)
-    private Ingredient intern(Ingredient ing){
-        HashableIngredient key = new HashableIngredient(ing);
-        return usedIngredients.computeIfAbsent(key, k -> ing);
+    public void addItem(Item item, AspectList list){
+        ItemNode node = new ItemNode(item, list);
+        itemNodes.put(item, node);
     }
 }

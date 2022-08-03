@@ -83,4 +83,9 @@ public class AspectList implements Iterable<AspectStack> {
     public Iterator<AspectStack> iterator() {
         return list.iterator();
     }
+
+    @Override
+    public String toString() {
+        return "Aspects" + list.toString();
+    }
 }

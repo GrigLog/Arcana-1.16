@@ -48,6 +48,6 @@ public class AspectStack {
 
     @Override
     public String toString(){
-        return "AspectStack{" + amount + " " + aspect.id + "}";
+        return amount + "x" + aspect.id;
     }
 }
