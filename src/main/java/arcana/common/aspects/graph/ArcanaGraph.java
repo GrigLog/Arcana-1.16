@@ -10,16 +10,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class ArcanaGraph {
     public Map<Item, ItemNode> itemNodes = new HashMap<>();
     public Map<IngredientNode, IngredientNode> ingNodes = new HashMap<>(); //it should have been Set but sets in java don't have a "get(key)->key" method
     public Set<RecipeNode> recipeNodes = new HashSet<>();
-    int edges = 0; //TODO: remove in future! It's just for debugging
     public ArcanaGraph() {}
 
     public void addRecipe(IRecipe<?> recipe, Set<Item> knownItems){
@@ -39,10 +35,8 @@ public class ArcanaGraph {
 
         RecipeNode r = new RecipeNode(result, counts);
         r.link = itemNodes.get(result.getItem());
-        edges++;
         for (IngredientNode ing : r.ingredients){
             ing.links.add(r);
-            edges++;
         }
         recipeNodes.add(r);
     }
@@ -57,15 +51,25 @@ public class ArcanaGraph {
             for (ItemNode in : itemNodes.values()){
                 if (node.hasItem(in.item)){
                     in.links.add(node);
-                    edges++;
                 }
             }
         }
         return Pair.of(node, count);
     }
 
-    public void addItem(Item item, AspectList list){
-        ItemNode node = new ItemNode(item, list);
-        itemNodes.put(item, node);
+    public void addItems(Map<Item, AspectList> itemAspects, Collection<Item> items) {
+        Map<Item, Item> remainders = new HashMap<>();
+        for (Item item : items){
+            ItemNode node = new ItemNode(item, itemAspects.get(item));
+            itemNodes.put(item, node);
+            if (item.hasCraftingRemainingItem())
+                remainders.put(item, item.getCraftingRemainingItem());
+        }
+        remainders.forEach((original, remaining) -> {
+            ItemNode originalNode = itemNodes.get(original);
+            ItemNode remainingNode = itemNodes.get(remaining);
+            remainingNode.origins.add(originalNode);
+            originalNode.remainder = remainingNode;
+        });
     }
 }

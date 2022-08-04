@@ -6,15 +6,23 @@ import net.minecraft.item.ItemStack;
 
 import java.util.*;
 
-public class RecipeNode implements IArcanaNode, Comparable<RecipeNode> {
+public class RecipeNode implements Comparable<RecipeNode> {
     public IngredientNode[] ingredients;
     public int[] ingCounts;
     float ratio;
     public int value = Integer.MAX_VALUE; //no need for cache because AspectList is only calculated once and used immediately
     public ItemNode link;
 
+    private static final float[] RATIOS = new float[]{1, 0.8f, 0.7f, 0.63f, 0.585f, 0.55f, 0.52f, 0.5f, 0.48f};
+
     public RecipeNode(ItemStack result, Map<IngredientNode, Integer> counts) {
-        ratio = 0.75f / result.getCount(); //0.75 - for crafting drop-off, 1/count - because value is calculated for 1 resulting item, not 4, 8 or whatever
+        ratio = 1f / result.getCount();
+        int c = counts.size();
+        if (c <= 9){
+            ratio *= RATIOS[c - 1];
+        } else {
+            ratio = (float) Math.pow(ratio, -1/3f);
+        }
         ingredients = new IngredientNode[counts.size()];
         ingCounts = new int[counts.size()];
         int i = 0;
@@ -42,8 +50,8 @@ public class RecipeNode implements IArcanaNode, Comparable<RecipeNode> {
         return value == Integer.MAX_VALUE;
     }
 
-    public boolean isValid() { //sticks have 2 recipes: one with value=0 and another with value=2. I think violating the rule of picking the lowest value recipe is necessary here.
-        return value != 0;
+    public boolean isValid(){
+        return !link.knownBasic();
     }
 
     public AspectList getList() {

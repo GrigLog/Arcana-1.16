@@ -47,6 +47,22 @@ public class AspectList implements Iterable<AspectStack> {
         return this;
     }
 
+    public AspectList subtract(AspectStack a){
+        for (AspectStack as : list){
+            if (as.aspect == a.getAspect()){
+                as.amount = Math.max(as.amount - a.amount, 0);
+            }
+        }
+        return this;
+    }
+
+    public AspectList subtract(AspectList aspects) {
+        for (AspectStack as : aspects){
+            subtract(as);
+        }
+        return this;
+    }
+
     public AspectList copy(){
         return new AspectList(list.stream().map(as -> new AspectStack(as.aspect, as.amount)).collect(Collectors.toList()));
     }
@@ -74,7 +90,7 @@ public class AspectList implements Iterable<AspectStack> {
     }
 
     public AspectList multiply(float a){
-        list = list.stream().peek(as -> as.amount = Math.round(as.amount * a))
+        list = list.stream().peek(as -> as.amount = (int)(as.amount * a))
             .filter(as -> as.amount > 0).collect(Collectors.toList());
         return this;
     }
@@ -88,4 +104,5 @@ public class AspectList implements Iterable<AspectStack> {
     public String toString() {
         return "Aspects" + list.toString();
     }
+
 }

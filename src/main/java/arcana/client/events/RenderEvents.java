@@ -7,6 +7,7 @@ import arcana.common.aspects.ItemAspectRegistry;
 import arcana.common.capability.Marks;
 import arcana.common.particles.MarkParticle;
 import arcana.utils.ClientUtil;
+import arcana.utils.Util;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
@@ -45,6 +46,7 @@ public class RenderEvents {
         }
     }
 
+    private static int line = 0;
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onRenderTooltipPost(@Nonnull RenderTooltipEvent.PostText event) {
         if (!Screen.hasShiftDown())
@@ -58,7 +60,7 @@ public class RenderEvents {
             RenderSystem.translatef(0F, 0F, mc.getItemRenderer().blitOffset);
 
             int x = event.getX();
-            int y = 10 * (event.getLines().size() - 3) + 14 + event.getY();
+            int y = 10 * line + 2 + event.getY();
             for (AspectStack as : stacks) {
                 ClientUtil.renderAspectStack(event.getMatrixStack(), as.getAspect(), as.amount, x, y);
                 x += 20;
@@ -73,6 +75,7 @@ public class RenderEvents {
             return;
         AspectList stacks = ItemAspectRegistry.get(event.getItemStack());
         if (stacks.list.size() > 0) {
+            line = event.getToolTip().size();
             // amount of spaces that need inserting
             int filler = stacks.list.size() * 5;
             // repeat " " *filler

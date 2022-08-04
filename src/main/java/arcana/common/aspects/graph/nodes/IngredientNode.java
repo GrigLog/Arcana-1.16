@@ -7,7 +7,7 @@ import net.minecraft.util.registry.Registry;
 
 import java.util.*;
 
-public class IngredientNode implements IArcanaNode {
+public class IngredientNode {
     private final int hash;
     public final ItemStack[] stacks;
     public final Item[] items;
@@ -40,8 +40,8 @@ public class IngredientNode implements IArcanaNode {
     }
 
     public boolean updateValue(ItemNode item) {
-        if (item.cache.value < cache.value) {
-            cache = item.cache;
+        if (item.cacheCrafts.value < cache.value) {
+            cache = item.cacheCrafts;
             return true;
         }
         return false;
