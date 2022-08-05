@@ -86,8 +86,6 @@ public class ResearchTableRight extends AdvancedHorizontalBlock {
         Direction facing = state.getValue(FACING);
         BlockPos posLeft = pos.relative(facing.getCounterClockWise());
         world.setBlockAndUpdate(posLeft, ModBlocks.RESEARCH_TABLE_LEFT.defaultBlockState().setValue(FACING, facing).setValue(ResearchTableLeft.PAPER, false));
-        //world.updateNeighborsAt(posLeft, Blocks.AIR);
-        //state.updateNeighbourShapes(world, posLeft, 3);
     }
 
     @Override

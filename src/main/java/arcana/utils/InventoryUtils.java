@@ -12,4 +12,11 @@ public class InventoryUtils {
             InventoryHelper.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), items.getStackInSlot(i));
         }
     }
+
+    public static void clear(IItemHandler items){
+        int size = items.getSlots();
+        for (int i = 0; i < size; i++){
+            items.extractItem(i, items.getStackInSlot(i).getCount(), false);
+        }
+    }
 }

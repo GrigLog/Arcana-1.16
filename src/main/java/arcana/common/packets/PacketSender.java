@@ -17,5 +17,6 @@ public class PacketSender {
 
     public static void init() {
         INSTANCE.registerMessage(msgId++, MarksPacket.class, MarksPacket::encode, MarksPacket::decode, MarksPacket::handle);
+        INSTANCE.registerMessage(msgId++, ToggleMinigamePacket.class, ToggleMinigamePacket::encode, ToggleMinigamePacket::decode, ToggleMinigamePacket::handle);
     }
 }

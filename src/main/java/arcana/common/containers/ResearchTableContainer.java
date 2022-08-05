@@ -2,9 +2,11 @@ package arcana.common.containers;
 
 import arcana.Arcana;
 import arcana.client.gui.ResearchTableScreen;
+import arcana.common.blocks.tiles.ResearchMinigame;
 import arcana.common.blocks.tiles.ResearchTable;
 import arcana.common.items.ModItemTags;
 import arcana.common.items.ModItems;
+import arcana.common.items.aspect.Crystal;
 import arcana.utils.wrappers.ContainerWrapper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -21,6 +23,9 @@ import net.minecraftforge.items.SlotItemHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+
+import static arcana.common.blocks.tiles.ResearchMinigame.GRID_HEIGHT;
+import static arcana.common.blocks.tiles.ResearchMinigame.GRID_WIDTH;
 
 public class ResearchTableContainer extends Container {
     public ResearchTable tile;
@@ -61,29 +66,40 @@ public class ResearchTableContainer extends Container {
     }
 
     private void addCustomSlots(){
-        addSlot(new SlotItemHandler(tile.items, ResearchTable.INK, 137, 11){
+        addSlot(new SlotItemHandler(tile.items, ResearchTable.INK, 300, 11){
             public boolean mayPlace(@Nonnull ItemStack stack) {
                 return super.mayPlace(stack) && ModItemTags.SCRIBING_TOOLS.contains(stack.getItem());
             }
 
         });
-        addSlot(new SlotItemHandler(tile.items, ResearchTable.PAPER, 155, 11){
+        addSlot(new SlotItemHandler(tile.items, ResearchTable.PAPER, 343, 11){
             public boolean mayPlace(@Nonnull ItemStack stack) {
                 return super.mayPlace(stack) && stack.getItem() == ModItems.RESEARCH_NOTE;
             }
         });
+        int xBase = (int)(190 - 18 * GRID_WIDTH / 2f);
+        int yBase = (int)(110 - 18 * GRID_HEIGHT / 2f);
+        for (int invY = 0; invY < GRID_HEIGHT; invY++){
+            for (int invX = 0; invX < GRID_WIDTH; invX++){
+                addSlot(new SlotItemHandler(tile.minigameItems, invY * GRID_WIDTH + invX, xBase + invX * 18, yBase + invY * 18){
+                    public boolean isActive() {
+                        return tile.minigame.isActive();
+                    }
+                });
+            }
+        }
     }
 
     @Override
     public ItemStack quickMoveStack(PlayerEntity player, int index) {
         ItemStack res = ItemStack.EMPTY; //return EMPTY if nothing was taken, slot remainders otherwise (but actually always returning the original slot contents always works wtf)
         Slot slot = slots.get(index);
-
         if (slot != null && slot.getItem() != ItemStack.EMPTY) {
             ItemStack selected = slot.getItem();
             res = selected.copy();
-            if (index < 2) { //table -> player
-                if (!moveItemStackTo(selected, 2, slots.size(), false))
+            int tableSlotsCount = 2 + GRID_WIDTH * GRID_HEIGHT;
+            if (index < tableSlotsCount) { //table -> player
+                if (!moveItemStackTo(selected, tableSlotsCount, slots.size(), false))
                     return ItemStack.EMPTY;
             } else { //player -> table
                 if (!moveItemStackTo(selected, 0, 2, false))

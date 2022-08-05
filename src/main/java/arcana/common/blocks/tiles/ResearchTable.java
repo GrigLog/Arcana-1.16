@@ -22,14 +22,17 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.ItemStackHandler;
 
+import javax.annotation.Nonnull;
+
 public class ResearchTable extends TileEntity {
     public static final TileEntityType<ResearchTable> type = TileWrapper.wrap("research_table", ResearchTable::new, ModBlocks.RESEARCH_TABLE_RIGHT);
-    public ResearchTable(TileEntityType<?> type) {
-        super(type);
-    }
-    public ResearchTable(){
-        super(type);
-    }
+    public static final int INK = 0, PAPER = 1;
+
+    public ItemStackHandler minigameItems = new ItemStackHandler(ResearchMinigame.GRID_HEIGHT * ResearchMinigame.GRID_WIDTH) {
+        public int getSlotLimit(int slot) {
+            return 1;
+        }
+    };
     public ItemStackHandler items = new ItemStackHandler(2) {
         protected void onContentsChanged(int slot) {
             boolean empty = items.getStackInSlot(slot).isEmpty();
@@ -45,7 +48,19 @@ public class ResearchTable extends TileEntity {
             ResearchTable.this.setChanged();
         }
     };
-    public static final int INK = 0, PAPER = 1;
+    public ResearchMinigame minigame;
+
+
+    public ResearchTable(TileEntityType<?> type) {
+        super(type);
+        minigame = new ResearchMinigame(this);
+    }
+
+    public ResearchTable(){
+        this(type);
+    }
+
+
 
     public ResearchTableContainer getContainer(int id, PlayerInventory inv, PlayerEntity player){
         PacketBuffer buf = new PacketBuffer(Unpooled.buffer(8, 8));
@@ -54,21 +69,26 @@ public class ResearchTable extends TileEntity {
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT compound){
-        super.load(state, compound);
-        items.deserializeNBT(compound.getCompound("items"));
+    public void load(BlockState state, CompoundNBT tag){
+        super.load(state, tag);
+        items.deserializeNBT(tag.getCompound("items"));
+        minigameItems.deserializeNBT(tag.getCompound("minigameItems"));
+        minigame.load(tag);
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT compound){
-        super.save(compound);
-        compound.put("items", items.serializeNBT());
-        return compound;
+    public CompoundNBT save(CompoundNBT tag){
+        super.save(tag);
+        tag.put("items", items.serializeNBT());
+        tag.put("minigameItems", minigameItems.serializeNBT());
+        minigame.save(tag);
+        return tag;
     }
 
     @Override
     public void setRemoved(){
         InventoryUtils.dropContents(level, worldPosition, items);
+        InventoryUtils.dropContents(level, worldPosition, minigameItems);
         super.setRemoved();
     }
 }
