@@ -15,8 +15,6 @@ public class Arcana {
     public static ArcanaGroup ARCANAGROUP = new ArcanaGroup();
 
     public Arcana(){
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        ArcanaRecipes.Serializers.SERIALIZERS.register(bus);
     }
 
 }

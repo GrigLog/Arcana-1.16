@@ -8,11 +8,13 @@ import arcana.common.containers.ModContainers;
 import arcana.common.items.ModItems;
 import arcana.common.packets.PacketSender;
 import arcana.common.particles.ModParticles;
+import arcana.common.recipes.ArcanaRecipes;
 import arcana.server.worldgen.Tower;
 import arcana.utils.Util;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.particles.ParticleType;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
@@ -65,6 +67,11 @@ public class Register {
     @SubscribeEvent
     static void regParticles(RegistryEvent.Register<ParticleType<?>> event){
         event.getRegistry().registerAll(ModParticles.markType);
+    }
+
+    @SubscribeEvent
+    static void regSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event){
+        Util.<IRecipeSerializer<?>>getFields(ArcanaRecipes.Serializers.class, IRecipeSerializer.class, null).forEach(event.getRegistry()::register);
     }
 
     @SubscribeEvent
