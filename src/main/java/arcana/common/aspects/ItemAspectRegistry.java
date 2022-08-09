@@ -8,6 +8,8 @@ import net.minecraft.client.resources.JsonReloadListener;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.profiler.IProfiler;
 import net.minecraft.resources.IResourceManager;

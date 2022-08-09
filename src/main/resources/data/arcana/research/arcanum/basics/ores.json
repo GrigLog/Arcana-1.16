@@ -1,0 +1,23 @@
+{
+  "icons": [
+    "arcana:amber_ore",
+    "arcana:silver_ore"
+  ],
+  "meta": [
+    "root",
+    "hexagon_base",
+    "purple_base"
+  ],
+  "x": -9,
+  "y": 2,
+  "sections": [
+    {
+      "type": "string",
+      "content": "research.arcana.ores.stage.1"
+    },
+    {
+      "type": "string",
+      "content": "research.arcana.ores.stage.2"
+    }
+  ]
+}

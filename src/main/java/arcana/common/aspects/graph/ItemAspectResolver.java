@@ -27,7 +27,7 @@ public class ItemAspectResolver {
         resolveAspects(itemAspects, graph);
         Long t2 = System.nanoTime();
         Arcana.logger.info("Done. Took " + (t2 - t1) / 1000000000f + " seconds.");
-        Arcana.logger.info(graph.ingNodes.values().toString());
+        //Arcana.logger.info(graph.ingNodes.values().toString());
     }
 
     private static void resolveAspects(Map<Item, AspectList> knownItems, ArcanaGraph graph) {

@@ -1,0 +1,42 @@
+{
+  "icons": [
+    "arcana:item/basicwand.png",
+    "arcana:arcane_crafting_table",
+    "arcana:goggles_of_revealing"
+  ],
+  "parents": [
+    "arcana:arcanum/basics/root"
+  ],
+  "meta": [
+    "square_base"
+  ],
+  "x": -5,
+  "y": 2,
+  "sections": [
+    {
+      "type": "string",
+      "content": "research.arcana.basic_wand.stage.1"
+    },
+    {
+      "type": "crafting",
+      "content": "arcana:iron_cap"
+    },
+    {
+      "type": "requirements",
+      "content": [
+        "item 1*minecraft:crafting_table",
+        "item_tag 2*minecraft:planks{'value':2.5}",
+        "xp 30-3",
+        "special arcana:special_test"
+      ]
+    },
+    {
+      "type": "string",
+      "content": "research.arcana.basic_wand.stage.2"
+    },
+    {
+      "type": "arcane_crafting",
+      "content": "arcana:arcane_crafting/goggles_of_revealing"
+    }
+  ]
+}

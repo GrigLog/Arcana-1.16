@@ -33,6 +33,6 @@ public class Codecs {
         builder.group(
             Registry.ITEM.fieldOf("id").forGetter(ItemStack::getItem),
             Codec.INT.optionalFieldOf("count", 1).forGetter(ItemStack::getCount),
-            CompoundNBT.CODEC.optionalFieldOf("tag").forGetter((is) -> Optional.ofNullable(is.getTag()))
+            CompoundNBT.CODEC.optionalFieldOf("nbt").forGetter((is) -> Optional.ofNullable(is.getTag()))
         ).apply(builder, (id, count, oTag) -> new ItemStack(id, count, oTag.orElse(null))));
 }

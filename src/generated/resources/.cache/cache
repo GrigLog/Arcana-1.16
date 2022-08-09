@@ -154,5 +154,8 @@ e66094c2489e0cf7561bbee5e8a9db19c551a24f assets/arcana/models/item/wind.json
 47376b609429605639ab76cf964518032bb5721e assets/arcana/models/item/wood_wand_core.json
 3e7d5d0f4ea8e58471e14c6945b7282f476bac6e assets/arcana/models/item/wrath.json
 ca96f0fb5a5bc7c8ac96da2f9f6db2fd06b21d22 assets/arcana/models/item/wrath_crystal.json
-aa4edf77ab78d92618a65a3d645d5dee0bce9c98 data/arcana/item_aspects/default.json
+d88b565c9126f57c799909ab9b40b50e47c2f4f4 data/arcana/item_aspects/default.json
 5c86eead974e9a185df5e920a8f0f63a0bf82bb2 data/arcana/tags/items/scribing_tools.json
+74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/forge/tags/items/ingots/arcanium.json
+74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/forge/tags/items/ingots/silver.json
+74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/forge/tags/items/ores/silver.json

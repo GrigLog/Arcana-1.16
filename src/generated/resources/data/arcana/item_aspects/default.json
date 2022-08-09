@@ -999,7 +999,231 @@
       "amount": 1
     }
   ],
-  "#arcana:shulker_boxes": [
+  "minecraft:shulker_box": [
+    {
+      "aspect": "arcana:vacuum",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:mana",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:ender",
+      "amount": 1
+    }
+  ],
+  "white_shulker_box": [
+    {
+      "aspect": "arcana:vacuum",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:mana",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:ender",
+      "amount": 1
+    }
+  ],
+  "orange_shulker_box": [
+    {
+      "aspect": "arcana:vacuum",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:mana",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:ender",
+      "amount": 1
+    }
+  ],
+  "magenta_shulker_box": [
+    {
+      "aspect": "arcana:vacuum",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:mana",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:ender",
+      "amount": 1
+    }
+  ],
+  "light_blue_shulker_box": [
+    {
+      "aspect": "arcana:vacuum",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:mana",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:ender",
+      "amount": 1
+    }
+  ],
+  "yellow_shulker_box": [
+    {
+      "aspect": "arcana:vacuum",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:mana",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:ender",
+      "amount": 1
+    }
+  ],
+  "lime_shulker_box": [
+    {
+      "aspect": "arcana:vacuum",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:mana",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:ender",
+      "amount": 1
+    }
+  ],
+  "pink_shulker_box": [
+    {
+      "aspect": "arcana:vacuum",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:mana",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:ender",
+      "amount": 1
+    }
+  ],
+  "gray_shulker_box": [
+    {
+      "aspect": "arcana:vacuum",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:mana",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:ender",
+      "amount": 1
+    }
+  ],
+  "light_gray_shulker_box": [
+    {
+      "aspect": "arcana:vacuum",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:mana",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:ender",
+      "amount": 1
+    }
+  ],
+  "cyan_shulker_box": [
+    {
+      "aspect": "arcana:vacuum",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:mana",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:ender",
+      "amount": 1
+    }
+  ],
+  "purple_shulker_box": [
+    {
+      "aspect": "arcana:vacuum",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:mana",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:ender",
+      "amount": 1
+    }
+  ],
+  "blue_shulker_box": [
+    {
+      "aspect": "arcana:vacuum",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:mana",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:ender",
+      "amount": 1
+    }
+  ],
+  "brown_shulker_box": [
+    {
+      "aspect": "arcana:vacuum",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:mana",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:ender",
+      "amount": 1
+    }
+  ],
+  "green_shulker_box": [
+    {
+      "aspect": "arcana:vacuum",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:mana",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:ender",
+      "amount": 1
+    }
+  ],
+  "red_shulker_box": [
+    {
+      "aspect": "arcana:vacuum",
+      "amount": 4
+    },
+    {
+      "aspect": "arcana:mana",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:ender",
+      "amount": 1
+    }
+  ],
+  "black_shulker_box": [
     {
       "aspect": "arcana:vacuum",
       "amount": 4

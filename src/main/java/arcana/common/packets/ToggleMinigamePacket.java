@@ -16,26 +16,22 @@ import java.util.Arrays;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-public class ToggleMinigamePacket {
-    public ToggleMinigamePacket(){
-    }
+public class ToggleMinigamePacket extends PacketHandler<ToggleMinigamePacket> {
+    public ToggleMinigamePacket(){}
 
-    static ToggleMinigamePacket decode(PacketBuffer buf){
+    public ToggleMinigamePacket decode(PacketBuffer buf){
         return new ToggleMinigamePacket();
     }
 
-    static void encode(ToggleMinigamePacket packet, PacketBuffer buf){
+    public void encode(ToggleMinigamePacket packet, PacketBuffer buf){
     }
 
-    static void handle(ToggleMinigamePacket packet, Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(() -> {
-             if (ctx.get().getDirection() == NetworkDirection.PLAY_TO_SERVER){
-                ServerPlayerEntity player = ctx.get().getSender();
-                if (player.containerMenu instanceof ResearchTableContainer){
-                    ((ResearchTableContainer)player.containerMenu).tile.minigame.toggle();
-                }
+    public void innerHandle(ToggleMinigamePacket packet, Supplier<NetworkEvent.Context> ctx){
+         if (ctx.get().getDirection() == NetworkDirection.PLAY_TO_SERVER){
+            ServerPlayerEntity player = ctx.get().getSender();
+            if (player.containerMenu instanceof ResearchTableContainer){
+                ((ResearchTableContainer)player.containerMenu).tile.minigame.toggle();
             }
-        });
-        ctx.get().setPacketHandled(true);
+        }
     }
 }

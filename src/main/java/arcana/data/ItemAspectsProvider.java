@@ -12,6 +12,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
 import net.minecraft.data.IDataProvider;
+import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.tags.BlockTags;
@@ -149,10 +150,16 @@ public class ItemAspectsProvider implements IDataProvider {
         item(Items.WHEAT, new AspectList().add(PLANT, 6).add(HARVEST, 2));
         item(Items.WHEAT_SEEDS, new AspectList().add(PLANT, 2).add(LIFE, 2));
         item(Items.WHITE_WOOL, new AspectList().add(FABRIC, 4).add(BEAST, 1));
+
         for (Aspect a: ASPECTS.values()){
             if (a == EMPTY)
                 continue;
             item("arcana:" + a.id.getPath() + "_crystal", new AspectList().add(a, 1));
+        }
+
+        item(Items.SHULKER_BOX, new AspectList().add(VACUUM, 4).add(MANA, 2).add(ENDER, 1));
+        for (DyeColor c : DyeColor.values()){
+            item(c.getName() + "_shulker_box", new AspectList().add(VACUUM, 4).add(MANA, 2).add(ENDER, 1));
         }
         //for (Aspect a : AspectUtils.primalAspects){
         //    item(a.id.getPath() + "_cluster", new AspectList().add(a, 5));
@@ -164,7 +171,6 @@ public class ItemAspectsProvider implements IDataProvider {
         //item(ModItems.PURIFIED_IRON, new AspectList().add(METAL, 8));
         //item(ModItems.PURIFIED_SILVER, new AspectList().add(METAL, 8).add(IMPRISON, 4));
 
-        tag("arcana:shulker_boxes", new AspectList().add(VACUUM, 4).add(MANA, 2).add(ENDER, 1));
         tag("forge:cobblestone", new AspectList().add(EARTH, 3).add(CHAOS, 1));
         tag("forge:dusts/redstone", new AspectList().add(ENERGY, 3).add(MACHINE, 2));
         tag("forge:dyes", new AspectList().add(SENSES, 5));

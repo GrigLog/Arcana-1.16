@@ -59,7 +59,7 @@ public class RecipeNode implements Comparable<RecipeNode> {
         for (int i = 0; i < ingCounts.length; i++) {
             list.add(ingredients[i].cache.list.copy().multiply(ingCounts[i]));
         }
-        Arcana.logger.info("assigned " + value + " aspects in total to " + link.item.getRegistryName());
+        //Arcana.logger.info("assigned " + value + " aspects in total to " + link.item.getRegistryName());
         return list.multiply(ratio);
     }
 

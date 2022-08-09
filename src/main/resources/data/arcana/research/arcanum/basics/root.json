@@ -1,0 +1,17 @@
+{
+  "icons": [
+    "arcana:arcanum"
+  ],
+  "meta": [
+    "spiky_base",
+    "purple_base"
+  ],
+  "x": -3,
+  "y": 0,
+  "sections": [
+    {
+      "type": "string",
+      "content": "research.arcana.root.text"
+    }
+  ]
+}

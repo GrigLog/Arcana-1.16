@@ -1,0 +1,22 @@
+{
+  "icons": [
+    "arcana:research/crimson_basics.png"
+  ],
+  "meta": [
+    "root",
+    "hexagon_base",
+    "purple_base"
+  ],
+  "x": -13,
+  "y": 4,
+  "sections": [
+    {
+      "type": "string",
+      "content": "research.arcana.the_crimson_rites.stage.1"
+    },
+    {
+      "type": "string",
+      "content": "research.arcana.the_crimson_rites.stage.2"
+    }
+  ]
+}

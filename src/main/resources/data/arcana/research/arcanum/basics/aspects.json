@@ -1,0 +1,27 @@
+{
+  "icons": [
+    "arcana:aspect_earth",
+    "arcana:aspect_air",
+    "arcana:aspect_water",
+    "arcana:aspect_fire",
+    "arcana:aspect_order",
+    "arcana:aspect_chaos"
+  ],
+  "meta": [
+    "root",
+    "square_base",
+    "purple_base"
+  ],
+  "x": -7,
+  "y": 0,
+  "sections": [
+    {
+      "type": "string",
+      "content": "research.arcana.aspects.text"
+    },
+    {
+      "type": "image",
+      "content": "arcana:textures/research/elements_diagram.png"
+    }
+  ]
+}

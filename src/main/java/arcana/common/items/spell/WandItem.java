@@ -63,7 +63,7 @@ public class WandItem extends Item {
     @Override
     public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
         if(allowdedIn(group)){
-            // iron/wooden, silver/dair, gold/greatwood, thaumium/silverwood, void/arcanium
+            // iron/wooden, silver/dair, gold/greatwood.json, thaumium/silverwood, void/arcanium
             items.add(withCapAndCore(ModItems.IRON_CAP, ModItems.WOOD_WAND_CORE, "wand"));
             items.add(withCapAndCore(ModItems.SILVER_CAP, ModItems.DAIR_WAND_CORE, "wand"));
             items.add(withCapAndCore(ModItems.GOLD_CAP, ModItems.GREATWOOD_WAND_CORE, "wand"));

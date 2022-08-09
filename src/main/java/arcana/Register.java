@@ -3,6 +3,7 @@ package arcana;
 import arcana.common.aspects.AspectUtils;
 import arcana.common.blocks.ModBlocks;
 import arcana.common.blocks.tiles.ModTiles;
+import arcana.common.capability.Knowledge;
 import arcana.common.capability.Marks;
 import arcana.common.containers.ModContainers;
 import arcana.common.items.ModItems;
@@ -77,6 +78,7 @@ public class Register {
     @SubscribeEvent
     static void setupCommon(FMLCommonSetupEvent event){
         CapabilityManager.INSTANCE.register(Marks.class, new Marks.Storage(), Marks::new);
+        CapabilityManager.INSTANCE.register(Knowledge.class, new Knowledge.Storage(), Knowledge::new);
         PacketSender.init();
     }
 

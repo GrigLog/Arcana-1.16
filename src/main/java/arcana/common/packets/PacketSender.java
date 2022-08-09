@@ -16,7 +16,18 @@ public class PacketSender {
     private static int msgId = 0;
 
     public static void init() {
-        INSTANCE.registerMessage(msgId++, MarksPacket.class, MarksPacket::encode, MarksPacket::decode, MarksPacket::handle);
-        INSTANCE.registerMessage(msgId++, ToggleMinigamePacket.class, ToggleMinigamePacket::encode, ToggleMinigamePacket::decode, ToggleMinigamePacket::handle);
+        regPackets(new MarksPacket(), new ToggleMinigamePacket(), new DataSyncPacket());
+    }
+
+
+
+    private static void regPackets(PacketHandler<?> ... packets){
+        for (PacketHandler<?> p : packets){
+            regPacket(p);
+        }
+    }
+
+    private static <T extends PacketHandler<?>> void regPacket(PacketHandler<T> packetInstance){
+        INSTANCE.registerMessage(msgId++, (Class<T>) packetInstance.getClass(), packetInstance::encode, packetInstance::decode, packetInstance::handle);
     }
 }
