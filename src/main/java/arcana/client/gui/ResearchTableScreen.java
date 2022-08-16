@@ -1,7 +1,6 @@
 package arcana.client.gui;
 
 import arcana.Arcana;
-import arcana.common.blocks.tiles.ResearchMinigame;
 import arcana.common.blocks.tiles.ResearchTable;
 import arcana.common.containers.ResearchTableContainer;
 import arcana.common.packets.PacketSender;
@@ -41,6 +40,17 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
     }
 
     @Override
+    public void render(MatrixStack ms, int pMouseX, int pMouseY, float pPartialTicks) {
+        super.render(ms, pMouseX, pMouseY, pPartialTicks);
+        ms.pushPose();
+        ms.translate(leftPos, topPos, 0);
+        tile.minigame.renderPaths(ms, menu);
+        ms.translate(20, 104, 0);
+        tile.minigame.renderAspectCounter(ms);
+        ms.popPose();
+    }
+
+    @Override
     public void tick() {
         super.tick();
         startButton.tick();
@@ -62,10 +72,10 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
         ResearchTable tile;
         public StartFinishButton(ResearchTable tile, int pX, int pY, int pWidth, int pHeight) {
             super(pX, pY, pWidth, pHeight, new StringTextComponent("Start"), b -> {
-                boolean active = tile.minigame.isActive();
-                tile.minigame.toggle();
-                PacketSender.INSTANCE.sendToServer(new ToggleMinigamePacket());
-                b.setMessage(new StringTextComponent(active ? "Start" : "Finish"));
+                b.setMessage(new StringTextComponent(tile.minigame.isActive() ? "Start" : "Finish"));
+                long seed = tile.getLevel().random.nextLong();
+                tile.minigame.toggle(seed);
+                PacketSender.INSTANCE.sendToServer(new ToggleMinigamePacket(seed));
             });
             this.tile = tile;
             tick();

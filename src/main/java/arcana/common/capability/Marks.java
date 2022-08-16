@@ -40,8 +40,8 @@ public class Marks {
     public List<BlockPos>[] positions;
 
     public Marks() {
-        positions = new ArrayList[AspectUtils.primalAspects.length];
-        for (int i = 0; i < AspectUtils.primalAspects.length; i++)
+        positions = new ArrayList[Aspects.primal.length];
+        for (int i = 0; i < Aspects.primal.length; i++)
             positions[i] = new ArrayList<>();
     }
 
@@ -53,7 +53,7 @@ public class Marks {
     public CompoundNBT getNbt() {
         CompoundNBT tag = new CompoundNBT();
         ListNBT arr = new ListNBT();
-        for (int i = 0; i < AspectUtils.primalAspects.length; i++){
+        for (int i = 0; i < Aspects.primal.length; i++){
             ListNBT list = new ListNBT();
             this.positions[i].forEach(bp -> list.add(LongNBT.valueOf(bp.asLong())));
             arr.add(list);
@@ -64,8 +64,8 @@ public class Marks {
 
     public Marks setNbt(CompoundNBT tag) {
         ListNBT arr = (ListNBT) tag.get("positions");
-        List<BlockPos>[] positions = new ArrayList[AspectUtils.primalAspects.length];
-        for (int i = 0; i < AspectUtils.primalAspects.length; i++){
+        List<BlockPos>[] positions = new ArrayList[Aspects.primal.length];
+        for (int i = 0; i < Aspects.primal.length; i++){
             positions[i] = arr.getList(i).stream().map(l -> BlockPos.of(((LongNBT)l).getAsLong())).collect(Collectors.toList());
         }
         this.positions = positions;
@@ -79,8 +79,8 @@ public class Marks {
     public static void sendToClient(@Nonnull PlayerEntity player){
         Marks cap = player.level.getCapability(Marks.CAPABILITY).resolve().orElse(null);
         BlockPos pos = player.blockPosition();
-        Marks toSend = new Marks(new ArrayList[AspectUtils.primalAspects.length]);
-        for (int i = 0; i < AspectUtils.primalAspects.length; i++) {
+        Marks toSend = new Marks(new ArrayList[Aspects.primal.length]);
+        for (int i = 0; i < Aspects.primal.length; i++) {
             toSend.positions[i] = cap.positions[i].stream().filter(bp -> //only send the closest marks
                         Math.abs(bp.getX() - pos.getX()) < (MARKS_RANGE << 5) &&
                         Math.abs(bp.getZ() - pos.getZ()) < (MARKS_RANGE << 5))

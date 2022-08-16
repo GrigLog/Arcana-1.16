@@ -74,10 +74,12 @@ public class Aspects{
 			WEAPON = Aspect.create("weapon", ColorRange.create(0x6a1445, 0x911b41, 0xb71831, 0xd94023, 0xf67c30)),
 			WIND = Aspect.create("wind", ColorRange.create(0x5d5f71, 0x888599, 0x9ea0bd, 0xccd0df, 0xfffde8)),
 			WRATH = Aspect.create("wrath", ColorRange.create(0x5a0b3d, 0x8e0f3e, 0xc61626, 0xed1507, 0xffbe8d));
-	
-	public static BiMap<Aspect, ResourceLocation> ASPECT_IDS = ASPECTS.inverse();
-	public static final BiMap<Pair<Aspect, Aspect>, Aspect> COMBINATIONS = HashBiMap.create(Aspects.getList().size());
-	
+
+	//do not change order!
+	public static final Aspect[] primal = new Aspect[]{Aspects.AIR, Aspects.WATER, Aspects.EARTH, Aspects.FIRE, Aspects.ORDER, Aspects.CHAOS};
+	public static final Aspect[] sin = new Aspect[]{Aspects.ENVY, Aspects.LUST, Aspects.SLOTH, Aspects.PRIDE, Aspects.GREED, Aspects.WRATH, Aspects.GLUTTONY};
+
+	public static final BiMap<Pair<Aspect, Aspect>, Aspect> COMBINATIONS = HashBiMap.create(Aspects.getList().size() - 1 - primal.length);
 	static{
 		COMBINATIONS.put(Pair.of(FIRE, CHAOS), ICE);
 		COMBINATIONS.put(Pair.of(FIRE, AIR), LIGHT);

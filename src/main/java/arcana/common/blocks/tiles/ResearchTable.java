@@ -1,5 +1,6 @@
 package arcana.common.blocks.tiles;
 
+import arcana.Arcana;
 import arcana.common.blocks.ModBlocks;
 import arcana.common.blocks.ResearchTableLeft;
 import arcana.common.blocks.ResearchTableRight;
@@ -17,6 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.state.DirectionProperty;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
@@ -24,13 +26,17 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 
-public class ResearchTable extends TileEntity {
+public class ResearchTable extends DefaultTile implements ITickableTileEntity {
     public static final TileEntityType<ResearchTable> type = TileWrapper.wrap("research_table", ResearchTable::new, ModBlocks.RESEARCH_TABLE_RIGHT);
     public static final int INK = 0, PAPER = 1;
 
     public ItemStackHandler minigameItems = new ItemStackHandler(ResearchMinigame.GRID_HEIGHT * ResearchMinigame.GRID_WIDTH) {
         public int getSlotLimit(int slot) {
             return 1;
+        }
+        protected void onContentsChanged(int slot) {
+            super.onContentsChanged(slot);
+            ResearchTable.this.setChanged();
         }
     };
     public ItemStackHandler items = new ItemStackHandler(2) {
@@ -60,14 +66,6 @@ public class ResearchTable extends TileEntity {
         this(type);
     }
 
-
-
-    public ResearchTableContainer getContainer(int id, PlayerInventory inv, PlayerEntity player){
-        PacketBuffer buf = new PacketBuffer(Unpooled.buffer(8, 8));
-        buf.writeBlockPos(worldPosition);
-        return new ResearchTableContainer(id, inv, buf);
-    }
-
     @Override
     public void load(BlockState state, CompoundNBT tag){
         super.load(state, tag);
@@ -90,5 +88,10 @@ public class ResearchTable extends TileEntity {
         InventoryUtils.dropContents(level, worldPosition, items);
         InventoryUtils.dropContents(level, worldPosition, minigameItems);
         super.setRemoved();
+    }
+
+    @Override
+    public void tick() {
+        //Arcana.logger.info((level.isClientSide ? "client" : "server") + " " + minigameItems.serializeNBT().toString());
     }
 }

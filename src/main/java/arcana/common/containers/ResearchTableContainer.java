@@ -1,12 +1,10 @@
 package arcana.common.containers;
 
-import arcana.Arcana;
 import arcana.client.gui.ResearchTableScreen;
-import arcana.common.blocks.tiles.ResearchMinigame;
 import arcana.common.blocks.tiles.ResearchTable;
 import arcana.common.items.ModItemTags;
 import arcana.common.items.ModItems;
-import arcana.common.items.aspect.Crystal;
+import arcana.common.items.aspect.AspectIcon;
 import arcana.utils.wrappers.ContainerWrapper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -21,8 +19,6 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
 
 import static arcana.common.blocks.tiles.ResearchMinigame.GRID_HEIGHT;
 import static arcana.common.blocks.tiles.ResearchMinigame.GRID_WIDTH;
@@ -30,24 +26,26 @@ import static arcana.common.blocks.tiles.ResearchMinigame.GRID_WIDTH;
 public class ResearchTableContainer extends Container {
     public ResearchTable tile;
     public static ContainerType<ResearchTableContainer> type = ContainerWrapper.withExtraData("research_table", ResearchTableContainer::new);
-    public ResearchTableContainer(int containerId, PlayerInventory playerInv, ResearchTable table){
+
+    public ResearchTableContainer(int containerId, PlayerInventory playerInv, ResearchTable table) {
         super(type, containerId);
         this.tile = table;
         addCustomSlots();
         addPlayerSlots(playerInv);
+        tile.minigame.updateRoots();
     }
 
-    public ResearchTableContainer(int containerId, PlayerInventory playerInv, PacketBuffer buf){
+    public ResearchTableContainer(int containerId, PlayerInventory playerInv, PacketBuffer buf) {
         this(containerId, playerInv, (ResearchTable) playerInv.player.level.getBlockEntity(buf.readBlockPos()));
     }
 
-    public static void open(ServerPlayerEntity serverPlayer, ResearchTable table){
+    public static void open(ServerPlayerEntity serverPlayer, ResearchTable table) {
         NetworkHooks.openGui(serverPlayer,
             ContainerWrapper.namelessProvider((id, playerInv, player) -> new ResearchTableContainer(id, playerInv, table)),
             buf -> buf.writeBlockPos(table.getBlockPos()));
     }
 
-    void addPlayerSlots(IInventory playerInventory){
+    void addPlayerSlots(IInventory playerInventory) {
         int hotX = 79, invX = 139, baseY = ResearchTableScreen.HEIGHT - 61;
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
@@ -65,25 +63,29 @@ public class ResearchTableContainer extends Container {
         }
     }
 
-    private void addCustomSlots(){
-        addSlot(new SlotItemHandler(tile.items, ResearchTable.INK, 300, 11){
+    private void addCustomSlots() {
+        addSlot(new SlotItemHandler(tile.items, ResearchTable.INK, 300, 11) {
             public boolean mayPlace(@Nonnull ItemStack stack) {
                 return super.mayPlace(stack) && ModItemTags.SCRIBING_TOOLS.contains(stack.getItem());
             }
 
         });
-        addSlot(new SlotItemHandler(tile.items, ResearchTable.PAPER, 343, 11){
+        addSlot(new SlotItemHandler(tile.items, ResearchTable.PAPER, 343, 11) {
             public boolean mayPlace(@Nonnull ItemStack stack) {
                 return super.mayPlace(stack) && stack.getItem() == ModItems.RESEARCH_NOTE;
             }
         });
-        int xBase = (int)(190 - 18 * GRID_WIDTH / 2f);
-        int yBase = (int)(110 - 18 * GRID_HEIGHT / 2f);
-        for (int invY = 0; invY < GRID_HEIGHT; invY++){
-            for (int invX = 0; invX < GRID_WIDTH; invX++){
-                addSlot(new SlotItemHandler(tile.minigameItems, invY * GRID_WIDTH + invX, xBase + invX * 18, yBase + invY * 18){
+        int xBase = (int) (190 - 18 * GRID_WIDTH / 2f);
+        int yBase = (int) (110 - 18 * GRID_HEIGHT / 2f);
+        for (int invY = 0; invY < GRID_HEIGHT; invY++) {
+            for (int invX = 0; invX < GRID_WIDTH; invX++) {
+                addSlot(new SlotItemHandler(tile.minigameItems, invY * GRID_WIDTH + invX, xBase + invX * 18, yBase + invY * 18) {
                     public boolean isActive() {
                         return tile.minigame.isActive();
+                    }
+
+                    public boolean mayPickup(PlayerEntity playerIn) {
+                        return !(getItem().getItem() instanceof AspectIcon);
                     }
                 });
             }

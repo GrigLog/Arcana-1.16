@@ -1,6 +1,6 @@
 package arcana.common.packets;
 
-import arcana.common.aspects.AspectUtils;
+import arcana.common.aspects.Aspects;
 import arcana.common.capability.Marks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
@@ -22,8 +22,8 @@ public class MarksPacket extends PacketHandler<MarksPacket> {
     public MarksPacket(){}
 
     public MarksPacket decode(PacketBuffer buf){
-        Marks cap = new Marks(new ArrayList[AspectUtils.primalAspects.length]);
-        for (int i = 0; i < AspectUtils.primalAspects.length; i++) {
+        Marks cap = new Marks(new ArrayList[Aspects.primal.length]);
+        for (int i = 0; i < Aspects.primal.length; i++) {
             long[] arr = buf.readLongArray(null);
             cap.positions[i] = Arrays.stream(arr).mapToObj(BlockPos::of).collect(Collectors.toList());
         }
@@ -31,7 +31,7 @@ public class MarksPacket extends PacketHandler<MarksPacket> {
     }
 
     public void encode(MarksPacket packet, PacketBuffer buf){
-        for (int i = 0; i < AspectUtils.primalAspects.length; i++) {
+        for (int i = 0; i < Aspects.primal.length; i++) {
             long[] arr = packet.cap.positions[i].stream().mapToLong(BlockPos::asLong).toArray();
             buf.writeLongArray(arr);
         }

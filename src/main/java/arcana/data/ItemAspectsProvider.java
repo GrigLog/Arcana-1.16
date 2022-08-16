@@ -155,13 +155,14 @@ public class ItemAspectsProvider implements IDataProvider {
             if (a == EMPTY)
                 continue;
             item("arcana:" + a.id.getPath() + "_crystal", new AspectList().add(a, 1));
+            item("arcana:" + a.id.getPath(), new AspectList().add(a, 1));
         }
 
         item(Items.SHULKER_BOX, new AspectList().add(VACUUM, 4).add(MANA, 2).add(ENDER, 1));
         for (DyeColor c : DyeColor.values()){
             item(c.getName() + "_shulker_box", new AspectList().add(VACUUM, 4).add(MANA, 2).add(ENDER, 1));
         }
-        //for (Aspect a : AspectUtils.primalAspects){
+        //for (Aspect a : Aspects.primal){
         //    item(a.id.getPath() + "_cluster", new AspectList().add(a, 5));
         //    item(a.id.getPath() + "_cluster_seed", new AspectList().add(a, 1).add(SEEDS, 1).add(CRYSTAL, 1));
         //}

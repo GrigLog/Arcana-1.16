@@ -14,7 +14,7 @@ import net.minecraft.util.registry.Registry;
 import java.util.Optional;
 
 public class Codecs {
-    public static final Codec<Aspect> ASPECT = ResourceLocation.CODEC.xmap(Aspects.ASPECTS::get, Aspects.ASPECT_IDS::get);
+    public static final Codec<Aspect> ASPECT = ResourceLocation.CODEC.xmap(Aspects.ASPECTS::get, a -> a.id);
     public static final Codec<AspectStack> ASPECT_STACK = RecordCodecBuilder.create(b -> b.group(
         ASPECT.fieldOf("aspect").forGetter(AspectStack::getAspect),
         Codec.INT.fieldOf("amount").forGetter(as -> as.amount)

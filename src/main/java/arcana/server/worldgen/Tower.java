@@ -114,7 +114,7 @@ public class Tower extends Structure<NoFeatureConfig> {
             this.x = pos.getX();
             this.z = pos.getZ();
             boundingBox = new MutableBoundingBox(pos.getX(), pos.getY(), pos.getZ(), pos.getX(), pos.getY(), pos.getZ());
-            primalIndex = ArrayUtils.indexOf(AspectUtils.primalAspects, aspect);
+            primalIndex = ArrayUtils.indexOf(Aspects.primal, aspect);
         }
 
         public FakePiece(TemplateManager tm, CompoundNBT tag) {

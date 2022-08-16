@@ -663,7 +663,19 @@
       "amount": 1
     }
   ],
+  "arcana:air": [
+    {
+      "aspect": "arcana:air",
+      "amount": 1
+    }
+  ],
   "arcana:chaos_crystal": [
+    {
+      "aspect": "arcana:chaos",
+      "amount": 1
+    }
+  ],
+  "arcana:chaos": [
     {
       "aspect": "arcana:chaos",
       "amount": 1
@@ -675,7 +687,19 @@
       "amount": 1
     }
   ],
+  "arcana:fire": [
+    {
+      "aspect": "arcana:fire",
+      "amount": 1
+    }
+  ],
   "arcana:earth_crystal": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 1
+    }
+  ],
+  "arcana:earth": [
     {
       "aspect": "arcana:earth",
       "amount": 1
@@ -687,7 +711,19 @@
       "amount": 1
     }
   ],
+  "arcana:order": [
+    {
+      "aspect": "arcana:order",
+      "amount": 1
+    }
+  ],
   "arcana:water_crystal": [
+    {
+      "aspect": "arcana:water",
+      "amount": 1
+    }
+  ],
+  "arcana:water": [
     {
       "aspect": "arcana:water",
       "amount": 1
@@ -699,7 +735,19 @@
       "amount": 1
     }
   ],
+  "arcana:armour": [
+    {
+      "aspect": "arcana:armour",
+      "amount": 1
+    }
+  ],
   "arcana:aura_crystal": [
+    {
+      "aspect": "arcana:aura",
+      "amount": 1
+    }
+  ],
+  "arcana:aura": [
     {
       "aspect": "arcana:aura",
       "amount": 1
@@ -711,7 +759,19 @@
       "amount": 1
     }
   ],
+  "arcana:beast": [
+    {
+      "aspect": "arcana:beast",
+      "amount": 1
+    }
+  ],
   "arcana:crafting_crystal": [
+    {
+      "aspect": "arcana:crafting",
+      "amount": 1
+    }
+  ],
+  "arcana:crafting": [
     {
       "aspect": "arcana:crafting",
       "amount": 1
@@ -723,7 +783,19 @@
       "amount": 1
     }
   ],
+  "arcana:creation": [
+    {
+      "aspect": "arcana:creation",
+      "amount": 1
+    }
+  ],
   "arcana:crystal_crystal": [
+    {
+      "aspect": "arcana:crystal",
+      "amount": 1
+    }
+  ],
+  "arcana:crystal": [
     {
       "aspect": "arcana:crystal",
       "amount": 1
@@ -735,7 +807,19 @@
       "amount": 1
     }
   ],
+  "arcana:darkness": [
+    {
+      "aspect": "arcana:darkness",
+      "amount": 1
+    }
+  ],
   "arcana:death_crystal": [
+    {
+      "aspect": "arcana:death",
+      "amount": 1
+    }
+  ],
+  "arcana:death": [
     {
       "aspect": "arcana:death",
       "amount": 1
@@ -747,7 +831,19 @@
       "amount": 1
     }
   ],
+  "arcana:eldritch": [
+    {
+      "aspect": "arcana:eldritch",
+      "amount": 1
+    }
+  ],
   "arcana:ender_crystal": [
+    {
+      "aspect": "arcana:ender",
+      "amount": 1
+    }
+  ],
+  "arcana:ender": [
     {
       "aspect": "arcana:ender",
       "amount": 1
@@ -759,7 +855,19 @@
       "amount": 1
     }
   ],
+  "arcana:energy": [
+    {
+      "aspect": "arcana:energy",
+      "amount": 1
+    }
+  ],
   "arcana:envy_crystal": [
+    {
+      "aspect": "arcana:envy",
+      "amount": 1
+    }
+  ],
+  "arcana:envy": [
     {
       "aspect": "arcana:envy",
       "amount": 1
@@ -771,7 +879,19 @@
       "amount": 1
     }
   ],
+  "arcana:exchange": [
+    {
+      "aspect": "arcana:exchange",
+      "amount": 1
+    }
+  ],
   "arcana:fabric_crystal": [
+    {
+      "aspect": "arcana:fabric",
+      "amount": 1
+    }
+  ],
+  "arcana:fabric": [
     {
       "aspect": "arcana:fabric",
       "amount": 1
@@ -783,7 +903,19 @@
       "amount": 1
     }
   ],
+  "arcana:flesh": [
+    {
+      "aspect": "arcana:flesh",
+      "amount": 1
+    }
+  ],
   "arcana:flight_crystal": [
+    {
+      "aspect": "arcana:flight",
+      "amount": 1
+    }
+  ],
+  "arcana:flight": [
     {
       "aspect": "arcana:flight",
       "amount": 1
@@ -795,7 +927,19 @@
       "amount": 1
     }
   ],
+  "arcana:gluttony": [
+    {
+      "aspect": "arcana:gluttony",
+      "amount": 1
+    }
+  ],
   "arcana:greed_crystal": [
+    {
+      "aspect": "arcana:greed",
+      "amount": 1
+    }
+  ],
+  "arcana:greed": [
     {
       "aspect": "arcana:greed",
       "amount": 1
@@ -807,7 +951,19 @@
       "amount": 1
     }
   ],
+  "arcana:harvest": [
+    {
+      "aspect": "arcana:harvest",
+      "amount": 1
+    }
+  ],
   "arcana:human_crystal": [
+    {
+      "aspect": "arcana:human",
+      "amount": 1
+    }
+  ],
+  "arcana:human": [
     {
       "aspect": "arcana:human",
       "amount": 1
@@ -819,7 +975,19 @@
       "amount": 1
     }
   ],
+  "arcana:ice": [
+    {
+      "aspect": "arcana:ice",
+      "amount": 1
+    }
+  ],
   "arcana:imprison_crystal": [
+    {
+      "aspect": "arcana:imprison",
+      "amount": 1
+    }
+  ],
+  "arcana:imprison": [
     {
       "aspect": "arcana:imprison",
       "amount": 1
@@ -831,7 +999,19 @@
       "amount": 1
     }
   ],
+  "arcana:journey": [
+    {
+      "aspect": "arcana:journey",
+      "amount": 1
+    }
+  ],
   "arcana:life_crystal": [
+    {
+      "aspect": "arcana:life",
+      "amount": 1
+    }
+  ],
+  "arcana:life": [
     {
       "aspect": "arcana:life",
       "amount": 1
@@ -843,7 +1023,19 @@
       "amount": 1
     }
   ],
+  "arcana:light": [
+    {
+      "aspect": "arcana:light",
+      "amount": 1
+    }
+  ],
   "arcana:lust_crystal": [
+    {
+      "aspect": "arcana:lust",
+      "amount": 1
+    }
+  ],
+  "arcana:lust": [
     {
       "aspect": "arcana:lust",
       "amount": 1
@@ -855,7 +1047,19 @@
       "amount": 1
     }
   ],
+  "arcana:machine": [
+    {
+      "aspect": "arcana:machine",
+      "amount": 1
+    }
+  ],
   "arcana:mana_crystal": [
+    {
+      "aspect": "arcana:mana",
+      "amount": 1
+    }
+  ],
+  "arcana:mana": [
     {
       "aspect": "arcana:mana",
       "amount": 1
@@ -867,7 +1071,19 @@
       "amount": 1
     }
   ],
+  "arcana:metal": [
+    {
+      "aspect": "arcana:metal",
+      "amount": 1
+    }
+  ],
   "arcana:mining_crystal": [
+    {
+      "aspect": "arcana:mining",
+      "amount": 1
+    }
+  ],
+  "arcana:mining": [
     {
       "aspect": "arcana:mining",
       "amount": 1
@@ -879,7 +1095,19 @@
       "amount": 1
     }
   ],
+  "arcana:mind": [
+    {
+      "aspect": "arcana:mind",
+      "amount": 1
+    }
+  ],
   "arcana:movement_crystal": [
+    {
+      "aspect": "arcana:movement",
+      "amount": 1
+    }
+  ],
+  "arcana:movement": [
     {
       "aspect": "arcana:movement",
       "amount": 1
@@ -891,7 +1119,19 @@
       "amount": 1
     }
   ],
+  "arcana:nether": [
+    {
+      "aspect": "arcana:nether",
+      "amount": 1
+    }
+  ],
   "arcana:overworld_crystal": [
+    {
+      "aspect": "arcana:overworld",
+      "amount": 1
+    }
+  ],
+  "arcana:overworld": [
     {
       "aspect": "arcana:overworld",
       "amount": 1
@@ -903,7 +1143,19 @@
       "amount": 1
     }
   ],
+  "arcana:plant": [
+    {
+      "aspect": "arcana:plant",
+      "amount": 1
+    }
+  ],
   "arcana:pride_crystal": [
+    {
+      "aspect": "arcana:pride",
+      "amount": 1
+    }
+  ],
+  "arcana:pride": [
     {
       "aspect": "arcana:pride",
       "amount": 1
@@ -915,7 +1167,19 @@
       "amount": 1
     }
   ],
+  "arcana:seeds": [
+    {
+      "aspect": "arcana:seeds",
+      "amount": 1
+    }
+  ],
   "arcana:senses_crystal": [
+    {
+      "aspect": "arcana:senses",
+      "amount": 1
+    }
+  ],
+  "arcana:senses": [
     {
       "aspect": "arcana:senses",
       "amount": 1
@@ -927,7 +1191,19 @@
       "amount": 1
     }
   ],
+  "arcana:slime": [
+    {
+      "aspect": "arcana:slime",
+      "amount": 1
+    }
+  ],
   "arcana:sloth_crystal": [
+    {
+      "aspect": "arcana:sloth",
+      "amount": 1
+    }
+  ],
+  "arcana:sloth": [
     {
       "aspect": "arcana:sloth",
       "amount": 1
@@ -939,7 +1215,19 @@
       "amount": 1
     }
   ],
+  "arcana:spirit": [
+    {
+      "aspect": "arcana:spirit",
+      "amount": 1
+    }
+  ],
   "arcana:strength_crystal": [
+    {
+      "aspect": "arcana:strength",
+      "amount": 1
+    }
+  ],
+  "arcana:strength": [
     {
       "aspect": "arcana:strength",
       "amount": 1
@@ -951,7 +1239,19 @@
       "amount": 1
     }
   ],
+  "arcana:taint": [
+    {
+      "aspect": "arcana:taint",
+      "amount": 1
+    }
+  ],
   "arcana:tool_crystal": [
+    {
+      "aspect": "arcana:tool",
+      "amount": 1
+    }
+  ],
+  "arcana:tool": [
     {
       "aspect": "arcana:tool",
       "amount": 1
@@ -963,7 +1263,19 @@
       "amount": 1
     }
   ],
+  "arcana:tree": [
+    {
+      "aspect": "arcana:tree",
+      "amount": 1
+    }
+  ],
   "arcana:undead_crystal": [
+    {
+      "aspect": "arcana:undead",
+      "amount": 1
+    }
+  ],
+  "arcana:undead": [
     {
       "aspect": "arcana:undead",
       "amount": 1
@@ -975,7 +1287,19 @@
       "amount": 1
     }
   ],
+  "arcana:vacuum": [
+    {
+      "aspect": "arcana:vacuum",
+      "amount": 1
+    }
+  ],
   "arcana:venom_crystal": [
+    {
+      "aspect": "arcana:venom",
+      "amount": 1
+    }
+  ],
+  "arcana:venom": [
     {
       "aspect": "arcana:venom",
       "amount": 1
@@ -987,13 +1311,31 @@
       "amount": 1
     }
   ],
+  "arcana:weapon": [
+    {
+      "aspect": "arcana:weapon",
+      "amount": 1
+    }
+  ],
   "arcana:wind_crystal": [
     {
       "aspect": "arcana:wind",
       "amount": 1
     }
   ],
+  "arcana:wind": [
+    {
+      "aspect": "arcana:wind",
+      "amount": 1
+    }
+  ],
   "arcana:wrath_crystal": [
+    {
+      "aspect": "arcana:wrath",
+      "amount": 1
+    }
+  ],
+  "arcana:wrath": [
     {
       "aspect": "arcana:wrath",
       "amount": 1
