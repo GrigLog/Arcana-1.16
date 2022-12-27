@@ -1,6 +1,9 @@
 package arcana.common.items;
 
 import arcana.Arcana;
+import arcana.common.entities.ArcanumEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -10,7 +13,8 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.SeparatePerspectiveModel;
+
+import javax.annotation.Nullable;
 
 import static arcana.utils.Util.arcLoc;
 
@@ -37,5 +41,16 @@ public class ArcanumItem extends Item {
         CompoundNBT tag = player.getItemInHand(hand).getOrCreateTag();
         tag.putBoolean("open", !tag.getBoolean("open"));
         return super.use(world, player, hand);
+    }
+
+    @Override
+    public boolean hasCustomEntity(ItemStack stack) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public Entity createEntity(World world, Entity original, ItemStack itemstack) {
+        return new ArcanumEntity((ItemEntity) original);
     }
 }

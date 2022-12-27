@@ -6,6 +6,7 @@ import arcana.common.blocks.tiles.ModTiles;
 import arcana.common.capability.Knowledge;
 import arcana.common.capability.Marks;
 import arcana.common.containers.ModContainers;
+import arcana.common.entities.ModEntities;
 import arcana.common.items.ModItems;
 import arcana.common.packets.PacketSender;
 import arcana.common.particles.ModParticles;
@@ -13,6 +14,7 @@ import arcana.common.recipes.ArcanaRecipes;
 import arcana.server.worldgen.Tower;
 import arcana.utils.Util;
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -58,6 +60,11 @@ public class Register {
     @SubscribeEvent
     static void regTiles(RegistryEvent.Register<TileEntityType<?>> event){
         Util.<TileEntityType<?>>getFields(ModTiles.class, TileEntityType.class, null).forEach(event.getRegistry()::register);
+    }
+
+    @SubscribeEvent
+    static void regEntities(RegistryEvent.Register<EntityType<?>> event) {
+        Util.<EntityType<?>>getFields(ModEntities.class, EntityType.class, null).forEach(event.getRegistry()::register);
     }
 
     @SubscribeEvent

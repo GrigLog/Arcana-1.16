@@ -4,6 +4,8 @@ import arcana.client.gui.ResearchTableScreen;
 import arcana.client.model.wand.WandModelLoader;
 import arcana.common.blocks.ModBlocks;
 import arcana.common.containers.ModContainers;
+import arcana.common.entities.ModEntities;
+import arcana.common.items.ModItems;
 import arcana.common.items.spell.CapItem;
 import arcana.common.items.spell.CoreItem;
 import arcana.common.particles.MarkParticle;
@@ -12,6 +14,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -19,6 +22,7 @@ import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
@@ -37,6 +41,8 @@ public class InitEvents {
         RenderTypeLookup.setRenderLayer(ModBlocks.RESEARCH_TABLE_RIGHT, RenderType.cutout());
 
         ScreenManager.register(ModContainers.RESEARCH_TABLE, ResearchTableScreen::new);
+
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.ARCANUM, (manager -> new ItemRenderer(manager, Minecraft.getInstance().getItemRenderer())));
     }
 
     @SubscribeEvent
