@@ -1,0 +1,12 @@
+{
+  "parent": "item/generated",
+  "loader": "forge:separate-perspective",
+  "base": {
+    "parent": "arcana:item/arcanum/3d_open"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "arcana:item/arcanum/inventory_open"
+    }
+  }
+}

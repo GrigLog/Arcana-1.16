@@ -41,8 +41,8 @@ public class InitEvents {
 
     @SubscribeEvent
     static void regItemModelProperties(FMLClientSetupEvent event){
-        ItemModelsProperties.register(FOCUS, arcLoc("style"),(stack, world, player)->stack.getTag().getInt("style"));
-        ItemModelsProperties.register(Arcanum, arcLoc("open"),(stack, world, player)->stack.getOrCreateTag().getInt("open"));
+        ItemModelsProperties.register(FOCUS, arcLoc("style"), (stack, world, player)->stack.getTag().getInt("style"));
+        ItemModelsProperties.register(Arcanum, arcLoc("open"), (stack, world, player)->stack.getOrCreateTag().getBoolean("open") ? 1 : 0);
     }
 
     @SubscribeEvent

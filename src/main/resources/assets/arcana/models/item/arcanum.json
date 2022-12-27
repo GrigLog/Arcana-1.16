@@ -1,10 +1,15 @@
 {
   "parent": "item/generated",
-  "textures": {
-    "layer0": "arcana:items/arcanum"
+  "loader": "forge:separate-perspective",
+  "base": {
+    "parent": "arcana:item/arcanum/3d_closed"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "arcana:item/arcanum/inventory_closed"
+    }
   },
   "overrides": [
-    { "predicate": { "arcana:open": 0 }, "model": "arcana:item/arcanum/arcanum_closed" },
-    { "predicate": { "arcana:open": 1 }, "model": "arcana:item/arcanum/arcanum_open" }
+    { "predicate": { "arcana:open": 1 }, "model": "arcana:item/arcanum_open" }
 ]
 }

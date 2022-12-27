@@ -10,6 +10,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.SeparatePerspectiveModel;
 
 import static arcana.utils.Util.arcLoc;
 
@@ -33,8 +34,8 @@ public class ArcanumItem extends Item {
 
     @Override
     public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        player.getItemInHand(hand).getOrCreateTag().putBoolean("open", true);
-
+        CompoundNBT tag = player.getItemInHand(hand).getOrCreateTag();
+        tag.putBoolean("open", !tag.getBoolean("open"));
         return super.use(world, player, hand);
     }
 }
