@@ -1,30 +1,18 @@
-package arcana.common.blocks.tiles;
+package arcana.common.blocks.tiles.research_table;
 
-import arcana.Arcana;
 import arcana.common.blocks.ModBlocks;
 import arcana.common.blocks.ResearchTableLeft;
 import arcana.common.blocks.ResearchTableRight;
-import arcana.common.containers.ResearchTableContainer;
+import arcana.common.blocks.tiles.DefaultTile;
 import arcana.utils.InventoryUtils;
 import arcana.utils.wrappers.TileWrapper;
-import io.netty.buffer.Unpooled;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.state.DirectionProperty;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.ItemStackHandler;
-
-import javax.annotation.Nonnull;
 
 public class ResearchTable extends DefaultTile implements ITickableTileEntity {
     public static final TileEntityType<ResearchTable> type = TileWrapper.wrap("research_table", ResearchTable::new, ModBlocks.RESEARCH_TABLE_RIGHT);

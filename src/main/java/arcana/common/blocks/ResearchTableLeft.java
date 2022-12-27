@@ -1,7 +1,6 @@
 package arcana.common.blocks;
 
-import arcana.Arcana;
-import arcana.common.blocks.tiles.ResearchTable;
+import arcana.common.blocks.tiles.research_table.ResearchTable;
 import arcana.common.containers.ResearchTableContainer;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -18,8 +17,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.EntityViewRenderEvent;
-import net.minecraftforge.fml.network.NetworkHooks;
 
 public class ResearchTableLeft extends AdvancedHorizontalBlock {
     public static final BooleanProperty PAPER = BooleanProperty.create("paper");

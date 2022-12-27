@@ -1,7 +1,7 @@
 package arcana.client.gui;
 
 import arcana.Arcana;
-import arcana.common.blocks.tiles.ResearchTable;
+import arcana.common.blocks.tiles.research_table.ResearchTable;
 import arcana.common.containers.ResearchTableContainer;
 import arcana.common.packets.PacketSender;
 import arcana.common.packets.ToggleMinigamePacket;
@@ -14,8 +14,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 
-import static arcana.common.blocks.tiles.ResearchTable.INK;
-import static arcana.common.blocks.tiles.ResearchTable.PAPER;
+import static arcana.common.blocks.tiles.research_table.ResearchTable.INK;
+import static arcana.common.blocks.tiles.research_table.ResearchTable.PAPER;
 
 public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer> {
     public static final int WIDTH = 378;
@@ -71,10 +71,10 @@ public class ResearchTableScreen extends ContainerScreen<ResearchTableContainer>
     protected static class StartFinishButton extends Button{
         ResearchTable tile;
         public StartFinishButton(ResearchTable tile, int pX, int pY, int pWidth, int pHeight) {
-            super(pX, pY, pWidth, pHeight, new StringTextComponent("Start"), b -> {
+            super(pX, pY, pWidth, pHeight, new StringTextComponent(tile.minigame.isActive() ? "Finish" : "Start"), b -> {
                 b.setMessage(new StringTextComponent(tile.minigame.isActive() ? "Start" : "Finish"));
                 long seed = tile.getLevel().random.nextLong();
-                tile.minigame.toggle(seed);
+                tile.minigame.toggle(seed, null);
                 PacketSender.INSTANCE.sendToServer(new ToggleMinigamePacket(seed));
             });
             this.tile = tile;

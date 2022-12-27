@@ -10,7 +10,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class AspectIcon extends Item {
-	Aspect aspect;
+	public Aspect aspect;
 	public AspectIcon(Aspect aspect){
 		super(new Properties());
 		setRegistryName(new ResourceLocation(aspect.id.getNamespace(), aspect.id.getPath()));

@@ -1,7 +1,7 @@
 package arcana.common.containers;
 
 import arcana.client.gui.ResearchTableScreen;
-import arcana.common.blocks.tiles.ResearchTable;
+import arcana.common.blocks.tiles.research_table.ResearchTable;
 import arcana.common.items.ModItemTags;
 import arcana.common.items.ModItems;
 import arcana.common.items.aspect.AspectIcon;
@@ -20,8 +20,8 @@ import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 
-import static arcana.common.blocks.tiles.ResearchMinigame.GRID_HEIGHT;
-import static arcana.common.blocks.tiles.ResearchMinigame.GRID_WIDTH;
+import static arcana.common.blocks.tiles.research_table.ResearchMinigame.GRID_HEIGHT;
+import static arcana.common.blocks.tiles.research_table.ResearchMinigame.GRID_WIDTH;
 
 public class ResearchTableContainer extends Container {
     public ResearchTable tile;

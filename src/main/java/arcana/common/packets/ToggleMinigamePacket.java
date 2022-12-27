@@ -37,7 +37,7 @@ public class ToggleMinigamePacket extends PacketHandler<ToggleMinigamePacket> {
          if (ctx.get().getDirection() == NetworkDirection.PLAY_TO_SERVER){
             ServerPlayerEntity player = ctx.get().getSender();
             if (player.containerMenu instanceof ResearchTableContainer){
-                ((ResearchTableContainer)player.containerMenu).tile.minigame.toggle(packet.seed);
+                ((ResearchTableContainer)player.containerMenu).tile.minigame.toggle(packet.seed, player);
             }
         }
     }
