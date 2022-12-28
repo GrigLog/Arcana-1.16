@@ -1,0 +1,10 @@
+{
+  "required": true,
+  "minVersion": "0.8.3",
+  "package": "arcana.mixins",
+  "refmap": "mixins.arcana.refmap.json",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [],
+  "client": [],
+  "server": []
+}

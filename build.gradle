@@ -7,12 +7,14 @@ buildscript {
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
 		classpath 'org.parchmentmc:librarian:1.+'
+        classpath 'org.spongepowered:mixingradle:0.7.+'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
+apply plugin: 'org.spongepowered.mixin'
 
 
 version = '0.0'
@@ -71,8 +73,13 @@ repositories{
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.35'
-
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     runtimeOnly fg.deobf("curse.maven:jei-238222:3681294")
+}
+
+mixin {
+    add sourceSets.main, 'mixins.arcana.refmap.json'
+    config 'mixins.arcana.json'
 }
 
 jar {
