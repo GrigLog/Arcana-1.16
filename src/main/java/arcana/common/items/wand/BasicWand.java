@@ -1,7 +1,8 @@
-package arcana.common.items.spell;
+package arcana.common.items.wand;
 
 import arcana.common.ArcanaGroup;
-import arcana.common.FireExplosion;
+import arcana.common.items.spell.FireExplosion;
+import arcana.common.items.spell.Spells;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -24,11 +25,7 @@ public class BasicWand extends Item {
 
     @Override
     public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        f(world, player);
+        Spells.FIRE_EXPLOSION.press(world, player);
         return super.use(world, player, hand);
-    }
-
-    public void f(World world, PlayerEntity player){
-        new FireExplosion(world, player, 3.0F,3,4).explode();
     }
 }

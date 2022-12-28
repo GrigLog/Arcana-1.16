@@ -2,8 +2,8 @@ package arcana.data;
 
 import arcana.Arcana;
 import arcana.common.items.aspect.AspectIcon;
-import arcana.common.items.spell.CapItem;
-import arcana.common.items.spell.CoreItem;
+import arcana.common.items.wand.CapItem;
+import arcana.common.items.wand.CoreItem;
 import arcana.common.items.aspect.Crystal;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.data.DataGenerator;

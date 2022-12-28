@@ -1,14 +1,18 @@
-package arcana.common.items.spell;
+package arcana.common.items.wand;
 
 import arcana.Arcana;
-import arcana.common.items.FocusItem;
 import arcana.common.items.ModItems;
+import arcana.common.items.spell.Spell;
+import arcana.common.items.spell.Spells;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.Color;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -59,6 +63,37 @@ public class WandItem extends Item {
         return FocusItem.FOCI.get(cap_name);
     }
 
+    public static Spell getSpell(ItemStack stack) {
+        String spell_name = stack.getOrCreateTag().getString("spell");
+        if (spell_name.isEmpty())
+            return Spells.EMPTY;
+        return Spells.REGISTRY.get(new ResourceLocation(spell_name));
+    }
+
+    @Override
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        getSpell(stack).press(world, player);
+        player.startUsingItem(hand);
+        return ActionResult.consume(stack);
+    }
+
+    @Override
+    public void releaseUsing(ItemStack stack, World world, LivingEntity living, int timeLeft) {
+        getSpell(stack).release(world, living, Integer.MAX_VALUE - timeLeft);
+        super.releaseUsing(stack, world, living, timeLeft);
+    }
+
+
+    @Override
+    public int getUseDuration(ItemStack stack) {
+        return Integer.MAX_VALUE;
+    }
+
+    @Override
+    public UseAction getUseAnimation(ItemStack p_77661_1_) {
+        return UseAction.BOW;
+    }
 
     @Override
     public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {

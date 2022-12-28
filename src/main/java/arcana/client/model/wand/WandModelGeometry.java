@@ -1,8 +1,8 @@
 package arcana.client.model.wand;
 
-import arcana.common.items.spell.CapItem;
-import arcana.common.items.spell.CoreItem;
-import arcana.common.items.spell.WandItem;
+import arcana.common.items.wand.CapItem;
+import arcana.common.items.wand.CoreItem;
+import arcana.common.items.wand.WandItem;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;

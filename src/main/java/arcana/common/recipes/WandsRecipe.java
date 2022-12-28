@@ -1,8 +1,8 @@
 package arcana.common.recipes;
 
 import arcana.common.items.ModItems;
-import arcana.common.items.spell.CapItem;
-import arcana.common.items.spell.CoreItem;
+import arcana.common.items.wand.CapItem;
+import arcana.common.items.wand.CoreItem;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.Item;
@@ -12,7 +12,6 @@ import net.minecraft.item.crafting.SpecialRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class WandsRecipe extends SpecialRecipe {

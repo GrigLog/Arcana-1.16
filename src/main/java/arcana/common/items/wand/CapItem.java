@@ -1,4 +1,4 @@
-package arcana.common.items.spell;
+package arcana.common.items.wand;
 
 import arcana.Arcana;
 import net.minecraft.client.util.ITooltipFlag;
