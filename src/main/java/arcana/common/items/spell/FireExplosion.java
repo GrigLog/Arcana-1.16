@@ -30,6 +30,11 @@ public class FireExplosion extends Spell {
     public int radius;
     public int burn_time;
 
+    @Override
+    public float getCastSpeedMult() {
+        return 0.5f;
+    }
+
     public FireExplosion(float damage, int radius, int burn_time){ //will be allowed to modify with a config
         this.damage = damage;
         this.radius = radius;
