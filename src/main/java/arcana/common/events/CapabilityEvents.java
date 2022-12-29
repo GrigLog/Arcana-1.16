@@ -1,6 +1,7 @@
 package arcana.common.events;
 
 import arcana.common.capability.Knowledge;
+import arcana.common.capability.Mana;
 import arcana.common.capability.Marks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,7 +19,9 @@ public class CapabilityEvents {
 
     @SubscribeEvent
     static void players(AttachCapabilitiesEvent<Entity> event){
-        if (event.getObject() instanceof PlayerEntity)
+        if (event.getObject() instanceof PlayerEntity) {
             event.addCapability(Knowledge.id, new Knowledge.Provider());
+            event.addCapability(Mana.id, new Mana.Provider());
+        }
     }
 }

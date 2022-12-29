@@ -16,7 +16,11 @@ public class PacketSender {
     private static int msgId = 0;
 
     public static void init() {
-        regPackets(new MarksPacket(), new ToggleMinigamePacket(), new DataSyncPacket());
+        regPackets(new MarksPacket(),
+            new ToggleMinigamePacket(),
+            new DataSyncPacket(),
+            new ManaPacket(),
+            new KnowledgePacket());
     }
 
 

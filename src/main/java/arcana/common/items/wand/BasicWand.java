@@ -1,7 +1,7 @@
 package arcana.common.items.wand;
 
-import arcana.common.ArcanaGroup;
-import arcana.common.items.spell.FireExplosion;
+import arcana.common.capability.Mana;
+import arcana.common.items.ArcanaGroup;
 import arcana.common.items.spell.Spells;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -25,7 +25,9 @@ public class BasicWand extends Item {
 
     @Override
     public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        Spells.FIRE_EXPLOSION.press(world, player);
+        if (Mana.unchecked(player).tryConsume(new float[]{1, 1, 1, 1, 1, 1})) {
+            Spells.FIRE_EXPLOSION.press(world, player);
+        }
         return super.use(world, player, hand);
     }
 }

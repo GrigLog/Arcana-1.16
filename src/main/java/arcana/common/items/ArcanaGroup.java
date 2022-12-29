@@ -1,4 +1,4 @@
-package arcana.common;
+package arcana.common.items;
 
 import arcana.Arcana;
 import arcana.common.items.ModItems;

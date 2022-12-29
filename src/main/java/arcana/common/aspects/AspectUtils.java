@@ -1,6 +1,6 @@
 package arcana.common.aspects;
 
-import arcana.common.ArcanaGroup;
+import arcana.common.items.ArcanaGroup;
 import arcana.common.items.aspect.AspectIcon;
 import arcana.common.items.aspect.Crystal;
 import arcana.utils.Pair;

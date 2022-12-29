@@ -1,12 +1,19 @@
 package arcana.utils;
 
+import arcana.Arcana;
 import arcana.common.aspects.Aspect;
 import arcana.common.aspects.AspectStack;
 import arcana.common.aspects.Aspects;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.mojang.datafixers.types.templates.Tag;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.NBTDynamicOps;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.registry.Registry;
@@ -35,4 +42,25 @@ public class Codecs {
             Codec.INT.optionalFieldOf("count", 1).forGetter(ItemStack::getCount),
             CompoundNBT.CODEC.optionalFieldOf("nbt").forGetter((is) -> Optional.ofNullable(is.getTag()))
         ).apply(builder, (id, count, oTag) -> new ItemStack(id, count, oTag.orElse(null))));
+
+
+    public static <T> T decodeJson(JsonObject json, boolean compressed, Codec<T> codec) {
+        return codec.parse(compressed ? JsonOps.COMPRESSED : JsonOps.INSTANCE, json)
+            .getOrThrow(false, Arcana.logger::error);
+    }
+
+    public static <T> JsonObject encodeJson(T obj, boolean compressed, Codec<T> codec) {
+        return (JsonObject) codec.encodeStart(compressed ? JsonOps.COMPRESSED : JsonOps.INSTANCE, obj)
+            .getOrThrow(false, Arcana.logger::error);
+    }
+
+    public static <T> T decodeNbt(CompoundNBT tag, Codec<T> codec) {
+        return codec.parse(NBTDynamicOps.INSTANCE, tag)
+            .getOrThrow(false, Arcana.logger::error);
+    }
+
+    public static <T> CompoundNBT encodeNbt(T obj, boolean compressed, Codec<T> codec) {
+        return (CompoundNBT) codec.encodeStart(NBTDynamicOps.INSTANCE, obj)
+            .getOrThrow(false, Arcana.logger::error);
+    }
 }

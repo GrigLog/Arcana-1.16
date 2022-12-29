@@ -1,6 +1,5 @@
 package arcana.common.items;
 
-import arcana.common.ArcanaGroup;
 import arcana.common.blocks.ModBlocks;
 import arcana.common.items.wand.*;
 import net.minecraft.item.BlockItem;
