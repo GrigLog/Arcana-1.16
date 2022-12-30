@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 import static arcana.utils.Util.arcLoc;
 
-public class BasicWand extends Item {
+public class BasicWand extends Item implements MagicDevice {
 
     public static double DAMAGE = 10;
     public static double BURN_TIME = 3;

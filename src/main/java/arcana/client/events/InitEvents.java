@@ -58,9 +58,9 @@ public class InitEvents {
     @SubscribeEvent
     public static void onTextureStitch(TextureStitchEvent.Pre event){
         for (CapItem cap : CapItem.CAPS.values())
-            event.addSprite(arcLoc("models/wands/caps/"+cap.name));
+            event.addSprite(arcLoc("models/wands/caps/"+cap.id));
         for(CoreItem core : CoreItem.CORES.values())
-            event.addSprite(arcLoc("models/wands/cores/"+core.name));
+            event.addSprite(arcLoc("models/wands/cores/"+core.id));
         event.addSprite(arcLoc("models/wands/foci/wand_focus"));
         event.addSprite(arcLoc("models/wands/foci/wand_focus_overlay"));
         event.addSprite(arcLoc("models/wands/foci/wand_focus_t"));

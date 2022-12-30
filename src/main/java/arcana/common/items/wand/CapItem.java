@@ -4,6 +4,7 @@ import arcana.Arcana;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.Color;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -18,20 +19,18 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static arcana.utils.Util.arcLoc;
-
 public class CapItem extends Item {
-    public static Map<String, CapItem> CAPS = new LinkedHashMap<>();
+    public static Map<ResourceLocation, CapItem> CAPS = new LinkedHashMap<>();
     public final int complexity, visStorage, level;
-    public String name;
+    public ResourceLocation id;
 
-    public CapItem(String name, int visStorage, int complexity, int level){
+    public CapItem(ResourceLocation name, int visStorage, int complexity, int level){
         super(new Properties().tab(Arcana.ARCANAGROUP));
-        setRegistryName(arcLoc(name));
+        setRegistryName(name);
         this.complexity = complexity;
         this.visStorage = visStorage;
         this.level = level;
-        this.name = name;
+        this.id = name;
         CAPS.put(name,this);
     }
 

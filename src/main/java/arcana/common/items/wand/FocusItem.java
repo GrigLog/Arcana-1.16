@@ -7,6 +7,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -15,16 +16,15 @@ import static arcana.utils.Util.arcLoc;
 
 public class FocusItem extends Item{
 
-    public static Map<String, FocusItem> FOCI = new LinkedHashMap<>();
-    public String name;
+    public static Map<ResourceLocation, FocusItem> FOCI = new LinkedHashMap<>();
+    public ResourceLocation id;
 
-    public FocusItem(String name) {
+    public FocusItem(ResourceLocation id) {
         super(new Properties().tab(Arcana.ARCANAGROUP).stacksTo(1));
-        setRegistryName(arcLoc("focus"));
-        this.name = name;
-        FOCI.put(name, this);
+        setRegistryName(id);
+        this.id = id;
+        FOCI.put(id, this);
     }
-
 
    //public ResourceLocation getModelLocation(CompoundNBT nbt){
    //    int style = nbt.getInt("custom_model_data");

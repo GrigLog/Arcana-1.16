@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Util {
     public static <T> List<T> getFields(Class<?> cls, Class<?> fieldClass, @Nullable Object instance){
@@ -25,6 +26,14 @@ public class Util {
 
     public static ResourceLocation arcLoc(String s){
         return new ResourceLocation(Arcana.id, s);
+    }
+
+    public static <T> T fromId(Map<ResourceLocation, T> map, String key) {
+        return map.get(new ResourceLocation(key));
+    }
+
+    public static ResourceLocation withPath(ResourceLocation rl, String path) {
+        return new ResourceLocation(rl.getNamespace(), path + rl.getPath());
     }
 
     public static int[] farrToIarr(float[] arr) {

@@ -4,6 +4,7 @@ import arcana.Arcana;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.Color;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -21,18 +22,18 @@ import java.util.Map;
 import static arcana.utils.Util.arcLoc;
 
 public class CoreItem extends Item {
-    public static Map<String, CoreItem> CORES = new LinkedHashMap<>();
+    public static Map<ResourceLocation, CoreItem> CORES = new LinkedHashMap<>();
     public final int maxVis,difficulty,level;
-    public String name;
+    public ResourceLocation id;
 
-    public CoreItem(String name, int maxVis,int difficulty,int level) {
+    public CoreItem(ResourceLocation id, int maxVis, int difficulty, int level) {
         super(new Properties().tab(Arcana.ARCANAGROUP));
-        setRegistryName(arcLoc(name));
+        setRegistryName(id);
         this.maxVis = maxVis;
         this.level = level;
         this.difficulty = difficulty;
-        this.name = name;
-        CORES.put(name,this);
+        this.id = id;
+        CORES.put(id, this);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -45,5 +46,13 @@ public class CoreItem extends Item {
 
     public boolean capAllowed(CapItem cap){
         return level >= cap.level;
+    }
+
+    public ResourceLocation getTextureLocation(){
+        return new ResourceLocation(id.getNamespace(), "models/wands/materials/" + id.getPath());
+    }
+
+    public ResourceLocation getGuiTexture(){
+        return new ResourceLocation(id.getNamespace(), "textures/gui/hud/wand/core/" + id.getPath() + ".png");
     }
 }

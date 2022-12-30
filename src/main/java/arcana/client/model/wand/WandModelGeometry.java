@@ -33,6 +33,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 import static arcana.utils.Util.arcLoc;
+import static arcana.utils.Util.withPath;
 
 @SuppressWarnings({"UnstableApiUsage", "deprecation"})
 public class WandModelGeometry implements IModelGeometry<WandModelGeometry> {
@@ -124,12 +125,12 @@ public class WandModelGeometry implements IModelGeometry<WandModelGeometry> {
             // nbt context comes from the focusData tag
             //FocusItem focus = WandItem.getFocus(stack);
             //CompoundNBT focusData =
-            String capTex = cap!=null?cap.name:"void_cap";
-            String coreTex = core!=null?core.name:"ice_wand_core";
+            ResourceLocation capTex = cap!=null ? cap.id : arcLoc("void_cap");
+            ResourceLocation coreTex = core!=null ? core.id : arcLoc("ice_wand_core");
 
             return new WandModelGeometry(
-                    arcLoc("models/wands/caps/"+capTex),
-                    arcLoc("models/wands/cores/"+coreTex),
+                    withPath(capTex, "models/wands/caps/"),
+                    withPath(coreTex,"models/wands/cores/"),
                     variant,
                     arcLoc("item/wands/foci/wand_focus"))
                     .bake(

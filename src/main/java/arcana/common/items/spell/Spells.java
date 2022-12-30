@@ -13,7 +13,7 @@ public class Spells {
     public static final Spell EMPTY = register("name", new Spell());
     public static final Spell FIRE_EXPLOSION = register("fire_explosion", new FireExplosion(3, 3, 4));
 
-    private static Spell register(String name, Spell spell) {
+    static Spell register(String name, Spell spell) {
         REGISTRY.put(arcLoc(name), spell);
         return spell;
     }

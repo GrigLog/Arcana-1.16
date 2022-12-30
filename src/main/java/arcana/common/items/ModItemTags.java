@@ -2,6 +2,7 @@ package arcana.common.items;
 
 import net.minecraft.item.Item;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 
 import static arcana.utils.Util.arcLoc;

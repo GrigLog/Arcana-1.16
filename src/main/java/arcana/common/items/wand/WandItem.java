@@ -26,6 +26,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 import static arcana.utils.Util.arcLoc;
+import static arcana.utils.Util.fromId;
 
 public class WandItem extends Item {
 
@@ -40,8 +41,8 @@ public class WandItem extends Item {
 
     public ItemStack withCapAndCore(CapItem cap, CoreItem core, String var){
         CompoundNBT nbt = new CompoundNBT();
-        nbt.putString("cap", cap.name);
-        nbt.putString("core", core.name);
+        nbt.putString("cap", cap.id.toString());
+        nbt.putString("core", core.id.toString());
         nbt.putString("variant", var);
         ItemStack stack = new ItemStack(this.asItem(), 1);
         stack.setTag(nbt);
@@ -49,18 +50,15 @@ public class WandItem extends Item {
     }
 
     public static CoreItem getCore(ItemStack stack){
-        String core_name = stack.getOrCreateTag().getString("core");
-        return CoreItem.CORES.get(core_name);
+        return fromId(CoreItem.CORES, stack.getOrCreateTag().getString("core"));
     }
 
     public static CapItem getCap(ItemStack stack){
-        String cap_name = stack.getOrCreateTag().getString("cap");
-        return CapItem.CAPS.get(cap_name);
+        return fromId(CapItem.CAPS, stack.getOrCreateTag().getString("cap"));
     }
 
     public static FocusItem getFocus(ItemStack stack){
-        String cap_name = stack.getOrCreateTag().getString("focus");
-        return FocusItem.FOCI.get(cap_name);
+        return fromId(FocusItem.FOCI, stack.getOrCreateTag().getString("focus"));
     }
 
     public static Spell getSpell(ItemStack stack) {
