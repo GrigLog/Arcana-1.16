@@ -19,7 +19,7 @@ public class ClientPlayerMixin {
         if (!(stack.getItem() instanceof WandItem)) {
             return;
         }
-        Spell spell = WandItem.getSpell(stack);
+        Spell spell = WandItem.Companion.getSpell(stack);
         input.leftImpulse *= 5 * spell.getCastSpeedMult();
         input.forwardImpulse *= 5 * spell.getCastSpeedMult();
     }
