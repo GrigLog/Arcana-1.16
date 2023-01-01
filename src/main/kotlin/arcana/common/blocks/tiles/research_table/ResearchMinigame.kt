@@ -26,15 +26,11 @@ import kotlin.math.pow
 class ResearchMinigame(var table: ResearchTable) {
     var canBeFinished = false
     var isActive = false
-    var items: ItemStackHandler
+    var items: ItemStackHandler = table.minigameItems
 
     //root elements are the ones you need to connect. They cannot be moved.
     //root path is a list of indexes.
     var rootPaths: MutableMap<Int, RootPath> = HashMap()
-
-    init {
-        items = table.minigameItems
-    }
 
     fun update() {
         val counter = aspectCounter

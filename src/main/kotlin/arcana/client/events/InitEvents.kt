@@ -1,5 +1,7 @@
 package arcana.client.events
 
+import arcana.client.ClientPaths.CAPS_3D
+import arcana.client.ClientPaths.CORES_3D
 import arcana.client.gui.ResearchTableScreen
 import arcana.client.model.wand.WandModelLoader
 import arcana.common.blocks.ModBlocks
@@ -61,9 +63,13 @@ object InitEvents {
     @SubscribeEvent
     fun onTextureStitch(event: TextureStitchEvent.Pre) {
         for ((rl, cap) in CapItem.CAPS)
-            event.addSprite(rl.withPath{"models/wands/caps/$it"})
-        for ((rl, core) in CoreItem.CORES)
-            event.addSprite(rl.withPath{"models/wands/cores/$it"})
+            event.addSprite(rl.withPath { CAPS_3D + it })
+        for ((rl, core) in CoreItem.CORES) {
+            event.addSprite(rl.withPath { CORES_3D + it })
+            //event.addSprite(rl.withPath { HUD_CORES + it })
+        }
+        //for (a in Aspects.primal)
+            //event.addSprite(a.id.withPath { HUD_VIS + it })
         event.addSprite(Util.arcLoc("models/wands/foci/wand_focus"))
         event.addSprite(Util.arcLoc("models/wands/foci/wand_focus_overlay"))
         event.addSprite(Util.arcLoc("models/wands/foci/wand_focus_t"))

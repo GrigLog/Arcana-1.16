@@ -16,8 +16,6 @@ import net.minecraftforge.items.ItemStackHandler
 class ResearchTable @JvmOverloads constructor(type: TileEntityType<*> = this.type)
     : DefaultTile(type), ITickableTileEntity {
 
-    var minigame: ResearchMinigame = ResearchMinigame(this)
-
     var minigameItems: ItemStackHandler =
         object : ItemStackHandler(ResearchMinigame.GRID_HEIGHT * ResearchMinigame.GRID_WIDTH) {
             override fun getSlotLimit(slot: Int) = 1
@@ -26,6 +24,10 @@ class ResearchTable @JvmOverloads constructor(type: TileEntityType<*> = this.typ
                 setChanged()
             }
         }
+
+    var minigame: ResearchMinigame = ResearchMinigame(this)
+
+
 
     var items: ItemStackHandler = object : ItemStackHandler(2) {
         override fun onContentsChanged(slot: Int) {

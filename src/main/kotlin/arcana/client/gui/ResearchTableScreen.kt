@@ -54,7 +54,7 @@ class ResearchTableScreen(
     override fun renderBg(ms: MatrixStack, pPartialTicks: Float, mouseX: Int, mouseY: Int) {
         this.renderBackground(ms)
         minecraft!!.textureManager.bind(BG)
-        ClientUtil.blitOneToOne(ms, leftPos, topPos, WIDTH, HEIGHT, 0, 0, 378, 378)
+        ClientUtil.blitNoScale(ms, 378, 378, 0, 0, leftPos, topPos, WIDTH, HEIGHT)
     }
 
     class StartFinishButton(var tile: ResearchTable, pX: Int, pY: Int, pWidth: Int, pHeight: Int)

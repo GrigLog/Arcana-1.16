@@ -1,5 +1,7 @@
 package arcana.client.model.wand
 
+import arcana.client.ClientPaths.CAPS_3D
+import arcana.client.ClientPaths.CORES_3D
 import arcana.common.items.ModItems
 import arcana.common.items.wand.CapItem
 import arcana.common.items.wand.CoreItem
@@ -47,8 +49,8 @@ class WandModelGeometry(val capid: ResourceLocation,
         val transformMap =
             PerspectiveMapWrapper.getTransforms(ModelTransformComposition(transformsFromModel, modelTransform))
 
-        val coreTex = RenderMaterial(AtlasTexture.LOCATION_BLOCKS, capid.withPath{"models/wands/caps/$it"})
-        val capTex = RenderMaterial(AtlasTexture.LOCATION_BLOCKS, coreId.withPath{"models/wands/cores/$it"})
+        val coreTex = RenderMaterial(AtlasTexture.LOCATION_BLOCKS, capid.withPath{CAPS_3D + it})
+        val capTex = RenderMaterial(AtlasTexture.LOCATION_BLOCKS, coreId.withPath{CORES_3D + it})
         val corePath = variant.withPath{"item/wands/variants/$it"}
         val focusPath = variant.withPath{"item/wands/foci/${it}_focus"}
         val coreModel = bakery.getModel(corePath)

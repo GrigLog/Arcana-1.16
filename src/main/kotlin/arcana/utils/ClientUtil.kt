@@ -60,29 +60,43 @@ object ClientUtil {
 
     fun renderAspect(ms: MatrixStack, aspect: Aspect, x: Int, y: Int) {
         Minecraft.getInstance().textureManager.bind(ResourceLocation(aspect.id.namespace, "textures/aspects/" + aspect.id.path + ".png"))
-        blitFullTexture(ms, x, y, 16, 16)
+        blitFullImage(ms, x, y, 16, 16)
     }
 
-    fun blitFullTexture(ms: MatrixStack, x: Int, y: Int, w: Int, h: Int) {
-        blit(ms.last().pose(), x, x + w, y, y + h, 0, 0f, 1f, 0f, 1f)
+    //what these letters mean:
+    //"atlas" refers to the whole image
+    //(u1, v1), (u2, v2) are the coordinates of 2 corner points of the desired rectangle from the whole image. They are always between 0 and 1
+    //(rectX, rectY) is a top-left corner of the desired rectangle in plain coordinates (from 0 to 100 or 228... until you hit the borders)
+    //rectW and rectH are its width and height
+    //(x, y) are the coordinates on the screen where your rectangle will be drawn to. (w, h) are width and height on the screen, obviously.
+    //Note that these are not actually "screen" coordinates because Minecraft uses some GUI scaling system
+
+    //our rectangle covers the whole image. The scaling will depend on w, h, and texture resolution
+    fun blitFullImage(ms: MatrixStack, x: Int, y: Int, w: Int, h: Int) =
+        blitByUV(ms.last().pose(), 0f, 0f, 1f, 1f, x, y, x + w, y + h)
+
+    //we don't care about scaling
+    fun blitNoScale(ms: MatrixStack, atlasWidth: Int, atlasHeight: Int, rectX: Int, rectY: Int, x: Int, y: Int, w: Int, h: Int) =
+        blitByRect(ms, atlasWidth, atlasHeight, rectY, rectX, w, h, x, y, w, h)
+
+    //I know this one duplicates blitFullTexture. Shut up. It is more convenient.
+    fun blitFullNoScale(ms: MatrixStack, x: Int, y: Int, atlasWidth: Int, atlasHeight: Int) =
+        blitFullImage(ms, x, y, atlasWidth, atlasHeight)
+
+
+    //making rectX and rectY float might be useful to allow rectX = Math.nextAfter(*, *). It can help to get rid of some rendering artifacts...
+    fun blitByRect(ms: MatrixStack, atlasWidth: Int, atlasHeight: Int, rectY: Int, rectX: Int, rectW: Int, rectH: Int, x: Int, y: Int, w: Int, h: Int) {
+        blitByUV(ms.last().pose(), rectX.toFloat() / atlasWidth, rectY.toFloat() / atlasHeight, (rectX.toFloat() + rectW) / atlasWidth, (rectY.toFloat() + rectH) / atlasHeight, x, y, x + w, y + h)
     }
 
-    fun blitOneToOne(ms: MatrixStack, x: Int, y: Int, w: Int, h: Int, texX: Int, texY: Int, atlasWidth: Int, atlasHeight: Int) {
-        blit(ms, x, y, w, h, texX, texY, w, h, atlasWidth, atlasHeight)
-    }
-
-    //making texX and texY float might be useful to allow texX = Math.nextAfter(*, *). It can help to get rid of some rendering artifacts...
-    fun blit(ms: MatrixStack, x: Int, y: Int, w: Int, h: Int, texX: Int, texY: Int, texW: Int, texH: Int, atlasWidth: Int, atlasHeight: Int) {
-        blit(ms.last().pose(), x, x + w, y, y + h, 0, texX.toFloat() / atlasWidth, (texX.toFloat() + texW) / atlasWidth, texY.toFloat() / atlasHeight, (texY.toFloat() + texH) / atlasHeight)
-    }
-
-    private fun blit(pMatrix: Matrix4f, x1: Int, x2: Int, y1: Int, y2: Int, pBlitOffset: Int, u1: Float, u2: Float, v1: Float, v2: Float) {
+    fun blitByUV(pMatrix: Matrix4f, u1: Float, v1: Float, u2: Float, v2: Float, x1: Int, y1: Int, x2: Int, y2: Int) {
+        val blitOffset = 0
         val bufferbuilder: BufferBuilder = Tessellator.getInstance().builder
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX)
-        bufferbuilder.vertex(pMatrix, x1.toFloat(), y2.toFloat(), pBlitOffset.toFloat()).uv(u1, v2).endVertex()
-        bufferbuilder.vertex(pMatrix, x2.toFloat(), y2.toFloat(), pBlitOffset.toFloat()).uv(u2, v2).endVertex()
-        bufferbuilder.vertex(pMatrix, x2.toFloat(), y1.toFloat(), pBlitOffset.toFloat()).uv(u2, v1).endVertex()
-        bufferbuilder.vertex(pMatrix, x1.toFloat(), y1.toFloat(), pBlitOffset.toFloat()).uv(u1, v1).endVertex()
+        bufferbuilder.vertex(pMatrix, x1.toFloat(), y2.toFloat(), blitOffset.toFloat()).uv(u1, v2).endVertex()
+        bufferbuilder.vertex(pMatrix, x2.toFloat(), y2.toFloat(), blitOffset.toFloat()).uv(u2, v2).endVertex()
+        bufferbuilder.vertex(pMatrix, x2.toFloat(), y1.toFloat(), blitOffset.toFloat()).uv(u2, v1).endVertex()
+        bufferbuilder.vertex(pMatrix, x1.toFloat(), y1.toFloat(), blitOffset.toFloat()).uv(u1, v1).endVertex()
         bufferbuilder.end()
         RenderSystem.enableAlphaTest()
         WorldVertexBufferUploader.end(bufferbuilder)
