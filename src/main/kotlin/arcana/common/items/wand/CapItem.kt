@@ -1,6 +1,7 @@
 package arcana.common.items.wand
 
 import arcana.common.items.ArcanaGroup
+import arcana.utils.Util.withPath
 import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -16,7 +17,7 @@ import javax.annotation.Nonnull
 
 class CapItem(val id: ResourceLocation, val visStorage: Int, val complexity: Int, val level: Int) : Item(ArcanaGroup.props) {
     init {
-        registryName = id
+        registryName = id.withPath{it+"_cap"}
         CAPS.put(id, this)
     }
     companion object {

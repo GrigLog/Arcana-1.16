@@ -17,7 +17,7 @@ import javax.annotation.Nonnull
 
 class CoreItem(val id: ResourceLocation, val maxVis: Int, val difficulty: Int, val level: Int) : Item(ArcanaGroup.props) {
     init {
-        registryName = id
+        registryName = id.withPath{it+"_core"}
         CORES.put(id, this)
     }
 
@@ -59,9 +59,4 @@ class CoreItem(val id: ResourceLocation, val maxVis: Int, val difficulty: Int, v
     fun capAllowed(cap: CapItem): Boolean {
         return level >= cap.level
     }
-
-    val textureLocation: ResourceLocation
-        get() = registryName!!.withPath{"models/wands/materials/$it"}
-    val guiTexture: ResourceLocation
-        get() = registryName!!.withPath{"textures/gui/hud/wand/core/$it"}
 }

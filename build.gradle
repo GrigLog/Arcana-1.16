@@ -81,6 +81,7 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.35'
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     runtimeOnly fg.deobf("curse.maven:jei-238222:3681294")
+    runtimeOnly fg.deobf("curse.maven:crafttweaker-239197:4277433") //to check nbt and tags
 }
 
 mixin {

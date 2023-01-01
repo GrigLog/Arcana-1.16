@@ -4,7 +4,7 @@ import arcana.common.items.ModItems
 import arcana.common.items.wand.CapItem
 import arcana.common.items.wand.CoreItem
 import arcana.common.items.wand.WandItem
-import arcana.utils.Util
+import arcana.utils.Util.arcLoc
 import arcana.utils.Util.withPath
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.Maps
@@ -26,9 +26,13 @@ import org.apache.logging.log4j.LogManager
 import java.util.*
 import java.util.function.Function
 
-class WandModelGeometry(// hold onto data here
-    var cap: ResourceLocation?, var core: ResourceLocation?, var variant: ResourceLocation?, var focus: ResourceLocation?
-) : IModelGeometry<WandModelGeometry?> {
+//unbaked model
+class WandModelGeometry(val capid: ResourceLocation,
+                        val coreId: ResourceLocation,
+                        val variant: ResourceLocation)
+    : IModelGeometry<WandModelGeometry?> {
+    constructor() : this(ModItems.VOID_CAP.id,  ModItems.ICE_CORE.id, arcLoc("wand"))
+
     var LOGGER = LogManager.getLogger()
     override fun bake(
         owner: IModelConfiguration,
@@ -43,16 +47,15 @@ class WandModelGeometry(// hold onto data here
         val transformMap =
             PerspectiveMapWrapper.getTransforms(ModelTransformComposition(transformsFromModel, modelTransform))
 
-        // get core texture
-        val coreTex = RenderMaterial(AtlasTexture.LOCATION_BLOCKS, core)
-        // get cap texture
-        val capTex = RenderMaterial(AtlasTexture.LOCATION_BLOCKS, cap)
-        if (variant == null) variant = Util.arcLoc("wand")
-        val coreLoc = ResourceLocation(variant!!.namespace, "item/wands/variants/" + variant!!.path)
-        //ResourceLocation coreLoc = arcLoc("item/wands/variants/wand");
-        val coreModel = bakery.getModel(coreLoc)
-        var tfs = ItemCameraTransforms.NO_TRANSFORMS
+        val coreTex = RenderMaterial(AtlasTexture.LOCATION_BLOCKS, capid.withPath{"models/wands/caps/$it"})
+        val capTex = RenderMaterial(AtlasTexture.LOCATION_BLOCKS, coreId.withPath{"models/wands/cores/$it"})
+        val corePath = variant.withPath{"item/wands/variants/$it"}
+        val focusPath = variant.withPath{"item/wands/foci/${it}_focus"}
+        val coreModel = bakery.getModel(corePath)
+        val coreBakedModel = coreModel.bake(bakery, spriteGetter, transformsFromModel, corePath)!!
+        val focusModelBaked = bakery.getBakedModel(focusPath, modelTransform, spriteGetter)
 
+        var tfs = ItemCameraTransforms.NO_TRANSFORMS
         // they *should* be, but might as well check.
         if (coreModel is BlockModel) {
             val model = coreModel
@@ -63,16 +66,10 @@ class WandModelGeometry(// hold onto data here
             LOGGER.error("Wand model isn't a block model!")
         }
 
-        // get focus model and texture, apply, and add
         val rand = Random()
-        if (focus != null) {
-            var focusModel =
-                bakery.getBakedModel(Util.arcLoc("item/wands/foci/wand_focus"), modelTransform, spriteGetter)
-            if (variant!!.path == "staff") focusModel =
-                bakery.getBakedModel(Util.arcLoc("item/wands/foci/staff_focus"), modelTransform, spriteGetter)
-            if (focusModel != null) builder.addAll(focusModel.getQuads(null, null, rand))
-        }
-        builder.addAll(coreModel.bake(bakery, spriteGetter, transformsFromModel, coreLoc)!!.getQuads(null, null, rand))
+        if (focusModelBaked != null)
+            builder.addAll(focusModelBaked.getQuads(null, null, rand))
+        builder.addAll(coreBakedModel.getQuads(null, null, rand))
         return WandBakedModel(
             builder.build(),
             spriteGetter.apply(coreTex),
@@ -102,22 +99,12 @@ class WandModelGeometry(// hold onto data here
             val core: CoreItem = WandItem.getCore(stack)
             // get variant (staff/scepter/wand)
             // TODO: improve this slightly
-            var variant = Util.arcLoc("wand")
-            if (stack.tag != null) variant = Util.arcLoc(stack.orCreateTag.getString("variant"))
+            var variant = arcLoc("wand")
+            if (stack.tag != null)
+                variant = arcLoc(stack.tag!!.getString("variant"))
 
 
-            // get focus
-            // nbt context comes from the focusData tag
-            //FocusItem focus = WandItem.getFocus(stack);
-            //CompoundNBT focusData =
-            val capTex = if (cap != null) cap.registryName!! else ModItems.VOID_CAP.registryName!!
-            val coreTex = if (core != null) core.registryName!! else ModItems.ICE_WAND_CORE.registryName!!
-            return WandModelGeometry(
-                capTex.withPath { "models/wands/caps/$it" },
-                coreTex.withPath {"models/wands/cores/$it" },
-                variant,
-                Util.arcLoc("item/wands/foci/wand_focus")
-            )
+            return WandModelGeometry(cap.id, core.id, variant)
                 .bake(
                     (originalModel as WandBakedModel).owner,
                     bakery,

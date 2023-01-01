@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "arcana:item/cores/dair_wand_core"
+    "layer0": "arcana:item/cores/endrod_core"
   }
 }
