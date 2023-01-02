@@ -17,7 +17,8 @@ object PacketSender {
         regPackets(
             MarksPacket(),
             ToggleMinigamePacket(),
-            DataSyncPacket(),
+            ResearchPacket(),
+            BiomeVisPacket(),
             ManaPacket(),
             KnowledgePacket()
         )

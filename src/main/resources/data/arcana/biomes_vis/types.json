@@ -1,0 +1,86 @@
+{
+  "hot": {
+    "fire": 2
+  },
+  "cold": {
+    "water": 1,
+    "air": 1
+  },
+  "sparse": {
+    "order": 1
+  },
+  "dense": {
+    "earth": 1,
+    "water": 1
+  },
+  "wet": {
+    "water": 2
+  },
+  "dry": {
+    "fire": 1,
+    "air": 1
+  },
+  "spooky": {
+    "chaos": 2
+  },
+  "dead": {
+    "chaos": 2
+  },
+  "lush": {
+    "earth": 1,
+    "water": 1
+  },
+  "mushroom": {
+    "order": 1
+    "earth": 1,
+    "water": 1
+  },
+  "magical": {
+    "order": 2
+  },
+  "plateau": {
+    "air": 1
+  },
+  "ocean": {
+    "water": 2,
+    "air": 1
+  },
+  "river": {
+    "water": 1
+  },
+  "mountain": {
+    "earth": 2,
+    "air": 1
+  },
+  "hills": {
+    "earth": 2,
+    "air": 1
+  },
+  "swamp": {
+    "water": 1,
+    "earth": 1
+  },
+  "wasteland": {
+    "air": 1
+  },
+  "void": {
+    "chaos": 3,
+    "order": 3
+  },
+  "overworld": {
+    "water": 1,
+    "air": 1,
+    "earth": 1
+  },
+  "nether": {
+    "fire": 3
+  },
+  "end": {
+    "chaos": 1,
+    "order": 1
+  },
+  "beach": {
+    "water": 1,
+    "air": 1
+  }
+}

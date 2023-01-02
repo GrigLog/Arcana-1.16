@@ -1,8 +1,9 @@
-package arcana.common.research
+package arcana.common.reloadable.research
 
+import arcana.common.research.BookEntry
 import net.minecraft.util.ResourceLocation
 
-object ClientResearchManager {
+object ClientResearchHolder {
     //TODO: use Path's or something similar?
     var books: HashMap<ResourceLocation, HashMap<String, HashMap<String, BookEntry>>> = HashMap()
     //arcana:arcanum -> alchemy -> [root, ores, ...]

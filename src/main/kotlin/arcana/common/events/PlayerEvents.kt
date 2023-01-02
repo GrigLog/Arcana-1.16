@@ -1,7 +1,7 @@
 package arcana.common.events
 
-import arcana.common.CommonData
 import arcana.common.capability.getMana
+import arcana.common.reloadable.biome_vis.BiomeVis
 import net.minecraftforge.event.TickEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber
@@ -16,7 +16,7 @@ object PlayerEvents {
         if (!event.player.isAlive)
             return
         val biome = event.player.level.getBiome(event.player.blockPosition())
-        val biomeAura = CommonData.getBiomeVis(biome)
+        val biomeAura = BiomeVis.getBiomeVis(biome)
         mana.add(biomeAura)
         //Arcana.logger.info(Floats.asList(*mana.values) + (if (event.player.level.isClientSide) "client" else "server"))
     }

@@ -1,10 +1,12 @@
 package arcana.server.events
 
 import arcana.common.aspects.ItemAspectRegistry
-import arcana.common.packets.DataSyncPacket
+import arcana.common.packets.BiomeVisPacket
 import arcana.common.packets.PacketSender
-import arcana.common.research.ResearchLoader
-import arcana.common.research.ServerResearchManager
+import arcana.common.packets.ResearchPacket
+import arcana.common.reloadable.biome_vis.BiomeVisLoader
+import arcana.common.reloadable.research.ResearchLoader
+import arcana.common.reloadable.research.ServerResearchHolder
 import arcana.server.commands.KnowledgeCommand
 import net.minecraft.command.Commands
 import net.minecraft.command.arguments.GameProfileArgument
@@ -25,6 +27,7 @@ object ServerEvents {
         itemAspects = ItemAspectRegistry(event.dataPackRegistries.recipeManager)
         event.addListener(itemAspects)
         event.addListener(ResearchLoader())
+        event.addListener(BiomeVisLoader())
     }
 
     @SubscribeEvent
@@ -48,11 +51,15 @@ object ServerEvents {
 
     @SubscribeEvent
     fun syncData(event: OnDatapackSyncEvent) {
-        if (event.player != null)
-            PacketSender.INSTANCE.send(PacketDistributor.PLAYER.with { event.player }, DataSyncPacket(ServerResearchManager.files))
-        else {
-            for (player in event.playerList.players)
-                PacketSender.INSTANCE.send(PacketDistributor.PLAYER.with { player }, DataSyncPacket(ServerResearchManager.files))
+        val dataPackets = listOf(ResearchPacket(ServerResearchHolder.files), BiomeVisPacket(BiomeVisLoader.files))
+        if (event.player != null) {
+            for (dp in dataPackets)
+                PacketSender.INSTANCE.send(PacketDistributor.PLAYER.with { event.player }, dp)
+        } else {
+            for (player in event.playerList.players) {
+                for (dp in dataPackets)
+                    PacketSender.INSTANCE.send(PacketDistributor.PLAYER.with { player }, dp)
+            }
         }
     }
 }

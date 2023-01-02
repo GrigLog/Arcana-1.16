@@ -1,10 +1,10 @@
-package arcana.common
+package arcana.common.reloadable.biome_vis
 
 import net.minecraft.util.RegistryKey
 import net.minecraft.util.registry.Registry
 import net.minecraft.world.biome.Biome
 
-object CommonData {
+object BiomeVis {
     val BIOME_VIS: MutableMap<RegistryKey<Biome>, FloatArray> = HashMap()
     private val DEFAULT_VIS = floatArrayOf(0.05f, 0.05f, 0.05f, 0.05f, 0.05f, 0.05f)
     fun getBiomeVis(biome: Biome) =
