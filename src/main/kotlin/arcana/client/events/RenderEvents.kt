@@ -31,11 +31,11 @@ object RenderEvents {
         if (player.tickCount % 15 != 0)
             return
         val marks = world.getMarks()
-        for (i in Aspects.primal.indices) {
+        for (i in Aspects.PRIMAL.indices) {
             for (pos in marks.positions[i]) {
                 for (j in 0..2)
                     world.addParticle(
-                        MarkParticle.Data(Aspects.primal[i]),
+                        MarkParticle.Data(Aspects.PRIMAL[i]),
                         pos.x + world.random.nextDouble(), pos.y + 0.3, pos.z + world.random.nextDouble(),
                         0.0, 0.1, 0.0
                 )

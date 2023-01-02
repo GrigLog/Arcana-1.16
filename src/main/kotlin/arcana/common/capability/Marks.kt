@@ -24,7 +24,7 @@ import javax.annotation.Nonnull
 import kotlin.math.abs
 
 class Marks(var positions: Array<List<BlockPos>>) {
-    constructor() : this(Array(Aspects.primal.size) { emptyList() })
+    constructor() : this(Array(Aspects.PRIMAL.size) { emptyList() })
 
     companion object {
         @CapabilityInject(Marks::class)
@@ -36,7 +36,7 @@ class Marks(var positions: Array<List<BlockPos>>) {
         fun sendToClient(@Nonnull player: PlayerEntity) {
             val cap = player.level.getCapability(CAPABILITY!!).resolve().orElse(null)
             val pos = player.blockPosition()
-            val toSend = Array(Aspects.primal.size) { i->
+            val toSend = Array(Aspects.PRIMAL.size) { i->
                 cap!!.positions[i].filter {bp ->
                     abs(bp.x - pos.x) < MARKS_RANGE shl 5 &&
                     abs(bp.z - pos.z) < MARKS_RANGE shl 5
@@ -60,7 +60,7 @@ class Marks(var positions: Array<List<BlockPos>>) {
         }
         set(tag) {
             val arr = tag["positions"] as ListNBT?
-            for (i in Aspects.primal.indices) {
+            for (i in Aspects.PRIMAL.indices) {
                 positions[i] = arr!!.getList(i).map { long -> BlockPos.of((long as LongNBT).asLong) }
             }
         }

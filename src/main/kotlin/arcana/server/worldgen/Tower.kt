@@ -113,7 +113,7 @@ class Tower(var aspect: Aspect) : Structure<NoFeatureConfig>(NoFeatureConfig.COD
             x = pos.x
             z = pos.z
             boundingBox = MutableBoundingBox(pos.x, pos.y, pos.z, pos.x, pos.y, pos.z)
-            primalIndex = ArrayUtils.indexOf(Aspects.primal, aspect)
+            primalIndex = ArrayUtils.indexOf(Aspects.PRIMAL, aspect)
         }
 
         constructor(tm: TemplateManager, tag: CompoundNBT) : super(TYPE, tag) {

@@ -13,7 +13,7 @@ import java.util.function.Supplier
 class MarksPacket(var cap: Marks? = null)
     : PacketHandler<MarksPacket>() {
     override fun decode(buf: PacketBuffer): MarksPacket {
-        val cap = Marks(Array(Aspects.primal.size) {
+        val cap = Marks(Array(Aspects.PRIMAL.size) {
             val arr = buf.readLongArray(null)
             arr.map{pPackedPos: Long -> BlockPos.of(pPackedPos)}.toMutableList()
         })
@@ -21,7 +21,7 @@ class MarksPacket(var cap: Marks? = null)
     }
 
     override fun encode(packet: MarksPacket, buf: PacketBuffer) {
-        for (i in Aspects.primal.indices) {
+        for (i in Aspects.PRIMAL.indices) {
             val arr = packet.cap!!.positions[i].stream().mapToLong { obj: BlockPos? -> obj!!.asLong() }.toArray()
             buf.writeLongArray(arr)
         }

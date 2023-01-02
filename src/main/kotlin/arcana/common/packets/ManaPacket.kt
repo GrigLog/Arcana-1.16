@@ -15,7 +15,7 @@ class ManaPacket(var cap: Mana? = null)
     : PacketHandler<ManaPacket>() {
     override fun decode(buf: PacketBuffer): ManaPacket {
         val max = buf.readFloat()
-        val intValues = IntArray(Aspects.primal.size)
+        val intValues = IntArray(Aspects.PRIMAL.size)
         for (i in intValues.indices) {
             intValues[i] = buf.readInt()
         }
@@ -24,7 +24,7 @@ class ManaPacket(var cap: Mana? = null)
 
     override fun encode(packet: ManaPacket, buf: PacketBuffer) {
         buf.writeFloat(packet.cap!!.max)
-        for (i in Aspects.primal.indices) {
+        for (i in Aspects.PRIMAL.indices) {
             buf.writeInt(java.lang.Float.floatToIntBits(packet.cap!!.values!![i]))
         }
     }

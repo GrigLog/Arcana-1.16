@@ -216,6 +216,6 @@ class ResearchMinigame(var table: ResearchTable) {
     companion object {
         const val GRID_WIDTH = 13
         const val GRID_HEIGHT = 8
-        val ARRAY = Aspects.primal
+        val ARRAY = Aspects.PRIMAL
     }
 }

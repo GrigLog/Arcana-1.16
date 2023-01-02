@@ -69,9 +69,9 @@ object Aspects {
     val WRATH = Aspect.create("wrath", ColorRange.create(0x5a0b3d, 0x8e0f3e, 0xc61626, 0xed1507, 0xffbe8d))
 
     //do not change order!
-    val primal = arrayOf(AIR, WATER, EARTH, FIRE, ORDER, CHAOS)
+    val PRIMAL = arrayOf(AIR, WATER, EARTH, FIRE, ORDER, CHAOS)
     val sin = arrayOf(ENVY, LUST, SLOTH, PRIDE, GREED, WRATH, GLUTTONY)
-    val COMBINATIONS: BiMap<Pair<Aspect, Aspect>, Aspect> = HashBiMap.create(list.size - 1 - primal.size)
+    val COMBINATIONS: BiMap<Pair<Aspect, Aspect>, Aspect> = HashBiMap.create(list.size - 1 - PRIMAL.size)
 
     init {
         COMBINATIONS[Pair.of(FIRE, CHAOS)] = ICE

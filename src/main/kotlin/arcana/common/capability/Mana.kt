@@ -25,7 +25,7 @@ class Mana {
         val id = Util.arcLoc("mana")
     }
 
-    var values = FloatArray(Aspects.primal.size)
+    var values = FloatArray(Aspects.PRIMAL.size)
     var max: Float
 
     constructor() {

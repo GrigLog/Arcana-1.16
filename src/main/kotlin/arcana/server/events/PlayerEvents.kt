@@ -6,8 +6,6 @@ import arcana.common.capability.getMana
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.util.math.ChunkPos
-import net.minecraftforge.event.TickEvent
-import net.minecraftforge.event.TickEvent.PlayerTickEvent
 import net.minecraftforge.event.entity.EntityEvent.EnteringChunk
 import net.minecraftforge.event.entity.player.PlayerEvent.*
 import net.minecraftforge.eventbus.api.SubscribeEvent
@@ -57,17 +55,5 @@ object PlayerEvents {
         Marks.sendToClient(player)
         player.getMana().sendToClient(player)
         player.getKnowledge().sendToClient(player)
-    }
-
-    @SubscribeEvent
-    fun tick(event: PlayerTickEvent) {
-        if (event.phase == TickEvent.Phase.END)
-            return
-        val mana = event.player.getMana() //TODO: move down
-        if (!event.player.isAlive)
-            return
-        val biomeAura = floatArrayOf(0.05f, 0.05f, 0.05f, 0.05f, 0.05f, 0.05f)
-        mana.add(biomeAura)
-    //Arcana.logger.info(Floats.asList(*mana.values))
     }
 }
