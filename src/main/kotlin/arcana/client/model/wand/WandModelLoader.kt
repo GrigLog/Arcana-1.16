@@ -1,6 +1,5 @@
 package arcana.client.model.wand
 
-import WandModelGeometry
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonObject
 import net.minecraft.resources.IResourceManager

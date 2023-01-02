@@ -1,7 +1,6 @@
-
+package arcana.client.model.wand
 import arcana.client.ClientPaths.CAPS_3D
 import arcana.client.ClientPaths.CORES_3D
-import arcana.client.model.wand.WandBakedModel
 import arcana.common.items.ModItems
 import arcana.common.items.wand.WandItem
 import arcana.utils.Util.arcLoc
@@ -34,52 +33,45 @@ import java.util.function.Function
 class WandModelGeometry(
     val cap: ResourceLocation,
     val core: ResourceLocation,
-    val variant: ResourceLocation,
-    var focus: ResourceLocation
+    val variant: ResourceLocation
 ) : IModelGeometry<WandModelGeometry> {
 
-    constructor() : this(ModItems.VOID_CAP.id, ModItems.ICE_CORE.id, arcLoc("wand"), arcLoc("no_focus"))
+    constructor() : this(ModItems.VOID_CAP.id, ModItems.ICE_CORE.id, arcLoc("wand"))
 
     var LOGGER: Logger = LogManager.getLogger()
+
     override fun bake(owner: IModelConfiguration, bakery: ModelBakery,
-        spriteGetter: java.util.function.Function<RenderMaterial, TextureAtlasSprite>,
-        modelTransform: IModelTransform?, overrides: ItemOverrideList?, modelLocation: ResourceLocation?
+        spriteGetter: Function<RenderMaterial, TextureAtlasSprite>,
+        modelTransform: IModelTransform, overrides: ItemOverrideList, modelLocation: ResourceLocation
     ): IBakedModel {
-        val transformsFromModel = owner.combinedTransform
-        val builder = ImmutableList.builder<BakedQuad>()
-        val transformMap: ImmutableMap<TransformType, TransformationMatrix> =
-            PerspectiveMapWrapper.getTransforms(ModelTransformComposition(transformsFromModel, modelTransform))
 
-        // get core texture
         val coreTex = RenderMaterial(AtlasTexture.LOCATION_BLOCKS, core)
-        // get cap texture
         val capTex = RenderMaterial(AtlasTexture.LOCATION_BLOCKS, cap)
-        val coreLoc = variant.withPath{"item/wands/variants/" + it }
-        //ResourceLocation coreLoc = arcLoc("item/wands/variants/wand");
-        val coreModel = bakery.getModel(coreLoc)
+
+        val variantLoc = variant.withPath{"item/wands/variants/" + it }
+        val variantModel = bakery.getModel(variantLoc)
         var tfs = ItemCameraTransforms.NO_TRANSFORMS
-
-        // they *should* be, but might as well check.
-        if (coreModel is BlockModel) {
-            val model = coreModel
-            model.textureMap["core"] = Either.left(coreTex)
-            model.textureMap["cap"] = Either.left(capTex)
-            tfs = model.transforms
-        } else {
+        if (variantModel is BlockModel) {
+            variantModel.textureMap["core"] = Either.left(coreTex)
+            variantModel.textureMap["cap"] = Either.left(capTex)
+            tfs = variantModel.transforms
+        } else
             LOGGER.error("Wand model isn't a block model!")
-        }
 
-        // get focus model and texture, apply, and add
+        val builder = ImmutableList.builder<BakedQuad>()
         val rand = Random()
-        var focusModel = bakery.getBakedModel(arcLoc("item/wands/foci/wand_focus"), modelTransform, spriteGetter)
-        if (variant.path == "staff") focusModel =
-            bakery.getBakedModel(arcLoc("item/wands/foci/staff_focus"), modelTransform, spriteGetter)
+        val focusModel = bakery.getBakedModel(variant.withPath { "item/wands/foci/${it}_focus" }, modelTransform, spriteGetter)
         if (focusModel != null)
             builder.addAll(focusModel.getQuads(null, null, rand))
-        builder.addAll(coreModel.bake(bakery, spriteGetter, transformsFromModel, coreLoc)!!.getQuads(null, null, rand))
+
+        val transformsFromModel = owner.combinedTransform
+        val transformMap: ImmutableMap<TransformType, TransformationMatrix> =
+            PerspectiveMapWrapper.getTransforms(ModelTransformComposition(transformsFromModel, modelTransform))
+        builder.addAll(variantModel.bake(bakery, spriteGetter, transformsFromModel, variantLoc)!!.getQuads(null, null, rand))
+
         return WandBakedModel(builder.build(), spriteGetter.apply(coreTex), Maps.immutableEnumMap(transformMap),
                               AttachmentOverrideHandler(bakery), true, true, this,
-                              owner, modelTransform!!, tfs)
+                              owner, modelTransform, tfs)
     }
 
     override fun getTextures(owner: IModelConfiguration, modelGetter: Function<ResourceLocation, IUnbakedModel>, missingTextureErrors: MutableSet<Pair<String, String>>): MutableCollection<RenderMaterial> {
@@ -99,17 +91,12 @@ class WandModelGeometry(
                 variant = arcLoc(stack.orCreateTag.getString("variant"))
 
 
-            // get focus
-            // nbt context comes from the focusData tag
-            //FocusItem focus = WandItem.getFocus(stack);
-            //CompoundNBT focusData =
             val capTex = cap.id
             val coreTex = core.id
             return WandModelGeometry(
                 capTex.withPath { CAPS_3D + it },
                 coreTex.withPath { CORES_3D + it },
-                variant,
-                arcLoc("item/wands/foci/wand_focus"))
+                variant)
                 .bake(
                     (originalModel as WandBakedModel).owner,
                     bakery,

@@ -1,6 +1,5 @@
 package arcana.client.model.wand
 
-import WandModelGeometry
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableMap
 import net.minecraft.client.renderer.model.BakedQuad
