@@ -3,6 +3,7 @@ package arcana.common.items.wand
 import arcana.common.items.ArcanaGroup
 import arcana.common.items.ModItems
 import arcana.common.items.spell.Spell
+import arcana.common.items.spell.Spells
 import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
@@ -59,7 +60,7 @@ open class WandItem(props: Properties = ArcanaGroup.props)
     override fun fillItemCategory(group: ItemGroup, items: NonNullList<ItemStack>) {
         if (allowdedIn(group)) {
             // iron/wooden, silver/dair, gold/greatwood.json, thaumium/silverwood, void/arcanium
-            items.add(withCapAndCore(ModItems.IRON_CAP, ModItems.WOOD_CORE, "wand"))
+            items.add(withCapAndCore(ModItems.IRON_CAP, ModItems.WOOD_CORE, "wand").apply{ setSpell(this, Spells.SPRAY)})
             items.add(withCapAndCore(ModItems.SILVER_CAP, ModItems.DAIR_CORE, "wand"))
             items.add(withCapAndCore(ModItems.GOLD_CAP, ModItems.GREATWOOD_CORE, "wand"))
             items.add(withCapAndCore(ModItems.THAUMIUM_CAP, ModItems.SILVERWOOD_CORE, "wand"))
@@ -112,6 +113,10 @@ open class WandItem(props: Properties = ArcanaGroup.props)
 
         fun getSpell(stack: ItemStack): Spell {
             return ModItems.WAND.getSpell(stack)
+        }
+
+        fun setSpell(stack: ItemStack, spell: Spell) {
+            stack.getOrCreateTag().putString("spell", Spells.REGISTRY.inverse().get(spell)!!.toString())
         }
     }
 }

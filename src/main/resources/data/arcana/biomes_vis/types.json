@@ -31,7 +31,7 @@
     "water": 1
   },
   "mushroom": {
-    "order": 1
+    "order": 1,
     "earth": 1,
     "water": 1
   },
