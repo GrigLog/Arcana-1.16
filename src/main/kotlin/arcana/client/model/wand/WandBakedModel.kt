@@ -1,8 +1,8 @@
 package arcana.client.model.wand
 
+import WandModelGeometry
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableMap
-import mcp.MethodsReturnNonnullByDefault
 import net.minecraft.client.renderer.model.BakedQuad
 import net.minecraft.client.renderer.model.IModelTransform
 import net.minecraft.client.renderer.model.ItemCameraTransforms
@@ -12,7 +12,6 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.util.math.vector.TransformationMatrix
 import net.minecraftforge.client.model.BakedItemModel
 import net.minecraftforge.client.model.IModelConfiguration
-import javax.annotation.ParametersAreNonnullByDefault
 
 class WandBakedModel(
     quads: ImmutableList<BakedQuad>,
