@@ -6,7 +6,7 @@ import net.minecraft.util.ResourceLocation
 object Spells {
     var REGISTRY: MutableMap<ResourceLocation, Spell> = HashMap()
     val EMPTY: Spell = register("name", Spell())
-    val FIRE_EXPLOSION: Spell = register("firemelon", FireMelon(3f, 3, 4))
+    val FIREMELON: Spell = register("firemelon", FireMelon(3f, 3, 4))
 
     private fun register(name: String, spell: Spell): Spell {
         REGISTRY[Util.arcLoc(name)] = spell

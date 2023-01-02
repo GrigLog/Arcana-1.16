@@ -1,6 +1,5 @@
 package arcana.common.items.wand
 
-import arcana.common.capability.getMana
 import arcana.common.items.ArcanaGroup
 import arcana.common.items.spell.Spells
 import net.minecraft.entity.player.PlayerEntity
@@ -14,9 +13,7 @@ import net.minecraft.world.World
 class BasicWand : Item(ArcanaGroup.props.rarity(Rarity.EPIC).stacksTo(1)), MagicDevice {
 
     override fun use(world: World, player: PlayerEntity, hand: Hand): ActionResult<ItemStack> {
-        if (player.getMana().tryConsume(floatArrayOf(1f, 1f, 1f, 1f, 1f, 1f))) {
-            Spells.FIRE_EXPLOSION.press(world, player)
-        }
+        Spells.FIREMELON.press(world, player)
         return super.use(world, player, hand)
     }
 

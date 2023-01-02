@@ -23,7 +23,7 @@ object Huds {
     @SubscribeEvent
     fun render(event: RenderGameOverlayEvent.Post) {
         val player = Minecraft.getInstance().player
-        if (player == null || event.type != RenderGameOverlayEvent.ElementType.ALL)
+        if (player == null || event.type != RenderGameOverlayEvent.ElementType.HOTBAR)
             return
         if (player.mainHandItem.item is MagicDevice || player.offhandItem.item is MagicDevice) {
             val deviceStack = if (player.mainHandItem.item is MagicDevice) player.mainHandItem else player.offhandItem
