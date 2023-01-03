@@ -51,7 +51,7 @@ class MarkParticle(
             pXSpeed: Double,
             pYSpeed: Double,
             pZSpeed: Double
-        ): Particle? {
+        ): Particle {
             val particle = MarkParticle(data.aspect, pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed)
             particle.setSpriteFromAge(sprite)
             return particle

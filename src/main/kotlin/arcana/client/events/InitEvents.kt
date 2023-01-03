@@ -36,7 +36,9 @@ object InitEvents {
     @SubscribeEvent
     fun regParticles(event: ParticleFactoryRegisterEvent) {
         Minecraft.getInstance().particleEngine.register(ModParticles.MARK_TYPE, MarkParticle::Factory)
+        //Minecraft.getInstance().particleEngine.register(ModParticles.WATER_TYPE, MarkParticle)
     }
+
     @SubscribeEvent
     fun setup(event: FMLClientSetupEvent) {
         RenderTypeLookup.setRenderLayer(ModBlocks.RESEARCH_TABLE_RIGHT, RenderType.cutout())

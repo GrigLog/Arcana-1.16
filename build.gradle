@@ -85,8 +85,8 @@ dependencies {
 }
 
 mixin {
-    //add sourceSets.main, 'mixins.arcana.refmap.json'
-    //config 'mixins.arcana.json'
+    add sourceSets.main, 'mixins.arcana.refmap.json'
+    config 'arcana.mixins.json'
 }
 
 jar {

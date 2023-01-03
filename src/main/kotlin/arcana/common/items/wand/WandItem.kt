@@ -44,6 +44,11 @@ open class WandItem(props: Properties = ArcanaGroup.props)
         return ActionResult.consume(stack)
     }
 
+    override fun onUsingTick(stack: ItemStack, player: LivingEntity, count: Int) {
+        val spell = this.getSpell(stack)
+        spell.hold(player.level, player, count)
+    }
+
     override fun releaseUsing(stack: ItemStack, world: World, living: LivingEntity, timeLeft: Int) {
         getSpell(stack).release(world, living, Int.MAX_VALUE - timeLeft)
         super.releaseUsing(stack, world, living, timeLeft)

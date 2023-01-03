@@ -12,10 +12,11 @@ object PlayerEvents {
     fun tick(event: TickEvent.PlayerTickEvent) {
         if (event.phase == TickEvent.Phase.END)
             return
-        val mana = event.player.getMana() //TODO: move down
-        if (!event.player.isAlive)
+        val player = event.player
+        val mana = player.getMana() //TODO: move down
+        if (!player.isAlive)
             return
-        val biome = event.player.level.getBiome(event.player.blockPosition())
+        val biome = player.level.getBiome(player.blockPosition())
         val biomeAura = BiomeVis.getBiomeVis(biome)
         mana.add(biomeAura)
         //Arcana.logger.info(Floats.asList(*mana.values) + (if (event.player.level.isClientSide) "client" else "server"))
