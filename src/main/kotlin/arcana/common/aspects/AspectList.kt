@@ -10,6 +10,7 @@ import java.util.stream.Collectors
 class AspectList(var list: MutableList<AspectStack> = ArrayList()) 
     : Iterable<AspectStack> {
 
+
     fun add(a: Aspect, amount: Int): AspectList {
         for (ass in list) {
             if (ass.aspect === a) {
@@ -92,6 +93,14 @@ class AspectList(var list: MutableList<AspectStack> = ArrayList())
             .filter { ass -> ass.amount > 0 }
             .collect(Collectors.toList())
         return this
+    }
+
+    fun toArray(coeff: Float = 1f): FloatArray {
+        val res = FloatArray(Aspects.PRIMAL.size)
+        for (ass in list) {
+            res[Aspects.PRIMAL.indexOf(ass.aspect)] = ass.amount * coeff
+        }
+        return res
     }
 
     override fun iterator(): MutableIterator<AspectStack> {

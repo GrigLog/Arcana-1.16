@@ -9,7 +9,11 @@ import net.minecraft.world.World
 
 class WaterSpray : Spell() {
     override val castSpeedMult = 0.6f
-    override fun hold(world: World, caster: LivingEntity, ticksPassed: Int) {
+    override val holdCost = floatArrayOf(0f, 0.05f, 0f, 0f, 0f, 0f)
+
+    override fun hold(world: World, caster: LivingEntity, ticksPassed: Int): Boolean {
+        if (!super.hold(world, caster, ticksPassed))
+            return false
         val castFrom = Vector3d(caster.x, caster.eyeY - 0.3, caster.z)
         val box = AxisAlignedBB.ofSize(RANGE * 2.5, RANGE * 2.5, RANGE * 2.5).move(castFrom)
         val res = ProjectileHelper.getEntityHitResult(caster, castFrom, castFrom.add(caster.lookAngle.scale(RANGE * 2.5)), box, { e->true}, RANGE * RANGE)
@@ -26,6 +30,7 @@ class WaterSpray : Spell() {
             val enemyPushSpeed = caster.lookAngle.scale(PLAYER_PUSH_SPEED * 4)
             res.entity.deltaMovement = res.entity.deltaMovement.add(enemyPushSpeed)
         }
+        return true
     }
 
     companion object {

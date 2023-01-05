@@ -1,6 +1,7 @@
 package arcana.common.items.spell
 
-import arcana.common.capability.getMana
+import arcana.common.aspects.AspectList
+import arcana.common.aspects.Aspects.FIRE
 import net.minecraft.enchantment.ProtectionEnchantment
 import net.minecraft.entity.LivingEntity
 import net.minecraft.particles.ParticleTypes
@@ -16,10 +17,11 @@ import net.minecraft.world.World
 class FireMelon    //will be allowed to modify with a config
     (var damage: Float, var radius: Int, var burn_time: Int) : Spell() {
     override val castSpeedMult = 0.5f
+    override val pressCost = AspectList().add(FIRE, 1).toArray()
 
-    override fun press(world: World, caster: LivingEntity) {
-        if (!caster.getMana().tryConsume(floatArrayOf(0f, 0f, 0f, 1f, 0f, 0f)))
-            return
+    override fun press(world: World, caster: LivingEntity): Boolean {
+        if (!super.press(world, caster))
+            return false
         val x = caster.x
         val y = caster.y + 1
         val z = caster.z
@@ -84,5 +86,6 @@ class FireMelon    //will be allowed to modify with a config
                 }
             }
         }
+        return true
     }
 }
