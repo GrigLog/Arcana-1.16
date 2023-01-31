@@ -11,6 +11,7 @@ object Spells {
     val EMPTY = register("name", Spell())
     val FIREMELON = register("firemelon", FireMelon(3f, 3, 4))
     val SPRAY = register("spray", WaterSpray())
+    val CHASING_SKULL = register("chasing_skull", ChasingSkull())
 
     private fun register(name: String, spell: Spell): Spell {
         REGISTRY[Util.arcLoc(name)] = spell
