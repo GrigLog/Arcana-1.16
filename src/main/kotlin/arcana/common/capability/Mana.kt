@@ -64,7 +64,7 @@ class Mana {
     fun tryConsume(toConsume: FloatArray): Boolean {
         var enough = true
         for (i in values.indices)
-            enough = enough and (values[i] > toConsume[i])
+            enough = enough and (values[i] >= toConsume[i])
         if (!enough)
             return false
         for (i in values.indices)
