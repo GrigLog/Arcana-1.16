@@ -14,6 +14,7 @@ object Spells {
     val CHASING_SKULL = register("chasing_skull", ChasingSkull())
     val RANDOM_POTION = register("random_potion", RandomPotion())
     val DAMAGING_SHOVEL = register("damaging_shovel", DamagingShovel())
+    val QUICK_WALL = register("quick_wall", QuickWall())
 
     private fun register(name: String, spell: Spell): Spell {
         REGISTRY[Util.arcLoc(name)] = spell

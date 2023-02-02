@@ -1,10 +1,12 @@
 package arcana.utils
 
 import arcana.Arcana
+import net.minecraft.entity.Entity
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.MathHelper
 import net.minecraft.util.math.vector.Vector3d
+import net.minecraft.util.math.vector.Vector3i
 
 object Util {
     fun <T> getFields(cls: Class<*>, fieldClass: Class<*>, instance: Any?): List<T> {
@@ -52,4 +54,8 @@ object Util {
         Vector3d(MathHelper.clamp(point.x, minX, maxX),
                  MathHelper.clamp(point.y, minY, maxY),
                  MathHelper.clamp(point.z, minZ, maxZ))
+
+    fun Vector3i.scale(scale: Int) = Vector3i(x * scale, y * scale, z * scale)
+
+    fun Entity.eyePosition() = position().add(0.0, eyeHeight.toDouble(), 0.0)
 }

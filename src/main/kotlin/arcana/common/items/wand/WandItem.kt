@@ -7,12 +7,10 @@ import arcana.common.items.spell.Spells
 import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.Item
-import net.minecraft.item.ItemGroup
-import net.minecraft.item.ItemStack
-import net.minecraft.item.UseAction
+import net.minecraft.item.*
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.util.ActionResult
+import net.minecraft.util.ActionResultType
 import net.minecraft.util.Hand
 import net.minecraft.util.NonNullList
 import net.minecraft.util.text.Color
@@ -38,10 +36,15 @@ open class WandItem(props: Properties = ArcanaGroup.props)
     }
 
     override fun use(world: World, player: PlayerEntity, hand: Hand): ActionResult<ItemStack> {
+        println("wand use")
         val stack = player.getItemInHand(hand)
         getSpell(stack).press(world, player)
         player.startUsingItem(hand)
         return ActionResult.consume(stack)
+    }
+
+    override fun useOn(ctx: ItemUseContext): ActionResultType {
+        return if (getSpell(ctx.itemInHand).pressBlock(ctx.player!!, ctx)) ActionResultType.SUCCESS else ActionResultType.PASS
     }
 
     override fun onUsingTick(stack: ItemStack, player: LivingEntity, count: Int) {
@@ -69,7 +72,7 @@ open class WandItem(props: Properties = ArcanaGroup.props)
             items.add(withCapAndCore(ModItems.SILVER_CAP, ModItems.DAIR_CORE, "wand").apply { setSpell(this, Spells.CHASING_SKULL) })
             items.add(withCapAndCore(ModItems.GOLD_CAP, ModItems.GREATWOOD_CORE, "wand").apply { setSpell(this, Spells.RANDOM_POTION) })
             items.add(withCapAndCore(ModItems.THAUMIUM_CAP, ModItems.SILVERWOOD_CORE, "wand").apply { setSpell(this, Spells.DAMAGING_SHOVEL) })
-            items.add(withCapAndCore(ModItems.VOID_CAP, ModItems.ARCANIUM_CORE, "wand"))
+            items.add(withCapAndCore(ModItems.VOID_CAP, ModItems.ARCANIUM_CORE, "wand").apply { setSpell(this, Spells.QUICK_WALL) })
             items.add(withCapAndCore(ModItems.VOID_CAP, ModItems.BLAZE_CORE, "wand"))
             items.add(withCapAndCore(ModItems.IRON_CAP, ModItems.WOOD_CORE, "staff"))
             items.add(withCapAndCore(ModItems.SILVER_CAP, ModItems.DAIR_CORE, "staff"))
