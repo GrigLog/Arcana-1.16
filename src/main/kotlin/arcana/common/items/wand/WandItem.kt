@@ -36,7 +36,6 @@ open class WandItem(props: Properties = ArcanaGroup.props)
     }
 
     override fun use(world: World, player: PlayerEntity, hand: Hand): ActionResult<ItemStack> {
-        println("wand use")
         val stack = player.getItemInHand(hand)
         getSpell(stack).press(world, player)
         player.startUsingItem(hand)

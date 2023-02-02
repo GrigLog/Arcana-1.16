@@ -14,7 +14,8 @@ class QuickWallTile(type: TileEntityType<*> = ModTiles.QUICK_WALL) : TileEntity(
     override fun tick() {
         val age = blockState.getValue(AGE_2)
         when (age) {
-            0 -> level!!.setBlockAndUpdate(blockPos, blockState.setValue(AGE_2, age + 1))
+            0 -> if (!level!!.isClientSide)
+                level!!.setBlockAndUpdate(blockPos, blockState.setValue(AGE_2, age + 1))
             1 -> {
                 val facing = blockState.getValue(DirectionalBlock.FACING)
                 val pos = Vector3d.atLowerCornerOf(blockPos.offset(facing.normal))
@@ -22,7 +23,8 @@ class QuickWallTile(type: TileEntityType<*> = ModTiles.QUICK_WALL) : TileEntity(
                 for (entity in level!!.getEntities(null, box)) {
                     entity.deltaMovement = facing.normal.to3d()
                 }
-                level!!.setBlockAndUpdate(blockPos, blockState.setValue(AGE_2, age + 1))
+                if (!level!!.isClientSide)
+                    level!!.setBlockAndUpdate(blockPos, blockState.setValue(AGE_2, age + 1))
             }
             2 -> level!!.setBlockAndUpdate(blockPos, Blocks.STONE.defaultBlockState())
         }

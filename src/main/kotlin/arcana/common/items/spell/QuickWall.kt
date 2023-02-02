@@ -23,6 +23,8 @@ class QuickWall : Spell() {
     override fun pressBlock(caster: LivingEntity, ctx: ItemUseContext): Boolean {
         if (!trySpendMana(caster, pressCost)) return false
         val world = caster.level
+        if (world.isClientSide)
+            return true
         val pos = ctx.clickedPos
         val heightDir = ctx.clickedFace.normal
 
