@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "block/air"
+    },
+    "age=1": {
+      "model": "block/air"
+    },
+    "age=2": {
+      "model": "block/stone"
+    }
+  }
+}

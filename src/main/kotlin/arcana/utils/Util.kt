@@ -57,5 +57,7 @@ object Util {
 
     fun Vector3i.scale(scale: Int) = Vector3i(x * scale, y * scale, z * scale)
 
+    fun Vector3i.to3d() = Vector3d(x.toDouble(), y.toDouble(), z.toDouble())
+
     fun Entity.eyePosition() = position().add(0.0, eyeHeight.toDouble(), 0.0)
 }

@@ -2,9 +2,11 @@ package arcana.common.items.spell
 
 import arcana.common.aspects.AspectList
 import arcana.common.aspects.Aspects
+import arcana.common.blocks.ModBlocks
+import arcana.common.blocks.QuickWallBlock.Companion.AGE_2
 import arcana.utils.Util.eyePosition
 import arcana.utils.Util.scale
-import net.minecraft.block.Blocks
+import net.minecraft.block.DirectionalBlock
 import net.minecraft.entity.LivingEntity
 import net.minecraft.item.ItemUseContext
 import net.minecraft.util.math.vector.Vector3d
@@ -44,7 +46,9 @@ class QuickWall : Spell() {
             for (j in (-1..1)) {
                 val placePos = pos.offset(heightDir.scale(i)).offset(widthDir.scale(j))
                 if (world.getBlockState(placePos).isAir) {
-                    world.setBlockAndUpdate(placePos, Blocks.STONE.defaultBlockState())
+                    world.setBlockAndUpdate(placePos, ModBlocks.QUICK_WALL.defaultBlockState()
+                        .setValue(AGE_2, 2 - i)
+                        .setValue(DirectionalBlock.FACING, ctx.clickedFace))
                 }
             }
         }
