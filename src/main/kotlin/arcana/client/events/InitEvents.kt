@@ -5,6 +5,7 @@ import arcana.client.ClientPaths.CORES_3D
 import arcana.client.gui.ResearchTableScreen
 import arcana.client.model.wand.WandModelLoader
 import arcana.client.render.ChasingSkullRenderer
+import arcana.client.render.DamagingShovelRenderer
 import arcana.common.blocks.ModBlocks
 import arcana.common.containers.ModContainers
 import arcana.common.entities.ModEntities
@@ -49,6 +50,7 @@ object InitEvents {
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.ARCANUM)
             { manager -> ItemRenderer(manager, Minecraft.getInstance().itemRenderer) }
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.CHASING_SKULL, ::ChasingSkullRenderer)
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.DAMAGING_SHOVEL, ::DamagingShovelRenderer)
     }
 
     @SubscribeEvent

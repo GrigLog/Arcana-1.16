@@ -18,7 +18,7 @@ import net.minecraftforge.fml.network.NetworkHooks
 import java.lang.Math.PI
 import kotlin.math.pow
 
-class ChasingSkullEntity(type: EntityType<ChasingSkullEntity> = ModEntities.CHASING_SKULL, world: World)
+class ChasingSkullEntity(type: EntityType<out ChasingSkullEntity> = ModEntities.CHASING_SKULL, world: World)
     : ProjectileEntity(type, world) {
     companion object {
         const val SPEED_MIN: Double = 0.15

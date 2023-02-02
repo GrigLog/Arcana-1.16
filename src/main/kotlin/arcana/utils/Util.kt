@@ -2,6 +2,9 @@ package arcana.utils
 
 import arcana.Arcana
 import net.minecraft.util.ResourceLocation
+import net.minecraft.util.math.AxisAlignedBB
+import net.minecraft.util.math.MathHelper
+import net.minecraft.util.math.vector.Vector3d
 
 object Util {
     fun <T> getFields(cls: Class<*>, fieldClass: Class<*>, instance: Any?): List<T> {
@@ -44,4 +47,9 @@ object Util {
     }
 
     fun Boolean.toInt() = if (this) 1 else 0
+
+    fun AxisAlignedBB.closestTo(point: Vector3d) =
+        Vector3d(MathHelper.clamp(point.x, minX, maxX),
+                 MathHelper.clamp(point.y, minY, maxY),
+                 MathHelper.clamp(point.z, minZ, maxZ))
 }
