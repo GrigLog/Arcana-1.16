@@ -10,4 +10,6 @@ object ModEntities {
         .sized(0.3125F, 0.3125F).clientTrackingRange(4).get()
     @JvmField val DAMAGING_SHOVEL = ETWrapper(MISC, "damaging_shovel", ::DamagingShovelEntity)
         .sized(0.5f, 0.5f).get()
+    @JvmField val FIRE_MELON = ETWrapper(MISC, "fire_melon", ::FireMelonEntity)
+        .sized(0.1f, 0.1f).get()
 }

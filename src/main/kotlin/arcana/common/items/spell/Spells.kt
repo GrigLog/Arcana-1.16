@@ -9,7 +9,7 @@ object Spells {
     var REGISTRY: BiMap<ResourceLocation, Spell> = HashBiMap.create()
 
     val EMPTY = register("name", Spell())
-    val FIREMELON = register("firemelon", FireMelon(3f, 3, 4))
+    val FIREMELON = register("firemelon", FireMelon(3f, 3f))
     val SPRAY = register("spray", WaterSpray())
     val CHASING_SKULL = register("chasing_skull", ChasingSkull())
     val RANDOM_POTION = register("random_potion", RandomPotion())

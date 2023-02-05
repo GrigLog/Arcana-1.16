@@ -6,12 +6,14 @@ import arcana.client.gui.ResearchTableScreen
 import arcana.client.model.wand.WandModelLoader
 import arcana.client.render.ChasingSkullRenderer
 import arcana.client.render.DamagingShovelRenderer
+import arcana.client.render.EmptyEntityRenderer
 import arcana.common.blocks.ModBlocks
 import arcana.common.containers.ModContainers
 import arcana.common.entities.ModEntities
 import arcana.common.items.ModItems
 import arcana.common.items.wand.CapItem
 import arcana.common.items.wand.CoreItem
+import arcana.common.particles.LinearFireParticle
 import arcana.common.particles.MarkParticle
 import arcana.common.particles.ModParticles
 import arcana.utils.Util
@@ -38,6 +40,7 @@ object InitEvents {
     @SubscribeEvent
     fun regParticles(event: ParticleFactoryRegisterEvent) {
         Minecraft.getInstance().particleEngine.register(ModParticles.MARK_TYPE, MarkParticle::Factory)
+        Minecraft.getInstance().particleEngine.register(ModParticles.FIRE, LinearFireParticle::Factory)
         //Minecraft.getInstance().particleEngine.register(ModParticles.WATER_TYPE, MarkParticle)
     }
 
@@ -51,6 +54,7 @@ object InitEvents {
             { manager -> ItemRenderer(manager, Minecraft.getInstance().itemRenderer) }
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.CHASING_SKULL, ::ChasingSkullRenderer)
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.DAMAGING_SHOVEL, ::DamagingShovelRenderer)
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.FIRE_MELON, ::EmptyEntityRenderer)
     }
 
     @SubscribeEvent

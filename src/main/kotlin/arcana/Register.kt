@@ -78,7 +78,7 @@ object Register {
 
     @SubscribeEvent
     fun regParticles(event: RegistryEvent.Register<ParticleType<*>>) {
-        event.registry.registerAll(ModParticles.MARK_TYPE)
+        event.registry.registerAll(ModParticles.MARK_TYPE, ModParticles.FIRE)
     }
 
     @SubscribeEvent
