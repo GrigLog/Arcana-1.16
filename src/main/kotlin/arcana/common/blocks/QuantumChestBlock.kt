@@ -2,7 +2,9 @@ package arcana.common.blocks
 
 import arcana.common.blocks.tiles.ModTiles
 import arcana.common.blocks.tiles.QuantumChestTile
+import arcana.common.items.ModItems
 import arcana.mixin_interfaces.IQuantumInventory
+import arcana.utils.Util.eyePosition
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.entity.monster.piglin.PiglinTasks
@@ -11,8 +13,10 @@ import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.fluid.FluidState
 import net.minecraft.fluid.Fluids
 import net.minecraft.inventory.container.ChestContainer
+import net.minecraft.inventory.container.ContainerType
 import net.minecraft.inventory.container.SimpleNamedContainerProvider
 import net.minecraft.item.BlockItemUseContext
+import net.minecraft.item.ItemStack
 import net.minecraft.pathfinding.PathType
 import net.minecraft.state.StateContainer
 import net.minecraft.tileentity.ChestTileEntity
@@ -48,17 +52,38 @@ class QuantumChestBlock(props: Properties = Properties.of(Material.STONE).requir
     }
 
     override fun use(state: BlockState, level: World, pos: BlockPos, player: PlayerEntity, hand: Hand, hit: BlockRayTraceResult): ActionResultType {
-        val inventory = (player as IQuantumInventory).`arcana$get`()
+        val quantumInv = (player as IQuantumInventory).`arcana$get`()
         val tile = level.getBlockEntity(pos)
-        if (inventory != null && tile is QuantumChestTile) {
-            val blockpos: BlockPos = pos.above()
-            if (level.getBlockState(blockpos).isRedstoneConductor(level, blockpos)) {
+        if (quantumInv != null && tile is QuantumChestTile) {
+            val posAbove = pos.above()
+            if (level.getBlockState(posAbove).isRedstoneConductor(level, posAbove)) {
                 return ActionResultType.sidedSuccess(level.isClientSide)
             } else if (level.isClientSide) {
                 return ActionResultType.SUCCESS
             } else {
-                inventory.activeChest = tile
-                player.openMenu(SimpleNamedContainerProvider({ p_226928_1_: Int, p_226928_2_: PlayerInventory?, p_226928_3_: PlayerEntity? -> ChestContainer.threeRows(p_226928_1_, p_226928_2_, inventory) }, CONTAINER_TITLE))
+                quantumInv.activeChest = tile
+                val eyePos = player.eyePosition()
+                val bounds = state.getShape(level, pos).bounds().move(pos)
+                val x0 = eyePos.x < bounds.minX
+                val x1 = eyePos.x > bounds.maxX
+                val y0 = eyePos.y < bounds.minY
+                val y1 = eyePos.y > bounds.maxY
+                val z0 = eyePos.z < bounds.minZ
+                val z1 = eyePos.z > bounds.maxZ
+                var flags = booleanArrayOf(x0, x1, y0, y1, z0, z1)
+                val index =
+                    if (y0 && !(x0 || x1 || y1 || z0 || z1)) {
+                        2
+                    } else {
+                        val indices = intArrayOf(0, 1, 3, 4, 5).filter { flags[it] }
+                        val choice = level.random.nextInt(indices.size)
+                        indices[choice]
+                    }
+                val subset = quantumInv.getSubset(index)
+                if (index == 2 && subset.isEmpty)
+                    subset.setItem(0, ItemStack(ModItems.ARCANUM))
+                player.openMenu(SimpleNamedContainerProvider({ containerId: Int, playerInv: PlayerInventory, player: PlayerEntity? ->
+                    ChestContainer(ContainerType.GENERIC_9x1, containerId, playerInv, quantumInv.getSubset(index), 1) }, CONTAINER_TITLE))
                 PiglinTasks.angerNearbyPiglins(player, true)
                 return ActionResultType.CONSUME
             }

@@ -1,13 +1,54 @@
 package arcana.common.blocks.tiles
 
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.inventory.IInventory
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.nbt.ListNBT
 
 
-class QuantumChestInventory : Inventory(27) {
+class QuantumChestInventory : Inventory(ROW_SIZE * N_ROWS) {
+    companion object {
+        val ROW_SIZE = 9
+        val N_ROWS = 6
+    }
+
+    class Subset(val baseInventory: QuantumChestInventory, val index: Int) : IInventory {
+        override fun clearContent() {
+            for (i in 0 until ROW_SIZE) {
+                setItem(i, ItemStack.EMPTY)
+            }
+            setChanged()
+        }
+
+        override fun getContainerSize(): Int = 9
+
+        override fun isEmpty(): Boolean {
+            for (i in 0 until ROW_SIZE) {
+                if (!getItem(i).isEmpty)
+                    return false
+            }
+            return true
+        }
+
+        override fun getItem(pIndex: Int): ItemStack = baseInventory.getItem(ROW_SIZE * index + pIndex)
+
+        override fun removeItem(pIndex: Int, pCount: Int): ItemStack = baseInventory.removeItem(ROW_SIZE * index + pIndex, pCount)
+
+        override fun removeItemNoUpdate(pIndex: Int): ItemStack = baseInventory.removeItemNoUpdate(ROW_SIZE * index + pIndex)
+
+        override fun setItem(pIndex: Int, pStack: ItemStack) = baseInventory.setItem(ROW_SIZE * index + pIndex, pStack)
+
+        override fun setChanged() = baseInventory.setChanged()
+
+        override fun stillValid(pPlayer: PlayerEntity): Boolean = baseInventory.stillValid(pPlayer)
+    }
+
+    fun getSubset(index: Int): Subset = Subset(this, index)
+
+    //Here goes the copy-paste from EnderChestInventory
+
     var activeChest: QuantumChestTile? = null
 
     override fun fromTag(pContainerNbt: ListNBT) {
