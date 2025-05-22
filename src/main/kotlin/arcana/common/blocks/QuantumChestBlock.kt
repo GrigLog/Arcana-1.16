@@ -2,6 +2,7 @@ package arcana.common.blocks
 
 import arcana.common.blocks.tiles.ModTiles
 import arcana.common.blocks.tiles.QuantumChestTile
+import arcana.mixin_interfaces.IQuantumInventory
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.entity.monster.piglin.PiglinTasks
@@ -9,14 +10,12 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.fluid.FluidState
 import net.minecraft.fluid.Fluids
-import net.minecraft.inventory.EnderChestInventory
 import net.minecraft.inventory.container.ChestContainer
 import net.minecraft.inventory.container.SimpleNamedContainerProvider
 import net.minecraft.item.BlockItemUseContext
 import net.minecraft.pathfinding.PathType
 import net.minecraft.state.StateContainer
 import net.minecraft.tileentity.ChestTileEntity
-import net.minecraft.tileentity.EnderChestTileEntity
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.tileentity.TileEntityMerger
 import net.minecraft.tileentity.TileEntityMerger.ICallbackWrapper
@@ -32,7 +31,6 @@ import net.minecraft.world.IWorld
 import net.minecraft.world.World
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
-import java.util.*
 
 class QuantumChestBlock(props: Properties = Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(22.5f, 600.0f).lightLevel { 7 })
     : AbstractChestBlock<QuantumChestTile>(props, {ModTiles.QUANTUM_CHEST}) {
@@ -50,18 +48,17 @@ class QuantumChestBlock(props: Properties = Properties.of(Material.STONE).requir
     }
 
     override fun use(state: BlockState, level: World, pos: BlockPos, player: PlayerEntity, hand: Hand, hit: BlockRayTraceResult): ActionResultType {
-        //return super.use(state, level, pos, player, hand, hit)
-        val enderchestinventory: EnderChestInventory = player.getEnderChestInventory()
-        val tileentity: TileEntity? = level.getBlockEntity(pos)
-        if (enderchestinventory != null && tileentity is EnderChestTileEntity) {
+        val inventory = (player as IQuantumInventory).`arcana$get`()
+        val tile = level.getBlockEntity(pos)
+        if (inventory != null && tile is QuantumChestTile) {
             val blockpos: BlockPos = pos.above()
             if (level.getBlockState(blockpos).isRedstoneConductor(level, blockpos)) {
                 return ActionResultType.sidedSuccess(level.isClientSide)
             } else if (level.isClientSide) {
                 return ActionResultType.SUCCESS
             } else {
-                enderchestinventory.setActiveChest(tileentity)
-                player.openMenu(SimpleNamedContainerProvider({ p_226928_1_: Int, p_226928_2_: PlayerInventory?, p_226928_3_: PlayerEntity? -> ChestContainer.threeRows(p_226928_1_, p_226928_2_, enderchestinventory) }, CONTAINER_TITLE))
+                inventory.activeChest = tile
+                player.openMenu(SimpleNamedContainerProvider({ p_226928_1_: Int, p_226928_2_: PlayerInventory?, p_226928_3_: PlayerEntity? -> ChestContainer.threeRows(p_226928_1_, p_226928_2_, inventory) }, CONTAINER_TITLE))
                 PiglinTasks.angerNearbyPiglins(player, true)
                 return ActionResultType.CONSUME
             }
