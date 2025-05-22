@@ -1,10 +1,13 @@
 package arcana.common.items
 
+import arcana.client.render.GenericISTER
 import arcana.common.blocks.ModBlocks
+import arcana.common.blocks.tiles.QuantumChestTile
 import arcana.common.items.wand.*
 import arcana.utils.Util.arcLoc
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
+import java.util.concurrent.Callable
 
 
 object ModItems {
@@ -17,6 +20,8 @@ object ModItems {
     @JvmField val RESEARCH_NOTE = item("research_note", ResearchNote(ArcanaGroup.props, false))
     @JvmField val RESEARCH_NOTE_COMPLETE = item("research_note_complete",
                                           ResearchNote(ArcanaGroup.props, true))
+    @JvmField val QUANTUM_CHEST = item("quantum_chest", BlockItem(ModBlocks.QUANTUM_CHEST,
+                                                                  ArcanaGroup.props.setISTER { Callable { GenericISTER(QuantumChestTile()) } }))
 
     @JvmField val WAND = item("wand", WandItem())
     @JvmField val STAFF = item("staff", StaffItem())

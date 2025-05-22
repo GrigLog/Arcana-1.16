@@ -7,7 +7,9 @@ import arcana.client.model.wand.WandModelLoader
 import arcana.client.render.ChasingSkullRenderer
 import arcana.client.render.DamagingShovelRenderer
 import arcana.client.render.EmptyEntityRenderer
+import arcana.client.render.QuantumChestTileRenderer
 import arcana.common.blocks.ModBlocks
+import arcana.common.blocks.tiles.ModTiles
 import arcana.common.containers.ModContainers
 import arcana.common.entities.ModEntities
 import arcana.common.items.ModItems
@@ -21,6 +23,7 @@ import arcana.utils.Util.toInt
 import arcana.utils.Util.withPath
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScreenManager
+import net.minecraft.client.renderer.Atlases
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.RenderTypeLookup
 import net.minecraft.client.renderer.entity.ItemRenderer
@@ -31,6 +34,7 @@ import net.minecraftforge.client.event.ParticleFactoryRegisterEvent
 import net.minecraftforge.client.event.TextureStitchEvent
 import net.minecraftforge.client.model.ModelLoaderRegistry
 import net.minecraftforge.eventbus.api.SubscribeEvent
+import net.minecraftforge.fml.client.registry.ClientRegistry
 import net.minecraftforge.fml.client.registry.RenderingRegistry
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
@@ -55,6 +59,7 @@ object InitEvents {
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.CHASING_SKULL, ::ChasingSkullRenderer)
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.DAMAGING_SHOVEL, ::DamagingShovelRenderer)
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.FIRE_MELON, ::EmptyEntityRenderer)
+        ClientRegistry.bindTileEntityRenderer(ModTiles.QUANTUM_CHEST, ::QuantumChestTileRenderer)
     }
 
     @SubscribeEvent
@@ -71,7 +76,7 @@ object InitEvents {
     }
 
     @SubscribeEvent
-    fun onTextureStitch(event: TextureStitchEvent.Pre) {
+    fun onTextureStitch(event: TextureStitchEvent.Pre) { //todo: specify the atlas sheet?
         for ((rl, cap) in CapItem.CAPS)
             event.addSprite(rl.withPath { CAPS_3D + it })
         for ((rl, core) in CoreItem.CORES) {
@@ -83,5 +88,8 @@ object InitEvents {
         event.addSprite(Util.arcLoc("models/wands/foci/wand_focus"))
         event.addSprite(Util.arcLoc("models/wands/foci/wand_focus_overlay"))
         event.addSprite(Util.arcLoc("models/wands/foci/wand_focus_t"))
+        if (event.map.location().equals(Atlases.CHEST_SHEET)) {
+            event.addSprite(QuantumChestTileRenderer.QUANTUM_CHEST_TEXTURE)
+        }
     }
 }

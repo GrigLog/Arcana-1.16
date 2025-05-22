@@ -8,4 +8,5 @@ import net.minecraft.tileentity.TileEntityType
 object ModTiles {
     @JvmField val RESEARCH_TABLE: TileEntityType<*> = ResearchTable.type
     @JvmField val QUICK_WALL = TileWrapper.wrap("quick_wall", ::QuickWallTile, ModBlocks.QUICK_WALL)
+    @JvmField val QUANTUM_CHEST = TileWrapper.wrap("quantum_chest", ::QuantumChestTile, ModBlocks.QUANTUM_CHEST)
 }

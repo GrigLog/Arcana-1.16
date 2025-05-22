@@ -10,4 +10,5 @@ object ModBlocks {
     @JvmField val RESEARCH_TABLE_RIGHT: Block = ResearchTableRight()
     @JvmField val RESEARCH_TABLE_LEFT: Block = ResearchTableLeft()
     @JvmField val QUICK_WALL = block("quick_wall", QuickWallBlock())
+    @JvmField val QUANTUM_CHEST: Block = block("quantum_chest", QuantumChestBlock()) //todo: cast to QuantumChestBlock?
 }
