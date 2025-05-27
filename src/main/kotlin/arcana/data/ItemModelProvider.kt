@@ -24,7 +24,7 @@ class ItemModelProvider(generator: DataGenerator, existingFileHelper: ExistingFi
         ModItems.RESEARCH_NOTE,
         ModItems.RESEARCH_NOTE_COMPLETE)
     var handheld: List<Item> = ArrayList()
-    var blockItem: List<Item> = ArrayList()
+    var block: List<Item> = listOf(ModItems.PEDESTAL)
     //...
     }
 
@@ -32,6 +32,7 @@ class ItemModelProvider(generator: DataGenerator, existingFileHelper: ExistingFi
         val items = ForgeRegistries.ITEMS.values.toList()
         handheld.forEach(::handheldItem)
         generated.forEach(::generatedItem)
+        block.forEach(::blockItem)
         items.filterIsInstance<AspectIcon>().forEach { makeItemModel(it, "item/generated", "aspects/") }
         items.filterIsInstance<Crystal>().forEach { makeItemModel(it, "item/generated", "item/crystals/") }
         items.filterIsInstance<CapItem>().forEach { makeItemModel(it, "item/generated", "item/caps/") }
@@ -41,6 +42,8 @@ class ItemModelProvider(generator: DataGenerator, existingFileHelper: ExistingFi
     protected fun generatedItem(item: Item) = makeItemModel(item, "item/generated")
 
     protected fun handheldItem(i: Item) = makeItemModel(i, "item/handheld")
+
+    protected fun blockItem(i: Item) = makeItemModel(i, i.registryName!!.namespace + ":block/" + i.registryName!!.path)
 
     protected fun makeItemModel(item: Item?, parent: String?) {
         val name = item!!.registryName!!.path

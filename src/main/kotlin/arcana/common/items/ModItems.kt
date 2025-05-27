@@ -20,8 +20,10 @@ object ModItems {
     @JvmField val RESEARCH_NOTE = item("research_note", ResearchNote(ArcanaGroup.props, false))
     @JvmField val RESEARCH_NOTE_COMPLETE = item("research_note_complete",
                                           ResearchNote(ArcanaGroup.props, true))
+
     @JvmField val QUANTUM_CHEST = item("quantum_chest", BlockItem(ModBlocks.QUANTUM_CHEST,
                                                                   ArcanaGroup.props.setISTER { Callable { GenericISTER(QuantumChestTile()) } }))
+    @JvmField val PEDESTAL = item("pedestal", BlockItem(ModBlocks.PEDESTAL, ArcanaGroup.props))
 
     @JvmField val WAND = item("wand", WandItem())
     @JvmField val STAFF = item("staff", StaffItem())

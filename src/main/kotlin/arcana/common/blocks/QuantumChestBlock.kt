@@ -45,7 +45,7 @@ class QuantumChestBlock(props: Properties = Properties.of(Material.STONE).requir
         val CONTAINER_TITLE: ITextComponent = TranslationTextComponent("container.arcana.quantum_chest")
     }
 
-    override fun hasTileEntity(state: BlockState?): Boolean = true;
+    override fun hasTileEntity(state: BlockState?): Boolean = true
 
     override fun newBlockEntity(world: IBlockReader): TileEntity {
         return QuantumChestTile()
