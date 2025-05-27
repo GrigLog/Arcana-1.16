@@ -22,7 +22,7 @@ import net.minecraft.world.IBlockReader
 import net.minecraft.world.World
 
 
-class PedestalBlock(properties: Properties = Properties.of(Material.STONE).strength(3F).noOcclusion())
+class PedestalBlock(properties: Properties = Properties.of(Material.STONE).strength(3F))
     : WaterloggableBlock(properties), ITileEntityProvider {
     companion object {
         val SHAPE: VoxelShape = VoxelShapes.or(

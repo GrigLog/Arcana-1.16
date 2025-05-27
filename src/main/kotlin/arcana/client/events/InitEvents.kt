@@ -4,10 +4,7 @@ import arcana.client.ClientPaths.CAPS_3D
 import arcana.client.ClientPaths.CORES_3D
 import arcana.client.gui.ResearchTableScreen
 import arcana.client.model.wand.WandModelLoader
-import arcana.client.render.ChasingSkullRenderer
-import arcana.client.render.DamagingShovelRenderer
-import arcana.client.render.EmptyEntityRenderer
-import arcana.client.render.QuantumChestTileRenderer
+import arcana.client.render.*
 import arcana.common.blocks.ModBlocks
 import arcana.common.blocks.tiles.ModTiles
 import arcana.common.containers.ModContainers
@@ -60,6 +57,7 @@ object InitEvents {
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.DAMAGING_SHOVEL, ::DamagingShovelRenderer)
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.FIRE_MELON, ::EmptyEntityRenderer)
         ClientRegistry.bindTileEntityRenderer(ModTiles.QUANTUM_CHEST, ::QuantumChestTileRenderer)
+        ClientRegistry.bindTileEntityRenderer(ModTiles.PEDESTAL, ::PedestalTileEntityRenderer)
     }
 
     @SubscribeEvent

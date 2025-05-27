@@ -10,7 +10,7 @@ import net.minecraft.util.math.AxisAlignedBB
 import net.minecraftforge.items.ItemStackHandler
 
 
-class PedestalTileEntity(type: TileEntityType<*> = ModTiles.QUANTUM_CHEST) : TileEntity(type) {
+class PedestalTileEntity(type: TileEntityType<*> = ModTiles.PEDESTAL) : TileEntity(type) {
     var itemContainer: ItemStackHandler = object : ItemStackHandler(1) {
         override fun onContentsChanged(slot: Int) {
             super.onContentsChanged(slot)
@@ -26,7 +26,8 @@ class PedestalTileEntity(type: TileEntityType<*> = ModTiles.QUANTUM_CHEST) : Til
 
     override fun load(state: BlockState, compound: CompoundNBT) {
         super.load(state, compound)
-        itemContainer.deserializeNBT(compound.getCompound("items"))
+        if(compound.contains("items"))
+            itemContainer.deserializeNBT(compound.getCompound("items"))
     }
 
     override fun save(pCompound: CompoundNBT): CompoundNBT {
