@@ -28,7 +28,7 @@ import net.minecraft.world.World
 class QuantumChestTileRenderer<T>(tileEntityRendererDispatcher: TileEntityRendererDispatcher?) :
     TileEntityRenderer<T>(tileEntityRendererDispatcher) where T : TileEntity?, T : IChestLid? {
     companion object {
-        val QUANTUM_CHEST_TEXTURE = Util.arcLoc("models/quantum_chest")
+        val QUANTUM_CHEST_TEXTURE = Util.arcLoc("block/quantum_chest")
     }
     private val chestLid: ModelRenderer
     private val chestBottom = ModelRenderer(64, 64, 0, 19)

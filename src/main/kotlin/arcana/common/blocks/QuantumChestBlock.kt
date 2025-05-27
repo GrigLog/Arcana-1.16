@@ -42,7 +42,7 @@ class QuantumChestBlock(props: Properties = Properties.of(Material.STONE).requir
         registerDefaultState(stateDefinition.any().setValue(EnderChestBlock.FACING, Direction.NORTH).setValue(EnderChestBlock.WATERLOGGED, false))
     }
     companion object {
-        val CONTAINER_TITLE: ITextComponent = TranslationTextComponent("container.enderchest")
+        val CONTAINER_TITLE: ITextComponent = TranslationTextComponent("container.arcana.quantum_chest")
     }
 
     override fun hasTileEntity(state: BlockState?): Boolean = true;

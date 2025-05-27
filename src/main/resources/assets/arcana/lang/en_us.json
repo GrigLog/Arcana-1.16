@@ -5,6 +5,10 @@
 
   "item.arcana.crystal": "%s Crystal",
 
+  "block.arcana.quantum_chest": "Quantum Chest",
+
+  "container.arcana.quantum_chest": "Quantum Chest",
+
   "_comment": "Arcana aspects",
   "aspect.arcana.any": "Any",
   "aspect.arcana.any.desc": "Any",

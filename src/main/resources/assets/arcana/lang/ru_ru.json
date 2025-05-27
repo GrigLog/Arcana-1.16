@@ -1,5 +1,9 @@
 {
   "itemGroup.arcana": "Arcana",
   "item.arcana.basicwand": "Обычный посох",
-  "item.arcana.arcanum": "Арканум"
+  "item.arcana.arcanum": "Арканум",
+
+  "block.arcana.quantum_chest": "Квантовый Сундук",
+
+  "container.arcana.quantum_chest": "Квантовый Сундук"
 }
