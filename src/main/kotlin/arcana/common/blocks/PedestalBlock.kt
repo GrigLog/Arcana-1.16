@@ -1,17 +1,29 @@
 package arcana.common.blocks
 
 import net.arcanamod.blocks.bases.WaterloggableBlock
+import net.arcanamod.blocks.tiles.PedestalTileEntity
 import net.minecraft.block.BlockState
+import net.minecraft.block.ITileEntityProvider
 import net.minecraft.block.material.Material
+import net.minecraft.entity.item.ItemEntity
+import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.inventory.InventoryHelper
+import net.minecraft.item.ItemStack
 import net.minecraft.pathfinding.PathType
+import net.minecraft.tileentity.TileEntity
+import net.minecraft.util.ActionResultType
+import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.BlockRayTraceResult
 import net.minecraft.util.math.shapes.ISelectionContext
 import net.minecraft.util.math.shapes.VoxelShape
 import net.minecraft.util.math.shapes.VoxelShapes
 import net.minecraft.world.IBlockReader
+import net.minecraft.world.World
 
 
-class PedestalBlock(properties: Properties = Properties.of(Material.STONE).strength(3F).noOcclusion()) : WaterloggableBlock(properties) {
+class PedestalBlock(properties: Properties = Properties.of(Material.STONE).strength(3F).noOcclusion())
+    : WaterloggableBlock(properties), ITileEntityProvider {
     companion object {
         val SHAPE: VoxelShape = VoxelShapes.or(
             box(1.0, 0.0, 1.0, 15.0, 4.0, 15.0),
@@ -23,45 +35,39 @@ class PedestalBlock(properties: Properties = Properties.of(Material.STONE).stren
 
     override fun isPathfindable(pState: BlockState, pLevel: IBlockReader, pPos: BlockPos, pType: PathType) = false
 
-    override fun hasTileEntity(state: BlockState) = false
+    override fun hasTileEntity(state: BlockState) = true
 
-    //override fun newBlockEntity(world: IBlockReader): TileEntity {
-    //    return PedestalTileEntity()
-    //}
+    override fun newBlockEntity(world: IBlockReader) = PedestalTileEntity()
 
-    /*override fun use(pState: BlockState, pLevel: World, pPos: BlockPos, pPlayer: PlayerEntity, pHand: Hand, pHit: BlockRayTraceResult): ActionResultType {
-        val itemstack: ItemStack = player.getHeldItem(hand)
-        val te: PedestalTileEntity = world.getTileEntity(pos) as PedestalTileEntity
+    override fun use(dtate: BlockState, world: World, pos: BlockPos, player: PlayerEntity, hand: Hand, hit: BlockRayTraceResult): ActionResultType {
+        val playerIS: ItemStack = player.getItemInHand(hand)
+        val te: PedestalTileEntity = world.getBlockEntity(pos) as PedestalTileEntity
 
-        if (te.getItem() === ItemStack.EMPTY) {
-            if (!itemstack.isEmpty) {
-                te.setItem(itemstack.split(1))
-                te.markDirty()
+        if (te.itemStack.isEmpty) {
+            if (!playerIS.isEmpty) {
+                te.itemStack = playerIS.split(1)
+                //te.setChanged()
                 return ActionResultType.SUCCESS
             }
         } else {
-            val pedestalItem: ItemStack = te.getItem()
-            if (!pedestalItem.isEmpty && !player.addItemStackToInventory(pedestalItem)) {
-                val itementity = ItemEntity(world,
-                                            player.getPosX(),
-                                            player.getPosY(),
-                                            player.getPosZ(), pedestalItem)
-                itementity.setNoPickupDelay()
-                world.addEntity(itementity)
+            if (!te.itemStack.isEmpty && !player.addItem(te.itemStack)) {
+                val itementity = ItemEntity(world, player.x, player.y, player.z, te.itemStack)
+                itementity.setNoPickUpDelay()
+                world.addFreshEntity(itementity)
             }
-            te.setItem(ItemStack.EMPTY)
-            te.markDirty()
+            te.itemStack = ItemStack.EMPTY
+            //te.setChanged()
             return ActionResultType.CONSUME
         }
         return ActionResultType.PASS
-    }*/
+    }
 
-    /*override fun onRemove(state: BlockState, world: World, pos: BlockPos, newState: BlockState, isMoving: Boolean) {
+    override fun onRemove(state: BlockState, world: World, pos: BlockPos, newState: BlockState, isMoving: Boolean) {
         if (state.block !== newState.block) {
             val te: TileEntity? = world.getBlockEntity(pos)
-            if (te is PedestalTileEntity) InventoryHelper.spawnItemStack(world, te.getPos().getX(), te.getPos()
-                .getY(), te.getPos().getZ(), (te as PedestalTileEntity).getItem())
-            super.onReplaced(state, world, pos, newState, isMoving)
+            if (te is PedestalTileEntity)
+                InventoryHelper.dropItemStack(world, te.blockPos.x.toDouble(), te.blockPos.y.toDouble(), te.blockPos.z.toDouble(), te.itemStack)
+            super.onRemove(state, world, pos, newState, isMoving)
         }
-    }*/
+    }
 }
