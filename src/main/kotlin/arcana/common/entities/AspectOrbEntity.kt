@@ -152,10 +152,12 @@ class AspectOrbEntity(type: EntityType<out AspectOrbEntity>, level: World) : Ent
     }
 
     override fun writeSpawnData(buffer: PacketBuffer) {
+        buffer.writeResourceLocation(aspectStack.aspect.id)
         buffer.writeInt(aspectStack.amount)
     }
 
     override fun readSpawnData(buffer: PacketBuffer) {
+        aspectStack.aspect = Aspects.get(buffer.readResourceLocation())
         aspectStack.amount = buffer.readInt()
     }
 }

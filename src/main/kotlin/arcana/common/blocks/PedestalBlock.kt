@@ -59,7 +59,7 @@ class PedestalBlock(properties: Properties = Properties.of(Material.STONE).stren
                     itementity.setNoPickUpDelay()
                     world.addFreshEntity(itementity)
                 }
-                val aspectOrb = AspectOrbEntity(world, Vector3d.upFromBottomCenterOf (te.blockPos, 1.0), AspectStack(Aspects.FIRE, 20))
+                val aspectOrb = AspectOrbEntity(world, Vector3d.upFromBottomCenterOf (te.blockPos, 1.0), AspectStack(Aspects.CHAOS, 20))
                 world.addFreshEntity(aspectOrb)
             }
             te.itemStack = ItemStack.EMPTY
