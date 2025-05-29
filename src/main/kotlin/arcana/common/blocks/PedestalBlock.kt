@@ -1,5 +1,8 @@
 package arcana.common.blocks
 
+import arcana.common.aspects.AspectStack
+import arcana.common.aspects.Aspects
+import arcana.common.entities.AspectOrbEntity
 import net.arcanamod.blocks.bases.WaterloggableBlock
 import net.arcanamod.blocks.tiles.PedestalTileEntity
 import net.minecraft.block.BlockState
@@ -18,10 +21,11 @@ import net.minecraft.util.math.BlockRayTraceResult
 import net.minecraft.util.math.shapes.ISelectionContext
 import net.minecraft.util.math.shapes.VoxelShape
 import net.minecraft.util.math.shapes.VoxelShapes
+import net.minecraft.util.math.vector.Vector3d
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.World
 
-
+@Suppress("deprecation")
 class PedestalBlock(properties: Properties = Properties.of(Material.STONE).strength(3F))
     : WaterloggableBlock(properties), ITileEntityProvider {
     companion object {
@@ -46,17 +50,19 @@ class PedestalBlock(properties: Properties = Properties.of(Material.STONE).stren
         if (te.itemStack.isEmpty) {
             if (!playerIS.isEmpty) {
                 te.itemStack = playerIS.split(1)
-                //te.setChanged()
                 return ActionResultType.SUCCESS
             }
         } else {
-            if (!te.itemStack.isEmpty && !player.addItem(te.itemStack)) {
-                val itementity = ItemEntity(world, player.x, player.y, player.z, te.itemStack)
-                itementity.setNoPickUpDelay()
-                world.addFreshEntity(itementity)
+            if (!te.itemStack.isEmpty) {
+                if (!player.addItem(te.itemStack)) {
+                    val itementity = ItemEntity(world, player.x, player.y, player.z, te.itemStack)
+                    itementity.setNoPickUpDelay()
+                    world.addFreshEntity(itementity)
+                }
+                val aspectOrb = AspectOrbEntity(world, Vector3d.upFromBottomCenterOf (te.blockPos, 1.0), AspectStack(Aspects.FIRE, 20))
+                world.addFreshEntity(aspectOrb)
             }
             te.itemStack = ItemStack.EMPTY
-            //te.setChanged()
             return ActionResultType.CONSUME
         }
         return ActionResultType.PASS
