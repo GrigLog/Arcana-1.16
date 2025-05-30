@@ -4,9 +4,11 @@ import arcana.common.blocks.tiles.ModTiles
 import net.minecraft.block.BlockState
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundNBT
+import net.minecraft.nbt.NBTUtil
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.tileentity.TileEntityType
 import net.minecraft.util.math.AxisAlignedBB
+import net.minecraft.util.math.BlockPos
 import net.minecraftforge.items.ItemStackHandler
 
 
@@ -17,6 +19,8 @@ class PedestalTileEntity(type: TileEntityType<*> = ModTiles.PEDESTAL) : TileEnti
             setChanged()
         }
     }
+    var infusionMatrix: BlockPos? = null
+
 
     var itemStack: ItemStack
         get() = itemContainer.getStackInSlot(0)
@@ -24,16 +28,21 @@ class PedestalTileEntity(type: TileEntityType<*> = ModTiles.PEDESTAL) : TileEnti
             itemContainer.setStackInSlot(0, stack)
         }
 
-    override fun load(state: BlockState, compound: CompoundNBT) {
-        super.load(state, compound)
-        if(compound.contains("items"))
-            itemContainer.deserializeNBT(compound.getCompound("items"))
-    }
-
     override fun save(pCompound: CompoundNBT): CompoundNBT {
         super.save(pCompound)
         pCompound.put("items", itemContainer.serializeNBT())
-        return pCompound;
+        infusionMatrix?.let {
+            pCompound.put("infusionMatrix", NBTUtil.writeBlockPos(it))
+        }
+        return pCompound
+    }
+
+    override fun load(state: BlockState, compound: CompoundNBT) {
+        super.load(state, compound)
+        itemContainer.deserializeNBT(compound.getCompound("items"))
+        infusionMatrix = if (compound.contains("infusionMatrix"))
+            NBTUtil.readBlockPos(compound.get("infusionMatrix") as CompoundNBT)
+            else null
     }
 
     override fun getUpdateTag(): CompoundNBT {

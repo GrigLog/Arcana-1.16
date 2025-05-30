@@ -12,4 +12,5 @@ object ModBlocks {
     @JvmField val QUICK_WALL = block("quick_wall", QuickWallBlock())
     @JvmField val QUANTUM_CHEST = block("quantum_chest", QuantumChestBlock())
     @JvmField val PEDESTAL = block("pedestal", PedestalBlock())
+    @JvmField val INFUSION_MATRIX = block("infusion_matrix", InfustionMatrixBlock())
 }

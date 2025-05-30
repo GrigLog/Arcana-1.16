@@ -24,6 +24,7 @@ object ModItems {
     @JvmField val QUANTUM_CHEST = item("quantum_chest", BlockItem(ModBlocks.QUANTUM_CHEST,
                                                                   ArcanaGroup.props.setISTER { Callable { GenericISTER(QuantumChestTile()) } }))
     @JvmField val PEDESTAL = item("pedestal", BlockItem(ModBlocks.PEDESTAL, ArcanaGroup.props))
+    @JvmField val INFUSION_MATRIX = item("infusion_matrix", BlockItem(ModBlocks.INFUSION_MATRIX, ArcanaGroup.props))
 
     @JvmField val WAND = item("wand", WandItem())
     @JvmField val STAFF = item("staff", StaffItem())

@@ -24,7 +24,7 @@ class ItemModelProvider(generator: DataGenerator, existingFileHelper: ExistingFi
         ModItems.RESEARCH_NOTE,
         ModItems.RESEARCH_NOTE_COMPLETE)
     var handheld: List<Item> = ArrayList()
-    var block: List<Item> = listOf(ModItems.PEDESTAL)
+    var block: List<Item> = listOf(ModItems.PEDESTAL, ModItems.INFUSION_MATRIX)
     //...
     }
 

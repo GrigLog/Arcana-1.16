@@ -11,4 +11,5 @@ object ModTiles {
     @JvmField val QUICK_WALL = TileWrapper.wrap("quick_wall", ::QuickWallTile, ModBlocks.QUICK_WALL)
     @JvmField val QUANTUM_CHEST = TileWrapper.wrap("quantum_chest", ::QuantumChestTile, ModBlocks.QUANTUM_CHEST)
     @JvmField val PEDESTAL = TileWrapper.wrap("pedestal", ::PedestalTileEntity, ModBlocks.PEDESTAL)
+    @JvmField val INFUSION_MATRIX = TileWrapper.wrap("infusion_matrix", ::InfusionMatrixTileEntity, ModBlocks.INFUSION_MATRIX)
 }

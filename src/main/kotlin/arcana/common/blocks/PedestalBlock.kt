@@ -1,7 +1,10 @@
 package arcana.common.blocks
 
+import arcana.Arcana
 import arcana.common.aspects.AspectStack
 import arcana.common.aspects.Aspects
+import arcana.common.blocks.tiles.InfusionMatrixTileEntity
+import arcana.common.blocks.tiles.InfusionMatrixTileEntity.Companion.RADIUS
 import arcana.common.entities.AspectOrbEntity
 import net.arcanamod.blocks.bases.WaterloggableBlock
 import net.arcanamod.blocks.tiles.PedestalTileEntity
@@ -16,6 +19,7 @@ import net.minecraft.pathfinding.PathType
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.ActionResultType
 import net.minecraft.util.Hand
+import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.BlockRayTraceResult
 import net.minecraft.util.math.shapes.ISelectionContext
@@ -68,12 +72,34 @@ class PedestalBlock(properties: Properties = Properties.of(Material.STONE).stren
         return ActionResultType.PASS
     }
 
-    override fun onRemove(state: BlockState, world: World, pos: BlockPos, newState: BlockState, isMoving: Boolean) {
+    override fun onPlace(state: BlockState, level: World, pedestalPos: BlockPos, oldState: BlockState, isMoving: Boolean) {
+        super.onPlace(state, level, pedestalPos, oldState, isMoving)
+        val area = AxisAlignedBB(pedestalPos).inflate(RADIUS.x.toDouble(), RADIUS.y.toDouble(), RADIUS.z.toDouble())
+        for (matrixPos in BlockPos.betweenClosedStream(area)) {
+            val matrix = level.getBlockEntity(matrixPos)
+            if (matrix is InfusionMatrixTileEntity) {
+                val pedestal = level.getBlockEntity(pedestalPos) as PedestalTileEntity
+                pedestal.infusionMatrix = matrixPos
+                matrix.pedestals.add(pedestalPos)
+                break
+            }
+        }
+    }
+
+    override fun onRemove(state: BlockState, level: World, pedestalPos: BlockPos, newState: BlockState, isMoving: Boolean) {
+        //Arcana.logger.info("pedestal removed: state=" + state + ", newState=" + newState + ", tileEntity=" + level.getBlockEntity(pedestalPos))
         if (state.block !== newState.block) {
-            val te: TileEntity? = world.getBlockEntity(pos)
-            if (te is PedestalTileEntity)
-                InventoryHelper.dropItemStack(world, te.blockPos.x.toDouble(), te.blockPos.y.toDouble(), te.blockPos.z.toDouble(), te.itemStack)
-            super.onRemove(state, world, pos, newState, isMoving)
+            val pedestal: TileEntity? = level.getBlockEntity(pedestalPos)
+            if (pedestal is PedestalTileEntity) {
+                InventoryHelper.dropItemStack(level, pedestal.blockPos.x.toDouble(), pedestal.blockPos.y.toDouble(), pedestal.blockPos.z.toDouble(), pedestal.itemStack)
+                pedestal.infusionMatrix?.let{
+                    val matrix = level.getBlockEntity(it)
+                    if (matrix is InfusionMatrixTileEntity) {
+                        matrix.pedestals.remove(pedestalPos)
+                    }
+                }
+            }
+            super.onRemove(state, level, pedestalPos, newState, isMoving)
         }
     }
 }
