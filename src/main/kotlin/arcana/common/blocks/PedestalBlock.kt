@@ -1,8 +1,6 @@
 package arcana.common.blocks
 
-import arcana.Arcana
-import arcana.common.aspects.AspectStack
-import arcana.common.aspects.Aspects
+import arcana.common.aspects.ItemAspectRegistry
 import arcana.common.blocks.tiles.InfusionMatrixTileEntity
 import arcana.common.blocks.tiles.InfusionMatrixTileEntity.Companion.RADIUS
 import arcana.common.entities.AspectOrbEntity
@@ -58,13 +56,17 @@ class PedestalBlock(properties: Properties = Properties.of(Material.STONE).stren
             }
         } else {
             if (!te.itemStack.isEmpty) {
+                val aspects = ItemAspectRegistry[te.itemStack]
                 if (!player.addItem(te.itemStack)) {
                     val itementity = ItemEntity(world, player.x, player.y, player.z, te.itemStack)
                     itementity.setNoPickUpDelay()
                     world.addFreshEntity(itementity)
                 }
-                val aspectOrb = AspectOrbEntity(world, Vector3d.upFromBottomCenterOf (te.blockPos, 1.0), AspectStack(Aspects.CHAOS, 20))
-                world.addFreshEntity(aspectOrb)
+                if (aspects.list.isNotEmpty()) {
+                    val aspectStack = aspects.list[0]
+                    val aspectOrb = AspectOrbEntity(world, Vector3d.upFromBottomCenterOf (te.blockPos, 1.0), aspectStack, te.infusionMatrix)
+                    world.addFreshEntity(aspectOrb)
+                }
             }
             te.itemStack = ItemStack.EMPTY
             return ActionResultType.CONSUME

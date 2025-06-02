@@ -30,7 +30,7 @@ class AspectOrbRenderer(manager: EntityRendererManager) : EntityRenderer<AspectO
         val v1 = (size / 4 * 16 + 0).toFloat() / 64.0f
         val v2 = (size / 4 * 16 + 16).toFloat() / 64.0f
         val renderTicks = (pEntity.tickCount.toFloat() + pPartialTicks) / 2.0f
-        pMatrixStack.translate(0.0, 0.1, 0.0)
+        pMatrixStack.translate(0.0, 0.05, 0.0)
         pMatrixStack.mulPose(entityRenderDispatcher.cameraOrientation())
         pMatrixStack.mulPose(Vector3f.YP.rotationDegrees(180.0f))
         pMatrixStack.scale(0.3f, 0.3f, 0.3f)

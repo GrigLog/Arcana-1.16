@@ -19,17 +19,20 @@ import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData
 import net.minecraftforge.fml.network.NetworkHooks
 import kotlin.math.max
+import kotlin.math.pow
 
 /** [net.minecraft.entity.item.ExperienceOrbEntity] for reference. Also [net.minecraft.entity.projectile.ArrowEntity] */
 class AspectOrbEntity(type: EntityType<out AspectOrbEntity>, level: World) : Entity(type, level), IEntityAdditionalSpawnData {
     var aspectStack: AspectStack = AspectStack(Aspects.FIRE, 1)
     var age = 0
+    var infusionMatrixPos: BlockPos? = null
 
-    constructor(level: World, pos: Vector3d, value: AspectStack) : this(ModEntities.ASPECT_ORB, level) {
+    constructor(level: World, pos: Vector3d, value: AspectStack, infusionMatrixPos: BlockPos?) : this(ModEntities.ASPECT_ORB, level) {
         setPos(pos.x, pos.y, pos.z)
         aspectStack = value
         deltaMovement = Vector3d(0.0, 1.0 / value.amount, 0.0)
         isNoGravity = true  // does not actually do anything since tick() is overriden but whatever
+        this.infusionMatrixPos = infusionMatrixPos
     }
 
     override fun tick() {
@@ -97,6 +100,7 @@ class AspectOrbEntity(type: EntityType<out AspectOrbEntity>, level: World) : Ent
         if (level.isClientSide)
             Arcana.logger.info(deltaMovement.length())
         val DRAG_COEFF = 0.5
+        val GRAVITY_COEFF = 0.5
         deltaMovement = deltaMovement.scale(max(0.0, 1 - DRAG_COEFF * deltaMovement.length() / aspectStack.amount))
 
         var slipperiness = 1f
@@ -108,6 +112,30 @@ class AspectOrbEntity(type: EntityType<out AspectOrbEntity>, level: World) : Ent
         if (onGround) {
             //what is this for?
             //deltaMovement = deltaMovement.multiply(1.0, -0.9, 1.0)
+        }
+
+        if (infusionMatrixPos != null) {
+            val infusionMatrixVec = Vector3d.atCenterOf(infusionMatrixPos!!)
+            val matrix = level.getBlockEntity(infusionMatrixPos!!)
+            if (matrix != null) {
+                val diff = position().subtract(infusionMatrixVec)
+                val acceleration = GRAVITY_COEFF / diff.lengthSqr()
+                val accVec = infusionMatrixVec.subtract(position()).normalize().scale(acceleration)
+                deltaMovement = deltaMovement.add(accVec)
+
+                val WIDTH = 0.1  // should be close to this.bbWidth. But I don't want to access instance members here
+                val HEIGHT = 0.1
+                val DIST_SQR = ((0.5 + WIDTH / 2).pow(2) * 2 + (0.5 + HEIGHT / 2).pow(2))
+                var shouldBeAbsorbed = diff.lengthSqr() < DIST_SQR
+                if (!shouldBeAbsorbed) { //Check if the orb would go through the suction sphere on the next tick. Absorb right now if so.
+                    val hSqr = deltaMovement.cross(diff).lengthSqr() / deltaMovement.lengthSqr()
+                    val xSqr = diff.lengthSqr() - hSqr
+                    shouldBeAbsorbed = position().add(deltaMovement).distanceToSqr(infusionMatrixVec) > DIST_SQR && xSqr < deltaMovement.lengthSqr() && hSqr < DIST_SQR
+                }
+                if (shouldBeAbsorbed) {
+                    kill()
+                }
+            }
         }
 
 
@@ -154,10 +182,14 @@ class AspectOrbEntity(type: EntityType<out AspectOrbEntity>, level: World) : Ent
     override fun writeSpawnData(buffer: PacketBuffer) {
         buffer.writeResourceLocation(aspectStack.aspect.id)
         buffer.writeInt(aspectStack.amount)
+        buffer.writeBoolean(infusionMatrixPos != null)
+        if (infusionMatrixPos != null)
+            buffer.writeBlockPos(infusionMatrixPos!!)
     }
 
     override fun readSpawnData(buffer: PacketBuffer) {
         aspectStack.aspect = Aspects.get(buffer.readResourceLocation())
         aspectStack.amount = buffer.readInt()
+        infusionMatrixPos = if (buffer.readBoolean()) buffer.readBlockPos() else null
     }
 }
