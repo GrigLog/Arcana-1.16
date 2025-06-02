@@ -59,5 +59,9 @@ object Util {
 
     fun Vector3i.to3d() = Vector3d(x.toDouble(), y.toDouble(), z.toDouble())
 
+    operator fun Vector3d.minus(other: Vector3d): Vector3d = this.subtract(other)
+
+    operator fun Vector3d.plus(other: Vector3d): Vector3d = this.add(other)
+
     fun Entity.eyePosition() = position().add(0.0, eyeHeight.toDouble(), 0.0)
 }

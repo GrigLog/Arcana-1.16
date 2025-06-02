@@ -45,9 +45,9 @@ class PedestalBlock(properties: Properties = Properties.of(Material.STONE).stren
 
     override fun newBlockEntity(world: IBlockReader) = PedestalTileEntity()
 
-    override fun use(dtate: BlockState, world: World, pos: BlockPos, player: PlayerEntity, hand: Hand, hit: BlockRayTraceResult): ActionResultType {
+    override fun use(dtate: BlockState, level: World, pos: BlockPos, player: PlayerEntity, hand: Hand, hit: BlockRayTraceResult): ActionResultType {
         val playerIS: ItemStack = player.getItemInHand(hand)
-        val te: PedestalTileEntity = world.getBlockEntity(pos) as PedestalTileEntity
+        val te: PedestalTileEntity = level.getBlockEntity(pos) as PedestalTileEntity
 
         if (te.itemStack.isEmpty) {
             if (!playerIS.isEmpty) {
@@ -58,14 +58,18 @@ class PedestalBlock(properties: Properties = Properties.of(Material.STONE).stren
             if (!te.itemStack.isEmpty) {
                 val aspects = ItemAspectRegistry[te.itemStack]
                 if (!player.addItem(te.itemStack)) {
-                    val itementity = ItemEntity(world, player.x, player.y, player.z, te.itemStack)
+                    val itementity = ItemEntity(level, player.x, player.y, player.z, te.itemStack)
                     itementity.setNoPickUpDelay()
-                    world.addFreshEntity(itementity)
+                    level.addFreshEntity(itementity)
                 }
-                if (aspects.list.isNotEmpty()) {
+                if (aspects.list.isNotEmpty() && !level.isClientSide) {
                     val aspectStack = aspects.list[0]
-                    val aspectOrb = AspectOrbEntity(world, Vector3d.upFromBottomCenterOf (te.blockPos, 1.0), aspectStack, te.infusionMatrix)
-                    world.addFreshEntity(aspectOrb)
+                    val aspectOrb = AspectOrbEntity(level, Vector3d.upFromBottomCenterOf (te.blockPos, 1.0), aspectStack, te.infusionMatrix)
+                    if (te.infusionMatrix != null) {
+                        val matrix = level.getBlockEntity(te.infusionMatrix!!) as? InfusionMatrixTileEntity
+                        matrix?.aspectOrbs?.add(aspectOrb)
+                    }
+                    level.addFreshEntity(aspectOrb)
                 }
             }
             te.itemStack = ItemStack.EMPTY

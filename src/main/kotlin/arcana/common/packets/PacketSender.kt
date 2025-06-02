@@ -22,6 +22,7 @@ object PacketSender {
             ManaPacket(),
             KnowledgePacket()
         )
+        regPacket2(AspectOrbRemovedPacket::class.java, AspectOrbRemovedHandler())
     }
 
     private fun regPackets(vararg packets: PacketHandler<*>) {
@@ -32,5 +33,9 @@ object PacketSender {
 
     private fun <T : PacketHandler<T>> regPacket(packetInstance: PacketHandler<T>) {
         INSTANCE.registerMessage(msgId++, packetInstance.javaClass as Class<T>, packetInstance::encode, packetInstance::decode, packetInstance::handle)
+    }
+
+    private fun <T> regPacket2(packetClass: Class<T>, packetInstance: PacketHandler2<T>) {
+        INSTANCE.registerMessage(msgId++, packetClass, packetInstance::encode, packetInstance::decode, packetInstance::handle)
     }
 }

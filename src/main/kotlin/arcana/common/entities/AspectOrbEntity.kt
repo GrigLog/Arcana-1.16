@@ -3,6 +3,10 @@ package arcana.common.entities
 import arcana.Arcana
 import arcana.common.aspects.AspectStack
 import arcana.common.aspects.Aspects
+import arcana.common.blocks.tiles.InfusionMatrixTileEntity
+import arcana.utils.Pair
+import arcana.utils.Util.minus
+import arcana.utils.Util.plus
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.MoverType
@@ -26,6 +30,14 @@ class AspectOrbEntity(type: EntityType<out AspectOrbEntity>, level: World) : Ent
     var aspectStack: AspectStack = AspectStack(Aspects.FIRE, 1)
     var age = 0
     var infusionMatrixPos: BlockPos? = null
+
+    /*companion object {
+        fun clientFactory(spawnEntity: FMLPlayMessages.SpawnEntity, level: World): AspectOrbEntity {
+            val res = AspectOrbEntity(ModEntities.ASPECT_ORB, level)
+            spawnEntity.additionalData
+            return res
+        }
+    }*/
 
     constructor(level: World, pos: Vector3d, value: AspectStack, infusionMatrixPos: BlockPos?) : this(ModEntities.ASPECT_ORB, level) {
         setPos(pos.x, pos.y, pos.z)
@@ -53,54 +65,14 @@ class AspectOrbEntity(type: EntityType<out AspectOrbEntity>, level: World) : Ent
         if (!level.noCollision(boundingBox)) {
             moveTowardsClosestSpace(x, (boundingBox.minY + boundingBox.maxY) / 2.0, z)
         }
-        // XP orb code
-        /*
-        val d0 = 8.0
-        if (followingTime < tickCount - 20 + id % 100) {
-            if (followingPlayer == null || followingPlayer.distanceToSqr(this) > 64.0) {
-                followingPlayer = level.getNearestPlayer(this, 8.0)
-            }
 
-            followingTime = tickCount
-        }
-
-        if (followingPlayer != null && followingPlayer.isSpectator()) {
-            followingPlayer = null
-        }
-
-        if (followingPlayer != null) {
-            val vector3d =
-                Vector3d(followingPlayer.getX() - x, followingPlayer.getY() + followingPlayer.getEyeHeight()
-                    .toDouble() / 2.0 - y, followingPlayer.getZ() - z)
-            val d1 = vector3d.lengthSqr()
-            if (d1 < 64.0) {
-                val d2 = 1.0 - sqrt(d1) / 8.0
-                deltaMovement = deltaMovement.add(vector3d.normalize().scale(d2 * d2 * 0.1))
-            }
-        }*/
-
-        /*
-        val SLOW_COEFF = 0.9
         move(MoverType.SELF, deltaMovement)
-        var slipperiness = 1f
-        if (onGround) {
-            val pos = BlockPos(x, y - 1.0, z)
-            slipperiness = level.getBlockState(pos).getSlipperiness(level, pos, this)
-        }
+        Arcana.logger.info("${deltaMovement.length()}, isClient=${level.isClientSide}, onGround=$onGround, ")
 
-        deltaMovement = deltaMovement.multiply(slipperiness.toDouble(), 1.0, slipperiness.toDouble()).scale(SLOW_COEFF)
-        if (onGround) {
-            deltaMovement = deltaMovement.multiply(1.0, -0.9, 1.0)
-        }*/
-
-        // dragAcceleration = c * v^2 / aspectStack.amount
-        // dragAcceleration/v = c * v / aspectStack.amount
-        // v - dragAcceleration = v(1 - dragAcceleration/v)
-        move(MoverType.SELF, deltaMovement)
-        if (level.isClientSide)
-            Arcana.logger.info(deltaMovement.length())
         val DRAG_COEFF = 0.5
         val GRAVITY_COEFF = 0.5
+        val ORB_GRAVITY_COEFF = 0.01
+
         deltaMovement = deltaMovement.scale(max(0.0, 1 - DRAG_COEFF * deltaMovement.length() / aspectStack.amount))
 
         var slipperiness = 1f
@@ -114,26 +86,43 @@ class AspectOrbEntity(type: EntityType<out AspectOrbEntity>, level: World) : Ent
             //deltaMovement = deltaMovement.multiply(1.0, -0.9, 1.0)
         }
 
+
         if (infusionMatrixPos != null) {
             val infusionMatrixVec = Vector3d.atCenterOf(infusionMatrixPos!!)
-            val matrix = level.getBlockEntity(infusionMatrixPos!!)
+            val matrix = level.getBlockEntity(infusionMatrixPos!!) as? InfusionMatrixTileEntity
             if (matrix != null) {
-                val diff = position().subtract(infusionMatrixVec)
-                val acceleration = GRAVITY_COEFF / diff.lengthSqr()
-                val accVec = infusionMatrixVec.subtract(position()).normalize().scale(acceleration)
-                deltaMovement = deltaMovement.add(accVec)
+                val diffMatrix = position() - infusionMatrixVec
+                val acceleration = GRAVITY_COEFF / diffMatrix.lengthSqr()
+                val accVec = (infusionMatrixVec - position()).normalize().scale(acceleration)
+                deltaMovement += accVec
+
+                for (otherOrb in matrix.aspectOrbs) {
+                    if (otherOrb == this)
+                        continue
+                    val compoundAspect = Aspects.getCompound(Pair.of(aspectStack.aspect, otherOrb.aspectStack.aspect))
+                    if (compoundAspect == Aspects.EMPTY)
+                        continue
+                    val diffOrb = otherOrb.position() - position()
+                    val accVec = diffOrb.normalize().scale(ORB_GRAVITY_COEFF / diffOrb.lengthSqr() * otherOrb.aspectStack.amount)
+                    deltaMovement += accVec
+                }
 
                 val WIDTH = 0.1  // should be close to this.bbWidth. But I don't want to access instance members here
                 val HEIGHT = 0.1
                 val DIST_SQR = ((0.5 + WIDTH / 2).pow(2) * 2 + (0.5 + HEIGHT / 2).pow(2))
-                var shouldBeAbsorbed = diff.lengthSqr() < DIST_SQR
+                var shouldBeAbsorbed = diffMatrix.lengthSqr() < DIST_SQR
                 if (!shouldBeAbsorbed) { //Check if the orb would go through the suction sphere on the next tick. Absorb right now if so.
-                    val hSqr = deltaMovement.cross(diff).lengthSqr() / deltaMovement.lengthSqr()
-                    val xSqr = diff.lengthSqr() - hSqr
-                    shouldBeAbsorbed = position().add(deltaMovement).distanceToSqr(infusionMatrixVec) > DIST_SQR && xSqr < deltaMovement.lengthSqr() && hSqr < DIST_SQR
+                    val hSqr = deltaMovement.cross(diffMatrix).lengthSqr() / deltaMovement.lengthSqr()
+                    val xSqr = diffMatrix.lengthSqr() - hSqr
+                    shouldBeAbsorbed = (position() + deltaMovement).distanceToSqr(infusionMatrixVec) > DIST_SQR && xSqr < deltaMovement.lengthSqr() && hSqr < DIST_SQR
                 }
                 if (shouldBeAbsorbed) {
-                    kill()
+                    remove()
+                    /*if (!level.isClientSide) {
+                        PacketSender.INSTANCE.send(PacketDistributor.NEAR.with {
+                            PacketDistributor.TargetPoint(position().x, position().y, position().z, 20.0, level.dimension())
+                        }, AspectOrbRemovedPacket(this))
+                    }*/
                 }
             }
         }
@@ -191,5 +180,13 @@ class AspectOrbEntity(type: EntityType<out AspectOrbEntity>, level: World) : Ent
         aspectStack.aspect = Aspects.get(buffer.readResourceLocation())
         aspectStack.amount = buffer.readInt()
         infusionMatrixPos = if (buffer.readBoolean()) buffer.readBlockPos() else null
+
+        //todo: is this the right place?
+        infusionMatrixPos?.let{
+            val matrix = level.getBlockEntity(it) as? InfusionMatrixTileEntity
+            matrix?.let {
+                it.aspectOrbs.add(this)
+            }
+        }
     }
 }
