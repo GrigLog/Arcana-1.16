@@ -31,18 +31,18 @@ class AspectOrbEntity(type: EntityType<out AspectOrbEntity>, level: World) : Ent
     var age = 0
     var infusionMatrixPos: BlockPos? = null
 
-    /*companion object {
-        fun clientFactory(spawnEntity: FMLPlayMessages.SpawnEntity, level: World): AspectOrbEntity {
-            val res = AspectOrbEntity(ModEntities.ASPECT_ORB, level)
-            spawnEntity.additionalData
-            return res
-        }
-    }*/
+    companion object {
+        val DRAG_COEFF = 0.0
+        val GRAVITY_COEFF = 0.5
+        val ORB_GRAVITY_COEFF = 0.01
+        val INITIAL_IMPULSE = 0.3
+        val LIFETIME_TICKS = 8 * 20
+    }
 
     constructor(level: World, pos: Vector3d, value: AspectStack, infusionMatrixPos: BlockPos?) : this(ModEntities.ASPECT_ORB, level) {
         setPos(pos.x, pos.y, pos.z)
         aspectStack = value
-        deltaMovement = Vector3d(0.0, 1.0 / value.amount, 0.0)
+        deltaMovement = Vector3d(0.0, INITIAL_IMPULSE, 0.0)
         isNoGravity = true  // does not actually do anything since tick() is overriden but whatever
         this.infusionMatrixPos = infusionMatrixPos
     }
@@ -68,10 +68,6 @@ class AspectOrbEntity(type: EntityType<out AspectOrbEntity>, level: World) : Ent
 
         move(MoverType.SELF, deltaMovement)
         Arcana.logger.info("${deltaMovement.length()}, isClient=${level.isClientSide}, onGround=$onGround, ")
-
-        val DRAG_COEFF = 0.5
-        val GRAVITY_COEFF = 0.5
-        val ORB_GRAVITY_COEFF = 0.01
 
         deltaMovement = deltaMovement.scale(max(0.0, 1 - DRAG_COEFF * deltaMovement.length() / aspectStack.amount))
 
@@ -130,7 +126,7 @@ class AspectOrbEntity(type: EntityType<out AspectOrbEntity>, level: World) : Ent
 
         ++tickCount
         ++age
-        if (age >= 20 * 5) {
+        if (age >= LIFETIME_TICKS) {
             remove()
         }
     }
