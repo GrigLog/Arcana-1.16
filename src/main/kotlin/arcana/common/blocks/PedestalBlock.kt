@@ -67,7 +67,7 @@ class PedestalBlock(properties: Properties = Properties.of(Material.STONE).stren
                     val aspectOrb = AspectOrbEntity(level, Vector3d.upFromBottomCenterOf (te.blockPos, 1.0), aspectStack, te.infusionMatrix)
                     if (te.infusionMatrix != null) {
                         val matrix = level.getBlockEntity(te.infusionMatrix!!) as? InfusionMatrixTileEntity
-                        matrix?.aspectOrbs?.add(aspectOrb)
+                        matrix?.addOrb(aspectOrb)
                     }
                     level.addFreshEntity(aspectOrb)
                 }

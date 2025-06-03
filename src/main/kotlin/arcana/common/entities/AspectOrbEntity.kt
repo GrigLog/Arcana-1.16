@@ -37,7 +37,22 @@ class AspectOrbEntity(type: EntityType<out AspectOrbEntity>, level: World) : Ent
         val ORB_GRAVITY_COEFF = 0.01
         val INITIAL_IMPULSE = 0.3
         val LIFETIME_TICKS = 8 * 20
+
+        private fun shouldMerge(pos1: Vector3d, v1: Vector3d, pos2: Vector3d, v2: Vector3d, distanceThresholdSqr: Double): Boolean {
+            val p = pos1 - pos2
+            if (p.lengthSqr() < distanceThresholdSqr)
+                return true
+            val v = v1 - v2
+            val t_min = -p.dot(v) / v.dot(v)
+            if (0 < t_min && t_min <= 1) {
+                val p_min = p + v.scale(t_min)
+                if (p_min.lengthSqr() < distanceThresholdSqr)
+                    return true
+            }
+            return false
+        }
     }
+
 
     constructor(level: World, pos: Vector3d, value: AspectStack, infusionMatrixPos: BlockPos?) : this(ModEntities.ASPECT_ORB, level) {
         setPos(pos.x, pos.y, pos.z)
@@ -46,6 +61,9 @@ class AspectOrbEntity(type: EntityType<out AspectOrbEntity>, level: World) : Ent
         isNoGravity = true  // does not actually do anything since tick() is overriden but whatever
         this.infusionMatrixPos = infusionMatrixPos
     }
+
+    //can be static
+
 
     override fun tick() {
         super.tick()
@@ -92,7 +110,9 @@ class AspectOrbEntity(type: EntityType<out AspectOrbEntity>, level: World) : Ent
                 val accVec = (infusionMatrixVec - position()).normalize().scale(acceleration)
                 deltaMovement += accVec
 
-                for (otherOrb in matrix.aspectOrbs) {
+                for (otherOrb in matrix.getOrbs()) {
+                    if (!otherOrb.isAlive)
+                        continue
                     if (otherOrb == this)
                         continue
                     val compoundAspect = Aspects.getCompound(Pair.of(aspectStack.aspect, otherOrb.aspectStack.aspect))
@@ -100,7 +120,24 @@ class AspectOrbEntity(type: EntityType<out AspectOrbEntity>, level: World) : Ent
                         continue
                     val diffOrb = otherOrb.position() - position()
                     val accVec = diffOrb.normalize().scale(ORB_GRAVITY_COEFF / diffOrb.lengthSqr() * otherOrb.aspectStack.amount)
-                    deltaMovement += accVec
+                    deltaMovement += accVec  //todo: update all velocities at once inside InfusionMatrixTile.tick() for deterministic behaviour?
+                    if (shouldMerge(position(), deltaMovement, otherOrb.position(), deltaMovement, 0.5)) {
+                        remove()
+                        otherOrb.remove()
+                        if (!level.isClientSide) {
+                            val a = aspectStack.amount
+                            val b = otherOrb.aspectStack.amount
+                            val newAmount = a + b
+                            val k1 = a.toDouble() / (a+b)
+                            val k2 = b.toDouble() / (a+b)
+                            val newPos = position().scale(k1) + otherOrb.position().scale(k2)
+                            val newDelta = deltaMovement.scale(k1) + otherOrb.deltaMovement.scale(k2)
+                            val newOrb = AspectOrbEntity(level, newPos, AspectStack(compoundAspect, newAmount), infusionMatrixPos)
+                            newOrb.deltaMovement = newDelta
+                            matrix.addOrb(newOrb)
+                            level.addFreshEntity(newOrb)
+                        }
+                    }
                 }
 
                 val WIDTH = 0.1  // should be close to this.bbWidth. But I don't want to access instance members here
@@ -181,7 +218,7 @@ class AspectOrbEntity(type: EntityType<out AspectOrbEntity>, level: World) : Ent
         infusionMatrixPos?.let{
             val matrix = level.getBlockEntity(it) as? InfusionMatrixTileEntity
             matrix?.let {
-                it.aspectOrbs.add(this)
+                it.addOrb(this)
             }
         }
     }

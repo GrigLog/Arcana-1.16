@@ -20,7 +20,22 @@ class InfusionMatrixTileEntity(type: TileEntityType<*> = ModTiles.INFUSION_MATRI
         val RADIUS = Vector3i(8, 5, 8)
     }
     var pedestals: MutableList<BlockPos> = mutableListOf()
-    var aspectOrbs: MutableList<AspectOrbEntity> = mutableListOf()
+    protected var aspectOrbs: MutableList<AspectOrbEntity> = mutableListOf()
+    protected val newAspectOrbs: MutableList<AspectOrbEntity> = mutableListOf()
+
+    fun addOrb(orb: AspectOrbEntity) = newAspectOrbs.add(orb)
+
+    fun getOrbs() : Iterable<AspectOrbEntity> = aspectOrbs
+
+    override fun tick() {
+        aspectOrbs = aspectOrbs.filter{it.isAlive}.toMutableList()
+        for (orb in newAspectOrbs) {
+            if (orb.isAlive)
+                aspectOrbs.add(orb)
+        }
+        newAspectOrbs.clear()
+        Arcana.logger.info("aspectOrbs:${aspectOrbs.size}, isClient=${level!!.isClientSide}")
+    }
 
     override fun save(pCompound: CompoundNBT): CompoundNBT {
         val list = ListNBT()
@@ -34,10 +49,5 @@ class InfusionMatrixTileEntity(type: TileEntityType<*> = ModTiles.INFUSION_MATRI
         val list = compound.get("pedestals") as ListNBT
         pedestals = list.map{NBTUtil.readBlockPos(it as CompoundNBT)}.toMutableList()
         super.load(bs, compound)
-    }
-
-    override fun tick() {
-        aspectOrbs = aspectOrbs.filter{it.isAlive}.toMutableList()
-        Arcana.logger.info("aspectOrbs:${aspectOrbs.size}, isClient=${level!!.isClientSide}")
     }
 }
