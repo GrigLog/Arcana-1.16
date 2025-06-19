@@ -15,7 +15,9 @@ import arcana.common.recipes.ArcanaRecipes
 import arcana.server.worldgen.ModFeatures
 import arcana.utils.Util
 import net.minecraft.block.Block
+import net.minecraft.entity.CreatureEntity
 import net.minecraft.entity.EntityType
+import net.minecraft.entity.ai.attributes.Attributes
 import net.minecraft.inventory.container.ContainerType
 import net.minecraft.item.Item
 import net.minecraft.item.crafting.IRecipeSerializer
@@ -28,6 +30,7 @@ import net.minecraft.world.gen.feature.StructureFeature
 import net.minecraft.world.gen.feature.structure.Structure
 import net.minecraftforge.common.capabilities.CapabilityManager
 import net.minecraftforge.event.RegistryEvent
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
@@ -69,6 +72,11 @@ object Register {
     @SubscribeEvent
     fun regEntities(event: RegistryEvent.Register<EntityType<*>>) {
         Util.getFields<EntityType<*>>(ModEntities::class.java, EntityType::class.java, null).forEach{ event.registry.register(it) }
+    }
+
+    @SubscribeEvent
+    fun regAttributes(event: EntityAttributeCreationEvent) {
+        event.put(ModEntities.CRIMSON_KNIGHT, CreatureEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 20.0).build())
     }
 
     @SubscribeEvent

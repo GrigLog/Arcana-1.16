@@ -1,6 +1,7 @@
 package arcana.common.entities
 
 import arcana.utils.wrappers.ETWrapper
+import net.minecraft.entity.EntityClassification
 import net.minecraft.entity.EntityClassification.MISC
 
 object ModEntities {
@@ -17,4 +18,7 @@ object ModEntities {
         .setShouldReceiveVelocityUpdates(true)
         //.setCustomClientFactory(AspectOrbEntity::clientFactory)
         .get()
+
+    @JvmField val CRIMSON_KNIGHT = ETWrapper(EntityClassification.CREATURE, "crimson_knight", ::CrimsonKnight)
+        .sized(0.6F, 1.95F).clientTrackingRange(8).get()
 }

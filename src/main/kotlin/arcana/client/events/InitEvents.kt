@@ -57,6 +57,7 @@ object InitEvents {
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.DAMAGING_SHOVEL, ::DamagingShovelRenderer)
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.FIRE_MELON, ::EmptyEntityRenderer)
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.ASPECT_ORB, ::AspectOrbRenderer)
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.CRIMSON_KNIGHT, ::CrimsonKnightRenderer)
         ClientRegistry.bindTileEntityRenderer(ModTiles.QUANTUM_CHEST, ::QuantumChestTileRenderer)
         ClientRegistry.bindTileEntityRenderer(ModTiles.PEDESTAL, ::PedestalTileEntityRenderer)
     }
