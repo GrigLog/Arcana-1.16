@@ -1,6 +1,5 @@
 package arcana.common.entities
 
-import arcana.Arcana
 import arcana.common.aspects.AspectStack
 import arcana.common.aspects.Aspects
 import arcana.common.blocks.tiles.InfusionMatrixTileEntity
@@ -62,9 +61,6 @@ class AspectOrbEntity(type: EntityType<out AspectOrbEntity>, level: World) : Ent
         this.infusionMatrixPos = infusionMatrixPos
     }
 
-    //can be static
-
-
     override fun tick() {
         super.tick()
 
@@ -84,21 +80,7 @@ class AspectOrbEntity(type: EntityType<out AspectOrbEntity>, level: World) : Ent
             moveTowardsClosestSpace(x, (boundingBox.minY + boundingBox.maxY) / 2.0, z)
         }
 
-        move(MoverType.SELF, deltaMovement)
-        Arcana.logger.info("${deltaMovement.length()}, isClient=${level.isClientSide}, onGround=$onGround, ")
-
         deltaMovement = deltaMovement.scale(max(0.0, 1 - DRAG_COEFF * deltaMovement.length() / aspectStack.amount))
-
-        var slipperiness = 1f
-        if (onGround) {
-            val pos = BlockPos(x, y - 1.0, z)
-            slipperiness = level.getBlockState(pos).getSlipperiness(level, pos, this)
-        }
-        deltaMovement = deltaMovement.multiply(slipperiness.toDouble(), 1.0, slipperiness.toDouble())
-        if (onGround) {
-            //what is this for?
-            //deltaMovement = deltaMovement.multiply(1.0, -0.9, 1.0)
-        }
 
 
         if (infusionMatrixPos != null) {
@@ -158,6 +140,19 @@ class AspectOrbEntity(type: EntityType<out AspectOrbEntity>, level: World) : Ent
                     }*/
                 }
             }
+        }
+
+        move(MoverType.SELF, deltaMovement)
+        //Arcana.logger.info("${deltaMovement.length()}, isClient=${level.isClientSide}, onGround=$onGround, ")
+        var slipperiness = 1f
+        if (onGround) {
+            val pos = BlockPos(x, y - 1.0, z)
+            slipperiness = level.getBlockState(pos).getSlipperiness(level, pos, this)
+        }
+        deltaMovement = deltaMovement.multiply(slipperiness.toDouble(), 1.0, slipperiness.toDouble())
+        if (onGround) {
+            //what is this for?
+            //deltaMovement = deltaMovement.multiply(1.0, -0.9, 1.0)
         }
 
 

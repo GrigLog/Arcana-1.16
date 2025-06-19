@@ -14,7 +14,7 @@ object ModEntities {
     @JvmField val FIRE_MELON = ETWrapper(MISC, "fire_melon", ::FireMelonEntity)
         .sized(0.1f, 0.1f).get()
     @JvmField val ASPECT_ORB = ETWrapper(MISC, "aspect_orb", ::AspectOrbEntity)
-        .sized(0.2F, 0.2F).clientTrackingRange(6).updateInterval(3)
+        .sized(0.5F, 0.5F).clientTrackingRange(6).updateInterval(3)
         .setShouldReceiveVelocityUpdates(true)
         //.setCustomClientFactory(AspectOrbEntity::clientFactory)
         .get()
